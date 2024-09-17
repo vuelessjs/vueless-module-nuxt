@@ -1,8 +1,7 @@
 {
   "name": "@vueless/module-nuxt",
   "version": "0.0.1",
-  "description": "Vueless Module Nuxt",
-  "repository": "your-org/my-module",
+  "description": "Vueless module for Nuxt.js.",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -31,8 +30,8 @@
   "dependencies": {
     "@nuxt/kit": "^3.13.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@vueless/plugin-vite": "^0.0.60",
-    "vueless": "^0.0.351"
+    "@vueless/plugin-vite": "^0.0.62",
+    "vueless": "^0.0.357"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.4.1",
@@ -44,9 +43,17 @@
     "changelogen": "^0.5.5",
     "eslint": "^9.9.1",
     "nuxt": "^3.13.0",
+    "release-it": "^17.6.0",
     "typescript": "latest",
     "vitest": "^2.0.5",
     "vue-tsc": "^2.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuelessjs/vueless-module-nuxt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vuelessjs/vueless-module-nuxt/issues"
   },
   "web-types": "./node_modules/vueless/web-types.json"
 }
