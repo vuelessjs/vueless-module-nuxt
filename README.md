@@ -1,72 +1,29 @@
-<!--
-Get your module up and running quickly.
-
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: my-module
-- Description: My new Nuxt module
--->
-
-# @vueless/module-nuxt
+# Vueless Nuxt Module
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
-
-## Features
-
-<!-- Highlight some of the features your module provide here -->
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
-
 ## Quick Setup
 
-Install the module to your Nuxt application with one command:
+1. Add `@vueless/module-nuxt` dependency to your project
 
 ```bash
-npx nuxi module add @vueless/module-nuxt
+npx nuxi@latest module add vueless
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+2. Add `@vueless/module-nuxt` to the `modules` section of `nuxt.config.{ts,js}`
 
+```js
+{
+  modules: [
+    '@vueless/module-nuxt'
+  ]
+}
+```
 
-## Contribution
-
-<details>
-  <summary>Local development</summary>
-  
-  ```bash
-  # Install dependencies
-  npm install
-  
-  # Generate type stubs
-  npm run dev:prepare
-  
-  # Develop with the playground
-  npm run dev
-  
-  # Build the playground
-  npm run dev:build
-  
-  # Run ESLint
-  npm run lint
-  
-  # Run Vitest
-  npm run test
-  npm run test:watch
-  
-  # Release new version
-  npm run release
-  ```
-
-</details>
-
+That's it! You can now use `@vueless/module-nuxt` in your Nuxt app ✨
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
