@@ -28,9 +28,9 @@ export default async function installTailwind(_nuxt = useNuxt()) {
   const configPaths = [vuelessConfigFile.dst, join(_nuxt.options.rootDir, 'tailwind.config')]
 
   /* Get tailwind user configs */
-  const { configPath: userConfigPath = [], ...twModuleConfig } = _nuxt.options.tailwindcss ?? {}
+  const { configPath: userConfigPath = [] || "", ...twModuleConfig } = _nuxt.options.tailwindcss ?? {}
 
-  /* Merge vueless, default and user tailwind config paths */
+  /* Merge vueless, default, and user tailwind config paths */
   typeof userConfigPath === 'string' ? configPaths.push(userConfigPath) : configPaths.push(...userConfigPath)
 
   /* Install tailwind module */

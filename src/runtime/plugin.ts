@@ -17,7 +17,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
   if (import.meta.server) {
     const themeRootVariables = setTheme()
 
-    _nuxtApp.ssrContext.head.push({
+    _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],
     })
   }
