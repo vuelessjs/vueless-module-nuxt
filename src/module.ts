@@ -3,10 +3,7 @@ import { COMPONENTS } from '@vueless/plugin-vite/constants.js'
 import { Vueless } from '@vueless/plugin-vite'
 import installTailwind from './tailwind'
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
-
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule({
   meta: {
     name: '@vueless/module-nuxt',
     configKey: 'vueless',

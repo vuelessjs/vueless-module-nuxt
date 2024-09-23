@@ -3,6 +3,8 @@ export default defineNuxtConfig({
   modules: ['../src/module'],
   devtools: { enabled: true },
   tailwindcss: {
-    content: ['../node_modules/vueless/**/*.{js,ts,vue}'],
+    config: {
+      content: ['../node_modules/vueless/**/*.{js,ts,vue}'],
+    },
   },
 })
