@@ -1,5 +1,5 @@
 import { addTemplate, installModule, useNuxt } from '@nuxt/kit'
-import { createTailwindSafelist } from '@vueless/plugin-vite/utils/tailwindSafelist'
+import { createTailwindSafelist } from '@vueless/plugin-vite/utils/tailwindSafelist.js'
 import { join } from 'pathe'
 import { defu } from 'defu'
 
@@ -33,8 +33,6 @@ export default async function installTailwind(_nuxt: Nuxt = useNuxt()) {
   const { configPath: userConfigPath = [], ...twModuleConfig } = _nuxt.options.tailwindcss ?? {}
 
   /* Merge vueless, default, and user tailwind config paths */
-
-  // configPaths.push(userConfigPath)
   if (typeof userConfigPath === 'string') {
     configPaths.push(userConfigPath)
   }
