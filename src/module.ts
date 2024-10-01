@@ -34,6 +34,7 @@ export default defineNuxtModule({
     for (const componentName in COMPONENTS) {
       await addComponent({
         name: componentName,
+        mode: componentName === 'UIcon' ? 'client' : 'all', // TODO: Find reason why icons can't load on dev server
         filePath: `vueless/${COMPONENTS[componentName].folder}/${componentName}.vue`,
       })
     }

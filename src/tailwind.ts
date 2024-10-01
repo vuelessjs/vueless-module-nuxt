@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { addTemplate, installModule, useNuxt } from '@nuxt/kit'
 import { createTailwindSafelist } from '@vueless/plugin-vite/utils/tailwindSafelist.js'
 import { join } from 'pathe'
@@ -7,7 +8,16 @@ import type { Nuxt } from './types'
 
 export default async function installTailwind(_nuxt: Nuxt = useNuxt()) {
   /* Generate tailwind safelist before module installed */
-  await createTailwindSafelist()
+  await createTailwindSafelist({
+    targetFiles: [
+      'components',
+      'layouts',
+      'pages',
+      path.join(process.cwd(), 'app.vue'),
+      path.join(process.cwd(), 'error.vue'),
+      path.join(process.cwd(), 'playground', 'app.vue'),
+    ],
+  })
 
   /* Add vueless tailwind config template */
   const vuelessConfigFile = addTemplate({
