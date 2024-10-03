@@ -5,6 +5,11 @@
   >
     <UHeader label="Vueless UI is ready!" />
 
+    <UIcon
+      internal
+      name="close"
+    />
+
     <UButton
       color="lime"
       label="Button"

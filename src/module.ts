@@ -3,10 +3,7 @@ import { COMPONENTS } from '@vueless/plugin-vite/constants.js'
 import { Vueless } from '@vueless/plugin-vite'
 import installTailwind from './tailwind'
 
-// Module options TypeScript interface definition
-export interface ModuleOptions {}
-
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule({
   meta: {
     name: '@vueless/module-nuxt',
     configKey: 'vueless',
@@ -37,6 +34,7 @@ export default defineNuxtModule<ModuleOptions>({
     for (const componentName in COMPONENTS) {
       await addComponent({
         name: componentName,
+        mode: componentName === 'UIcon' ? 'client' : 'all', // TODO: Find reason why icons can't load on dev server
         filePath: `vueless/${COMPONENTS[componentName].folder}/${componentName}.vue`,
       })
     }

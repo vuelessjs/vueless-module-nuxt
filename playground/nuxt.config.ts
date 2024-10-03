@@ -1,8 +1,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-09-13',
-  modules: ['../src/module'],
+  modules: ['@vueless/module-nuxt'],
   devtools: { enabled: true },
   tailwindcss: {
-    content: ['../node_modules/vueless/**/*.{js,ts,vue}'],
+    config: {
+      content: ['../node_modules/vueless/**/*.{js,ts,vue}'],
+    },
   },
 })
