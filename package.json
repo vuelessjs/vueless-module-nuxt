@@ -1,9 +1,30 @@
 {
   "name": "@vueless/module-nuxt",
-  "version": "0.0.1",
-  "description": "Vueless module for Nuxt.js.",
+  "version": "0.0.4",
   "license": "MIT",
+  "description": "Nuxt Styleless UI Component Library, powered by Tailwind CSS.",
+  "keywords": [
+    "vueless",
+    "nuxt",
+    "nuxt.js",
+    "nuxt3",
+    "ui library",
+    "component library",
+    "nuxt framework",
+    "design system",
+    "tailwind",
+    "tailwindcss",
+    "unstyled",
+    "styleless",
+    "headlessui",
+    "ui"
+  ],
+  "homepage": "https://vueless.com",
+  "author": "Johnny Grid",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",
@@ -17,15 +38,13 @@
     "dist"
   ],
   "scripts": {
-    "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "package:prepare": "rm -rf dist && mkdir -p dist && cp -r src/. package.json LICENSE README.md dist/",
+    "prepack": "nuxt-module-build build",
     "release:patch": "release-it patch --ci --npm.publish",
     "release:minor": "release-it minor --ci --npm.publish --git.tag --github.release",
     "release:major": "release-it major --ci --npm.publish --git.tag --github.release",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "lint:ci": "eslint --no-fix --max-warnings=0",
     "test": "vitest run",
@@ -36,10 +55,10 @@
   "dependencies": {
     "@nuxt/kit": "^3.13.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@vueless/plugin-vite": "^0.0.64",
+    "@vueless/plugin-vite": "^0.0.67",
     "defu": "^6.1.4",
     "pathe": "^1.1.2",
-    "vueless": "^0.0.400"
+    "vueless": "^0.0.413"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.4.1",
@@ -47,6 +66,7 @@
     "@nuxt/module-builder": "^0.8.3",
     "@nuxt/schema": "^3.13.1",
     "@nuxt/test-utils": "^3.14.1",
+    "@release-it/bumper": "^6.0.1",
     "@types/node": "latest",
     "changelogen": "^0.5.5",
     "eslint": "^9.9.1",

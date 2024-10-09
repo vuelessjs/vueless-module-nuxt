@@ -10,13 +10,7 @@
     "release": false
   },
   "npm": {
-    "publish": false,
-    "publishPath": "./dist"
-  },
-  "plugins": {
-    "@release-it/bumper": {
-      "out": "dist/*.json"
-    }
+    "publish": false
   },
   "hooks": {
     "after:release": "echo Successfully released ${name} v${version}."
