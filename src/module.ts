@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, createResolver, addComponent } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
 import { COMPONENTS } from '@vueless/plugin-vite/constants.js'
 import { Vueless } from '@vueless/plugin-vite'
 import installTailwind from './tailwind'
@@ -34,9 +34,14 @@ export default defineNuxtModule({
     for (const componentName in COMPONENTS) {
       await addComponent({
         name: componentName,
-        mode: componentName === 'UIcon' ? 'client' : 'all', // TODO: Find reason why icons can't load on dev server
         filePath: `vueless/${COMPONENTS[componentName].folder}/${componentName}.vue`,
       })
     }
+
+    /* Register vueless composables for auto-import. */
+    addImportsDir('vueless/composables')
+
+    /* Register vueless utils for auto-import. */
+    addImportsDir('vueless/utils')
   },
 })
