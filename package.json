@@ -1,6 +1,6 @@
 {
   "name": "@vueless/module-nuxt",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "license": "MIT",
   "description": "Nuxt Styleless UI Component Library, powered by Tailwind CSS.",
   "keywords": [
