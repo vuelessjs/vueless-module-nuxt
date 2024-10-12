@@ -5,15 +5,15 @@
   >
     <UHeader label="Vueless UI is ready!" />
 
-    <UIcon
-      internal
-      name="close"
-    />
+    <UIcon name="heart_plus" />
 
     <UButton
       color="lime"
       label="Button"
+      left-icon="timer"
     />
+
+    <UCalendar />
 
     <UInput label="Input" />
   </UCol>
