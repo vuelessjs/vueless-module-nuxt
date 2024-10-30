@@ -1,6 +1,6 @@
 import { createVueless, setTheme } from 'vueless'
-import vClickOutside from 'vueless/directives/vClickOutside.js'
-import vTooltip from 'vueless/directives/vTooltip.js'
+import vClickOutside from 'vueless/directives/clickOutside/vClickOutside.js'
+import vTooltip from 'vueless/directives/tooltip/vTooltip.js'
 
 import { defineNuxtPlugin } from '#app'
 
