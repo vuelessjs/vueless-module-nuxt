@@ -1,6 +1,6 @@
 {
-  "name": "@vueless/module-nuxt",
-  "version": "0.0.11",
+  "name": "@vueless/nuxt",
+  "version": "0.0.0",
   "license": "MIT",
   "description": "Nuxt Styleless UI Component Library, powered by Tailwind CSS.",
   "keywords": [
@@ -55,22 +55,22 @@
   "dependencies": {
     "@nuxt/kit": "^3.13.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@vueless/plugin-vite": "^0.0.74",
+    "@vueless/plugin-vite": "^0.0.78",
     "defu": "^6.1.4",
     "pathe": "^1.1.2",
-    "vueless": "^0.0.431"
+    "vueless": "^0.0.479"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.25.0",
     "@nuxt/devtools": "^1.4.1",
     "@nuxt/eslint-config": "^0.5.7",
-    "@nuxt/module-builder": "^0.8.3",
-    "@nuxt/schema": "^3.13.1",
+    "@nuxt/module-builder": "^0.8.4",
+    "@nuxt/schema": "^3.13.2",
     "@nuxt/test-utils": "^3.14.1",
     "@types/node": "latest",
     "changelogen": "^0.5.5",
     "eslint": "^9.12.0",
-    "nuxt": "^3.13.0",
+    "nuxt": "^3.13.2",
     "release-it": "^17.6.0",
     "typescript": "latest",
     "vitest": "^2.0.5",
