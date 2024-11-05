@@ -1,11 +1,11 @@
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
 import { COMPONENTS } from 'vueless/constants.js'
-import { Vueless } from 'vueless/plugin-vite'
+import { Vueless } from 'vueless/plugin-vite.js'
 import installTailwind from './tailwind'
 
 export default defineNuxtModule({
   meta: {
-    name: '@vueless/module-nuxt',
+    name: '@vueless/nuxt',
     configKey: 'vueless',
     compatibility: {
       nuxt: '>=3.13.0',
