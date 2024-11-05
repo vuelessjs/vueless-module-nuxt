@@ -1,6 +1,6 @@
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
-import { COMPONENTS } from '@vueless/plugin-vite/constants.js'
-import { Vueless } from '@vueless/plugin-vite'
+import { COMPONENTS } from 'vueless/constants.js'
+import { Vueless } from 'vueless/plugin-vite'
 import installTailwind from './tailwind'
 
 export default defineNuxtModule({
@@ -14,6 +14,9 @@ export default defineNuxtModule({
   defaults: {},
   async setup(_options, _nuxt) {
     const { resolve } = createResolver(import.meta.url)
+
+    /* Transpile vueless and tailwindcss ts files into js */
+    _nuxt.options.build.transpile.push('vueless', 'tailwindcss')
 
     /* Add vueless vite plugin */
     _nuxt.hook('vite:extendConfig', (config) => {
@@ -34,7 +37,7 @@ export default defineNuxtModule({
     for (const componentName in COMPONENTS) {
       await addComponent({
         name: componentName,
-        filePath: `vueless/${COMPONENTS[componentName].folder}/${componentName}.vue`,
+        filePath: `vueless/${COMPONENTS[componentName]}/${componentName}.vue`,
       })
     }
 

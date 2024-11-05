@@ -55,10 +55,9 @@
   "dependencies": {
     "@nuxt/kit": "^3.13.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "@vueless/plugin-vite": "^0.0.78",
     "defu": "^6.1.4",
     "pathe": "^1.1.2",
-    "vueless": "^0.0.479"
+    "vueless": "^0.0.481"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.25.0",
