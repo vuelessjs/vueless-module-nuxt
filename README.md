@@ -7,23 +7,23 @@
 
 ## Quick Setup
 
-1. Add `@vueless/module-nuxt` dependency to your project
+1. Add `@vueless/nuxt` dependency to your project.
 
 ```bash
-npx nuxi@latest module add vueless
+npm i @vueless/nuxt
 ```
 
-2. Add `@vueless/module-nuxt` to the `modules` section of `nuxt.config.{ts,js}`
+2. Add `@vueless/nuxt` to the `modules` section of `nuxt.config.{ts,js}`
 
 ```js
 {
   modules: [
-    '@vueless/module-nuxt'
+    '@vueless/nuxt'
   ]
 }
 ```
 
-That's it! You can now use `@vueless/module-nuxt` in your Nuxt app ✨
+That's it! You can now use `@vueless/nuxt` in your Nuxt app ✨
 
 <!-- Badges -->
 [npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=020420&colorB=00DC82
