@@ -11,9 +11,13 @@ export default defineNuxtModule({
       nuxt: '>=3.13.0',
     },
   },
-  defaults: {},
+  defaults: {
+    mirrorCacheDir: '',
+    debug: false,
+  },
   async setup(_options, _nuxt) {
     const { resolve } = createResolver(import.meta.url)
+    const { mirrorCacheDir, debug } = _options
 
     /* Transpile vueless and tailwindcss ts files into js */
     _nuxt.options.build.transpile.push('vueless', 'tailwindcss')
@@ -21,7 +25,9 @@ export default defineNuxtModule({
     /* Add vueless vite plugin */
     _nuxt.hook('vite:extendConfig', (config) => {
       config.plugins = config.plugins || []
-      config.plugins.push(Vueless({ mode: 'nuxt-module' }))
+      config.plugins.push(
+        Vueless({ mode: 'nuxt-module', mirrorCacheDir, debug }),
+      )
     })
 
     /* Install Tailwind module */

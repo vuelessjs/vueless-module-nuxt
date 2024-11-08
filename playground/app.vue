@@ -13,9 +13,15 @@
       left-icon="timer"
     />
 
-    <UCalendar />
+    <UCheckbox />
 
-    <UInput label="Input" />
+    <UCheckboxMultiState />
+
+    <USelect label="USelect" />
+
+    <UInput
+      label="Input"
+    />
   </UCol>
 </template>
 
