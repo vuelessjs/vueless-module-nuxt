@@ -40,6 +40,7 @@
   "scripts": {
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
+    "dev:preview": "nuxi preview playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "prepack": "nuxt-module-build build && cp package.json LICENSE README.md dist/",
     "release:patch": "release-it patch --ci --npm.publish",
@@ -57,7 +58,7 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "defu": "^6.1.4",
     "pathe": "^1.1.2",
-    "vueless": "^0.0.481"
+    "vueless": "^0.0.492"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.25.0",
