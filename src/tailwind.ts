@@ -18,7 +18,7 @@ export default async function installTailwind(_nuxt: Nuxt = useNuxt()) {
     write: true,
     getContents: async () => `
       import forms from "@tailwindcss/forms";
-      import { getSafelist, vuelessTailwindConfig } from "vueless/preset-tailwind.js";
+      import { getSafelist, vuelessTailwindConfig } from "vueless/preset-tailwind";
 
       export default {
         plugins: [forms],
@@ -32,7 +32,8 @@ export default async function installTailwind(_nuxt: Nuxt = useNuxt()) {
   const configPaths = [vuelessConfigFile.dst, join(_nuxt.options.rootDir, 'tailwind.config')]
 
   /* Get tailwind user configs */
-  const { configPath: userConfigPath = [], ...twModuleConfig } = _nuxt.options.tailwindcss ?? {}
+  const { configPath = [], ...twModuleConfig } = _nuxt.options.tailwindcss ?? {}
+  const userConfigPath = configPath as string | string[]
 
   /* Merge vueless, default, and user tailwind config paths */
   if (typeof userConfigPath === 'string') {
