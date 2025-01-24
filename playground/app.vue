@@ -329,7 +329,7 @@ const rows = [
     },
     user: {
       nickname: 'Adam Gordon',
-      image: 'https://avatars.githubusercontent.com/u/28706372?v=4',
+      image: 'https://gitlab.com/uploads/-/system/user/avatar/4469990/avatar.png?width=192',
       profile: 'https://gitlab.com/JohnnyGrid',
     },
     status: {
@@ -347,7 +347,7 @@ const rows = [
     },
     user: {
       nickname: 'Leslie Nielsen',
-      image: 'https://avatars.githubusercontent.com/u/739984?v=4',
+      image: 'https://gitlab.com/uploads/-/system/user/avatar/4469990/avatar.png?width=192',
       profile: 'https://gitlab.com/JohnnyGrid',
     },
     status: {
