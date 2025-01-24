@@ -7,7 +7,7 @@ import { defineNuxtPlugin } from '#app'
 export default defineNuxtPlugin((_nuxtApp) => {
   /* Init vueless */
   const vueless = createVueless()
-  _nuxtApp.vueApp.use(vueless, {})
+  _nuxtApp.vueApp.use(vueless, [])
 
   /* Set vueless directives */
   _nuxtApp.vueApp.directive('clickOutside', vClickOutside)
