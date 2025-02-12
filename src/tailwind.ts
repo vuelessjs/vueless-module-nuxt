@@ -21,7 +21,7 @@ export default async function installTailwind(_nuxt: Nuxt = useNuxt()) {
       import { getSafelist, vuelessTailwindConfig } from "vueless/preset-tailwind";
 
       export default {
-        plugins: [forms],
+        plugins: [forms({ strategy: "base" })],
         safelist: getSafelist(),
         ...vuelessTailwindConfig,
       }
