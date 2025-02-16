@@ -95,7 +95,7 @@
                 />
 
                 <USwitch
-                  v-model="swichValue"
+                  v-model="switchValue"
                   label="Enable 2FA"
                 />
               </URow>
@@ -286,7 +286,7 @@ function test() {
 }
 
 const currentPage = ref(1)
-const swichValue = ref(false)
+const switchValue = ref(false)
 const isShownDeleteModal = ref(false)
 
 function onClickDelete() {

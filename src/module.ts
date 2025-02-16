@@ -41,7 +41,7 @@ export default defineNuxtModule({
 
     /* Register vueless components for auto-import. */
     for (const componentName in COMPONENTS) {
-      await addComponent({
+      addComponent({
         name: componentName,
         filePath: `vueless/${COMPONENTS[componentName]}/${componentName}.vue`,
       })

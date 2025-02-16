@@ -1,6 +1,6 @@
 import { addTemplate, installModule, useNuxt } from '@nuxt/kit'
 import { createTailwindSafelist } from 'vueless/utils/node/tailwindSafelist.js'
-import { getNuxtFiles } from 'vueless/utils/node/helper.js'
+import { getNuxtDirs } from 'vueless/utils/node/helper.js'
 import { join } from 'pathe'
 import { defu } from 'defu'
 
@@ -9,7 +9,7 @@ import type { Nuxt } from './types'
 export default async function installTailwind(_nuxt: Nuxt = useNuxt()) {
   /* Generate tailwind safelist before module installed */
   await createTailwindSafelist({
-    targetFiles: getNuxtFiles(),
+    targetFiles: getNuxtDirs(),
   })
 
   /* Add vueless tailwind config template */
