@@ -58,7 +58,7 @@
     "@nuxtjs/tailwindcss": "^6.12.1",
     "defu": "^6.1.4",
     "pathe": "^1.1.2",
-    "vueless": "0.0.774"
+    "vueless": "^0.0.823"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.25.0",

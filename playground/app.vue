@@ -1,4 +1,23 @@
 <template>
+  <div class="p-8 grid gap-4 grid-cols-12 grid-rows-4">
+    <div class="grid gap-4 col-span-3 row-span-2">
+      <PaymentCard />
+      <ActivityTracker />
+    </div>
+    <div class="grid gap-4 col-span-3 row-span-2">
+      <SignupForm class="row-span-3" />
+      <RoleCard />
+    </div>
+    <ClientsTable />
+    <div class="grid grid-cols-6 col-span-6 gap-4 gap-x-12">
+      <UCalendar
+        v-model="selectedDate"
+        class="col-span-2"
+      />
+      <CookieSettings class="col-span-4" />
+    </div>
+  </div>
+
   <UCol
     gap="xl"
     class="p-16"
