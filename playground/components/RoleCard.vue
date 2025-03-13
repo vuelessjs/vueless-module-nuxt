@@ -38,29 +38,29 @@
 
 <script setup>
 const rolesOptions = ref([
-  { label: "Owner" },
-  { label: "Admin" },
-  { label: "Developer" },
-  { label: "Viewer" },
-  { label: "Editor" },
-  { label: "Support" },
+  { label: 'Owner' },
+  { label: 'Admin' },
+  { label: 'Developer' },
+  { label: 'Viewer' },
+  { label: 'Editor' },
+  { label: 'Support' },
 ])
 
 const teamMembers = ref([
   {
-    name: "Ryan Black",
-    email: "r@example.com",
-    avatar: "https://avatar.iran.liara.run/public/41"
+    name: 'Ryan Black',
+    email: 'r@example.com',
+    avatar: 'https://avatar.iran.liara.run/public/41',
   },
   {
-    name: "Emily Caldwell",
-    email: "e@example.com",
-    avatar: "https://avatar.iran.liara.run/public/78"
+    name: 'Emily Caldwell',
+    email: 'e@example.com',
+    avatar: 'https://avatar.iran.liara.run/public/78',
   },
   {
-    name: "John Doe",
-    email: "j@example.com",
-    avatar: "https://avatar.iran.liara.run/public/35"
-  }
+    name: 'John Doe',
+    email: 'j@example.com',
+    avatar: 'https://avatar.iran.liara.run/public/35',
+  },
 ])
 </script>

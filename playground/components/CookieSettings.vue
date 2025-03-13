@@ -35,17 +35,17 @@
 <script setup>
 const cookieSettings = ref([
   {
-    label: "Strictly Necessary",
-    description: "Essential cookies required for core website functionality."
+    label: 'Strictly Necessary',
+    description: 'Essential cookies required for core website functionality.',
   },
   {
-    label: "Functional Cookies",
-    description: "Enable personalized features and enhance usability."
+    label: 'Functional Cookies',
+    description: 'Enable personalized features and enhance usability.',
   },
   {
-    label: "Performance Cookies",
-    description: "Help us analyze and optimize website performance."
-  }
+    label: 'Performance Cookies',
+    description: 'Help us analyze and optimize website performance.',
+  },
 ])
 
 const cookieValues = ref([true, false, false])

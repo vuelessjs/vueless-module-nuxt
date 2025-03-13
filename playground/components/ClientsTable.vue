@@ -107,26 +107,25 @@
   >
     <UText>This action cannot be undone. Are you sure you want to permanently delete this payment?</UText>
   </UModalConfirm>
-
 </template>
 
 <script setup>
-import { getRandomId } from "vueless"
+import { getRandomId } from 'vueless'
 
 const currentPage = ref(1)
 const isShownDeleteModal = ref(false)
 
 const columns = [
-  { key: "date", label: "Date" },
-  { key: "amount", label: "Amount" },
-  { key: "user", label: "User" },
-  { key: "status", label: "Status" },
-  { key: "tools", label: "Tools" },
+  { key: 'date', label: 'Date' },
+  { key: 'amount', label: 'Amount' },
+  { key: 'user', label: 'User' },
+  { key: 'status', label: 'Status' },
+  { key: 'tools', label: 'Tools' },
 ]
 
 const rows = computed(() => {
-  return generateRandomTableData(currentPage.value);
-});
+  return generateRandomTableData(currentPage.value)
+})
 
 function onClickDelete() {
   isShownDeleteModal.value = true
@@ -134,40 +133,40 @@ function onClickDelete() {
 
 function generateRandomTableData() {
   const users = [
-    { nickname: "John Doe", image: "https://avatar.iran.liara.run/public/45" },
-    { nickname: "Adam Gordon", image: "https://avatar.iran.liara.run/public/41" },
-    { nickname: "Leslie Nielsen", image: "https://avatar.iran.liara.run/public/33" },
-    { nickname: "Sarah Johnson", image: "https://avatar.iran.liara.run/public/25" },
-    { nickname: "Mike Chen", image: "https://avatar.iran.liara.run/public/28" },
-    { nickname: "Emma Watson", image: "https://avatar.iran.liara.run/public/15" },
-    { nickname: "David Miller", image: "https://avatar.iran.liara.run/public/22" },
-    { nickname: "Alex Rodriguez", image: "https://avatar.iran.liara.run/public/19" }
-  ];
+    { nickname: 'John Doe', image: 'https://avatar.iran.liara.run/public/45' },
+    { nickname: 'Adam Gordon', image: 'https://avatar.iran.liara.run/public/41' },
+    { nickname: 'Leslie Nielsen', image: 'https://avatar.iran.liara.run/public/33' },
+    { nickname: 'Sarah Johnson', image: 'https://avatar.iran.liara.run/public/25' },
+    { nickname: 'Mike Chen', image: 'https://avatar.iran.liara.run/public/28' },
+    { nickname: 'Emma Watson', image: 'https://avatar.iran.liara.run/public/15' },
+    { nickname: 'David Miller', image: 'https://avatar.iran.liara.run/public/22' },
+    { nickname: 'Alex Rodriguez', image: 'https://avatar.iran.liara.run/public/19' },
+  ]
 
   const statuses = [
-    { label: "Completed", color: "green" },
-    { label: "Awaiting", color: "yellow" },
-    { label: "Failed", color: "red" },
-    { label: "Processing", color: "blue" },
-    { label: "Pending", color: "orange" }
-  ];
+    { label: 'Completed', color: 'green' },
+    { label: 'Awaiting', color: 'yellow' },
+    { label: 'Failed', color: 'red' },
+    { label: 'Processing', color: 'blue' },
+    { label: 'Pending', color: 'orange' },
+  ]
 
   const generateDate = () => {
-    const day = Math.floor(Math.random() * 28) + 1;
+    const day = Math.floor(Math.random() * 28) + 1
 
-    return `${day.toString().padStart(2, "0")}.02.2024`;
-  };
+    return `${day.toString().padStart(2, '0')}.02.2024`
+  }
 
   const generateAmount = () => {
     return {
-      sum: parseFloat((Math.random() * 190 + 10).toFixed(2)),
-      symbol: "$"
-    };
-  };
+      sum: Number.parseFloat((Math.random() * 190 + 10).toFixed(2)),
+      symbol: '$',
+    }
+  }
 
   return Array(3).fill(null).map(() => {
-    const randomUserIndex = Math.floor(Math.random() * users.length);
-    const randomStatusIndex = Math.floor(Math.random() * statuses.length);
+    const randomUserIndex = Math.floor(Math.random() * users.length)
+    const randomStatusIndex = Math.floor(Math.random() * statuses.length)
 
     return {
       id: getRandomId(),
@@ -175,12 +174,12 @@ function generateRandomTableData() {
       amount: generateAmount(),
       user: users[randomUserIndex],
       status: statuses[randomStatusIndex],
-      tools: "",
-    };
-  });
+      tools: '',
+    }
+  })
 }
 
 function onPageChange(newPage) {
-  currentPage.value = newPage;
+  currentPage.value = newPage
 }
 </script>
