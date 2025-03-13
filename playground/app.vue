@@ -1,4 +1,35 @@
 <template>
+  <div class="max-w-screen-2xl grid gap-4 grid-cols-4 mt-10 mx-auto">
+    <div class="grid gap-4 col-span-1">
+      <PaymentCard />
+      <ActivityTracker />
+    </div>
+    <div class="grid gap-4 col-span-1">
+      <SignupForm />
+      <RoleCard />
+    </div>
+    <div class="grid grid-cols-2 gap-4 col-span-2">
+      <ClientsTable />
+      <UAlert
+        title="Scheduled Maintenance Notice"
+        description="
+            Our website will be undergoing scheduled maintenance on March 15th from 2:00 AM to 4:00 AM UTC.
+            Some features may be temporarily unavailable during this time. We appreciate your patience!
+          "
+        variant="thirdary"
+        color="white"
+        bordered
+        closable
+        class="col-span-2"
+      />
+      <UCalendar
+        v-model="selectedDate"
+        class="col-span-1 w-auto shadow-none border-gray-200"
+      />
+      <CookieSettings class="col-span-1" />
+    </div>
+  </div>
+
   <UCol
     gap="xl"
     class="p-16"
