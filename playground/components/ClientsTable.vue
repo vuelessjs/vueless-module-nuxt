@@ -1,8 +1,5 @@
 <template>
-  <UGroup
-    title="Payment details"
-    class="col-span-6 max-h-fit"
-  >
+  <UGroup class="col-span-2">
     <UTable
       :columns="columns"
       :rows="rows"
@@ -10,13 +7,21 @@
       compact
     >
       <template #header-actions>
-        <UButton
-          size="sm"
-          variant="thirdary"
-          label="Delete"
-          color="blue"
-          class=""
-        />
+        <URow gap="2xs">
+          <UButton
+            label="Edit"
+            variant="thirdary"
+            color="brand"
+            size="sm"
+          />
+
+          <UButton
+            label="Delete"
+            variant="thirdary"
+            color="brand"
+            size="sm"
+          />
+        </URow>
       </template>
 
       <template #cell-amount="{ value }">
@@ -28,7 +33,7 @@
       </template>
 
       <template #cell-user="{ value }">
-        <div class="flex items-center space-x-2">
+        <URow>
           <UAvatar
             size="sm"
             rounded="full"
@@ -39,10 +44,9 @@
             target-blank
             size="md"
             color="grayscale"
-            :href="value.profile"
             :label="value.nickname"
           />
-        </div>
+        </URow>
       </template>
 
       <template #cell-status="{ value }">
@@ -54,7 +58,7 @@
       </template>
 
       <template #cell-tools>
-        <div class="flex">
+        <URow>
           <UButton
             square
             size="sm"
@@ -80,7 +84,7 @@
               size="xs"
             />
           </UButton>
-        </div>
+        </URow>
       </template>
     </UTable>
 
@@ -88,96 +92,95 @@
       v-model="currentPage"
       class="mt-4 flex justify-center"
       :total="90"
+      show-first
+      show-last
       size="sm"
+      @change="onPageChange"
     />
   </UGroup>
 
   <UModalConfirm
     v-model="isShownDeleteModal"
-    title="Delete payment"
-    confirm-label="Delete"
+    title="Confirm Payment Deletion"
+    confirm-label="Delete Payment"
     color="red"
   >
-    <UText>Are you 100% sure to delete this payment?</UText>
+    <UText>This action cannot be undone. Are you sure you want to permanently delete this payment?</UText>
   </UModalConfirm>
+
 </template>
 
 <script setup>
-import { getRandomId } from 'vueless'
-
-const columns = [
-  { key: 'date', label: 'Date' },
-  { key: 'amount', label: 'Amount' },
-  { key: 'user', label: 'User' },
-  { key: 'status', label: 'Status' },
-  { key: 'tools', label: 'Tools' },
-]
-
-const rows = computed(() => {
-  return currentPage.value === 1
-    ? [
-        {
-          id: getRandomId(),
-          date: '28.02.2024',
-          amount: {
-            sum: 46.99,
-            symbol: '$',
-          },
-          user: {
-            nickname: 'John Doe',
-            image: 'https://avatar.iran.liara.run/public/45',
-            profile: 'https://gitlab.com/JohnnyGrid',
-          },
-          status: {
-            label: 'Payment Completed',
-            color: 'green',
-          },
-          tools: '',
-        },
-        {
-          id: getRandomId(),
-          date: '28.02.2024',
-          amount: {
-            sum: 103.45,
-            symbol: '$',
-          },
-          user: {
-            nickname: 'Adam Gordon',
-            image: 'https://avatar.iran.liara.run/public/41',
-            profile: 'https://gitlab.com/JohnnyGrid',
-          },
-          status: {
-            label: 'Awaiting Confirmation',
-            color: 'yellow',
-          },
-          tools: '',
-        },
-        {
-          id: getRandomId(),
-          date: '28.02.2024',
-          amount: {
-            sum: 30.45,
-            symbol: '$',
-          },
-          user: {
-            nickname: 'Leslie Nielsen',
-            image: 'https://avatar.iran.liara.run/public/33',
-            profile: 'https://gitlab.com/JohnnyGrid',
-          },
-          status: {
-            label: 'Payment Failed',
-            color: 'red',
-          },
-          tools: '',
-        },
-      ]
-    : []
-})
+import { getRandomId } from "vueless"
 
 const currentPage = ref(1)
 const isShownDeleteModal = ref(false)
 
+const columns = [
+  { key: "date", label: "Date" },
+  { key: "amount", label: "Amount" },
+  { key: "user", label: "User" },
+  { key: "status", label: "Status" },
+  { key: "tools", label: "Tools" },
+]
+
+const rows = computed(() => {
+  return generateRandomTableData(currentPage.value);
+});
+
 function onClickDelete() {
   isShownDeleteModal.value = true
+}
+
+function generateRandomTableData() {
+  const users = [
+    { nickname: "John Doe", image: "https://avatar.iran.liara.run/public/45" },
+    { nickname: "Adam Gordon", image: "https://avatar.iran.liara.run/public/41" },
+    { nickname: "Leslie Nielsen", image: "https://avatar.iran.liara.run/public/33" },
+    { nickname: "Sarah Johnson", image: "https://avatar.iran.liara.run/public/25" },
+    { nickname: "Mike Chen", image: "https://avatar.iran.liara.run/public/28" },
+    { nickname: "Emma Watson", image: "https://avatar.iran.liara.run/public/15" },
+    { nickname: "David Miller", image: "https://avatar.iran.liara.run/public/22" },
+    { nickname: "Alex Rodriguez", image: "https://avatar.iran.liara.run/public/19" }
+  ];
+
+  const statuses = [
+    { label: "Completed", color: "green" },
+    { label: "Awaiting", color: "yellow" },
+    { label: "Failed", color: "red" },
+    { label: "Processing", color: "blue" },
+    { label: "Pending", color: "orange" }
+  ];
+
+  const generateDate = () => {
+    const day = Math.floor(Math.random() * 28) + 1;
+
+    return `${day.toString().padStart(2, "0")}.02.2024`;
+  };
+
+  const generateAmount = () => {
+    return {
+      sum: parseFloat((Math.random() * 190 + 10).toFixed(2)),
+      symbol: "$"
+    };
+  };
+
+  return Array(3).fill(null).map(() => {
+    const randomUserIndex = Math.floor(Math.random() * users.length);
+    const randomStatusIndex = Math.floor(Math.random() * statuses.length);
+
+    return {
+      id: getRandomId(),
+      date: generateDate(),
+      amount: generateAmount(),
+      user: users[randomUserIndex],
+      status: statuses[randomStatusIndex],
+      tools: "",
+    };
+  });
+}
+
+function onPageChange(newPage) {
+  currentPage.value = newPage;
 }
 </script>
