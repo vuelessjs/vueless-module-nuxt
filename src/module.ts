@@ -1,5 +1,5 @@
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
-import TailwindCSS from '@tailwindcss/vite';
+import TailwindCSS from '@tailwindcss/vite'
 
 import { COMPONENTS } from 'vueless/constants.js'
 import { Vueless } from 'vueless/plugin-vite.js'
