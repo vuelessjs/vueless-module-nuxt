@@ -13,7 +13,10 @@
         :config="toggleItemConfig"
       >
         <template #option="{ option }">
-          <UIcon :name="option.iconName" />
+          <UIcon
+            :name="option.iconName"
+            color="inherit"
+          />
           {{ option.label }}
         </template>
       </UToggle>
