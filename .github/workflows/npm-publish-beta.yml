@@ -1,8 +1,8 @@
-name: Vueless Module Nuxt publish
+name: Vueless Module Nuxt publish (beta)
 
 on:
   push:
-    branches: [ main ]
+    branches: [ beta ]
 
 permissions: write-all
 
@@ -36,7 +36,7 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - run: npm ci
       - run: npm run prepack
-      - run: npm run release:patch
+      - run: npm run release:beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
