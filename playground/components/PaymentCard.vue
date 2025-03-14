@@ -79,7 +79,7 @@ const toggleItemConfig = /* tw */ {
   toggleButton: {
     base: 'flex-col',
     defaults: {
-      variant: 'secondary',
+      variant: 'outlined',
     },
   },
 }

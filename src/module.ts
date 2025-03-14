@@ -1,7 +1,10 @@
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
+import TailwindCSS from '@tailwindcss/vite';
+
 import { COMPONENTS } from 'vueless/constants.js'
 import { Vueless } from 'vueless/plugin-vite.js'
-import installTailwind from './tailwind'
+import { getNuxtDirs } from 'vueless/utils/node/helper.js'
+import { createTailwindSafelist } from 'vueless/utils/node/tailwindSafelist.js'
 
 export default defineNuxtModule({
   meta: {
@@ -20,18 +23,21 @@ export default defineNuxtModule({
     const { mirrorCacheDir, debug } = _options
 
     /* Transpile vueless and tailwindcss ts files into js */
-    _nuxt.options.build.transpile.push('vueless', 'tailwindcss')
+    _nuxt.options.build.transpile.push('vueless')
 
     /* Add vueless vite plugin */
     _nuxt.hook('vite:extendConfig', (config) => {
       config.plugins = config.plugins || []
       config.plugins.push(
+        TailwindCSS(),
         Vueless({ mode: 'nuxt-module', mirrorCacheDir, debug }),
       )
     })
 
-    /* Install Tailwind module */
-    await installTailwind(_nuxt)
+    /* Generate tailwind safelist before module installed */
+    await createTailwindSafelist({
+      targetFiles: getNuxtDirs(),
+    })
 
     /**
      * Add runtime plugin
