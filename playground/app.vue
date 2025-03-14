@@ -98,7 +98,7 @@ const primaryColors = {
 
 const neutralColors = {
   slate: 'bg-slate-600',
-  gray: 'bg-cool-600',
+  gray: 'bg-gray-600',
   zinc: 'bg-zinc-600',
   neutral: 'bg-neutral-600',
   stone: 'bg-stone-600',
