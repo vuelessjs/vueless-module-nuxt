@@ -8,6 +8,7 @@
         v-for="member in teamMembers"
         :key="member.email"
         justify="between"
+        block
         align="center"
         gap="2xs"
       >
@@ -28,7 +29,7 @@
         <UDropdownButton
           label="Select a role"
           :options="rolesOptions"
-          variant="thirdary"
+          variant="ghost"
           size="sm"
         />
       </URow>

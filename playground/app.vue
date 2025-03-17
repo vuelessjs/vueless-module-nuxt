@@ -16,8 +16,7 @@
             Our website will be undergoing scheduled maintenance on March 15th from 2:00 AM to 4:00 AM UTC.
             Some features may be temporarily unavailable during this time. We appreciate your patience!
           "
-        variant="thirdary"
-        color="white"
+        variant="outlined"
         bordered
         closable
         class="col-span-2"
@@ -25,6 +24,7 @@
       <UCalendar
         v-model="selectedDate"
         class="col-span-1 w-auto shadow-none border-gray-200"
+        range
       />
       <CookieSettings class="col-span-1" />
     </div>
@@ -64,8 +64,10 @@
 import { ref } from 'vue'
 import { setTheme } from 'vueless'
 
-const now = new Date()
-const selectedDate = ref(now)
+const selectedDate = ref({
+  from: new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
+  to: new Date(new Date().setDate(new Date().getDate() + (6 - new Date().getDay()))),
+})
 const selectedColor = ref('')
 
 watch(selectedColor, (newValue) => {

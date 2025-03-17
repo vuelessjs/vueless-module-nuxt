@@ -16,6 +16,7 @@
       <UButton
         label="Set goal"
         block
+        variant="subtle"
       />
     </UCol>
   </UCard>

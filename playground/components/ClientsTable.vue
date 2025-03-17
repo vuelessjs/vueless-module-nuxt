@@ -10,15 +10,13 @@
         <URow gap="2xs">
           <UButton
             label="Edit"
-            variant="thirdary"
-            color="brand"
+            variant="ghost"
             size="sm"
           />
 
           <UButton
             label="Delete"
-            variant="thirdary"
-            color="brand"
+            variant="ghost"
             size="sm"
           />
         </URow>
@@ -33,7 +31,7 @@
       </template>
 
       <template #cell-user="{ value }">
-        <URow>
+        <URow align="center">
           <UAvatar
             size="sm"
             rounded="full"
@@ -53,7 +51,6 @@
         <UBadge
           :label="value.label"
           :color="value.color"
-          variant="thirdary"
         />
       </template>
 
@@ -62,11 +59,10 @@
           <UButton
             square
             size="sm"
-            variant="thirdary"
+            variant="ghost"
           >
             <UIcon
               name="edit"
-              color="gray"
               size="xs"
             />
           </UButton>
@@ -74,13 +70,13 @@
           <UButton
             square
             size="sm"
-            variant="thirdary"
-            color="red"
+            variant="ghost"
+            color="error"
             @click="onClickDelete"
           >
             <UIcon
               name="delete"
-              color="red"
+              color="error"
               size="xs"
             />
           </UButton>
@@ -144,11 +140,11 @@ function generateRandomTableData() {
   ]
 
   const statuses = [
-    { label: 'Completed', color: 'green' },
-    { label: 'Awaiting', color: 'yellow' },
-    { label: 'Failed', color: 'red' },
-    { label: 'Processing', color: 'blue' },
-    { label: 'Pending', color: 'orange' },
+    { label: 'Completed', color: 'success' },
+    { label: 'Awaiting', color: 'warning' },
+    { label: 'Failed', color: 'error' },
+    { label: 'Processing', color: 'info' },
+    { label: 'Pending', color: 'notice' },
   ]
 
   const generateDate = () => {
