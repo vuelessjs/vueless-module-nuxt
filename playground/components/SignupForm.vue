@@ -64,7 +64,6 @@
       <UButton
         label="Create account"
         block
-        variant="soft"
       />
     </UCol>
   </UCard>
