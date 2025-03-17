@@ -9,6 +9,7 @@
         :key="cookie.label"
         justify="between"
         align="center"
+        block
       >
         <UCol gap="2xs">
           <UHeader
@@ -25,7 +26,7 @@
 
       <UButton
         label="Save preferences"
-        variant="secondary"
+        variant="outlined"
         block
       />
     </UCol>
