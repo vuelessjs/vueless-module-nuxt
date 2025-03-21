@@ -15,7 +15,13 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
   /* Set vueless theme variables */
   if (import.meta.server) {
-    const themeRootVariables = setTheme()
+    const event = _nuxtApp.ssrContext?.event
+
+    const colorModeCookie = event.node.req.headers.cookie?.split('=')[1]
+
+    console.log('Detected color mode on server:', colorModeCookie)
+
+    const themeRootVariables = setTheme({ colorMode: colorModeCookie })
 
     _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],
