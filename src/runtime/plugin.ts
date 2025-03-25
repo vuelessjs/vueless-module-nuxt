@@ -1,5 +1,6 @@
 import { createVueless, setTheme } from 'vueless'
 import { COLOR_MODE_KEY, AUTO_MODE_KEY, LIGHT_MODE_SELECTOR, DARK_MODE_SELECTOR, PRIMARY_COLOR, NEUTRAL_COLOR } from 'vueless/constants'
+import { ColorMode } from 'vueless/types'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
 
@@ -36,7 +37,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     }, Boolean(isAutoModeCookie))
     _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],
-      htmlAttrs: { class: colorModeCookie === 'dark' ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR },
+      htmlAttrs: { class: colorModeCookie === ColorMode.Dark ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR },
     })
   }
 })
