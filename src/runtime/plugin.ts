@@ -1,4 +1,5 @@
 import { createVueless, setTheme } from 'vueless'
+import { COLOR_MODE_KEY, AUTO_MODE_KEY, LIGHT_MODE_SELECTOR, DARK_MODE_SELECTOR, PRIMARY_COLOR, NEUTRAL_COLOR } from 'vueless/constants'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
 
@@ -17,14 +18,25 @@ export default defineNuxtPlugin((_nuxtApp) => {
   if (import.meta.server) {
     const event = _nuxtApp.ssrContext?.event
 
-    const colorModeCookie = event.node.req.headers.cookie?.split('=')[1]
+    const cookies = event?.node.req.headers.cookie?.split(';').reduce((acc: Record<string, string>, cookie) => {
+      const [key, value] = cookie.trim().split('=')
+      if (key) acc[key] = value
+      return acc
+    }, {})
 
-    console.log('Detected color mode on server:', colorModeCookie)
+    const colorModeCookie = cookies?.[COLOR_MODE_KEY]
+    const isAutoModeCookie = Number(cookies?.[AUTO_MODE_KEY])
+    const primaryColorCookie = cookies?.[PRIMARY_COLOR]
+    const neutralColorCookie = cookies?.[NEUTRAL_COLOR]
 
-    const themeRootVariables = setTheme({ colorMode: colorModeCookie })
-
+    const themeRootVariables = setTheme({
+      primary: primaryColorCookie,
+      neutral: neutralColorCookie,
+      colorMode: colorModeCookie,
+    }, Boolean(isAutoModeCookie))
     _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],
+      htmlAttrs: { class: colorModeCookie === 'dark' ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR },
     })
   }
 })
