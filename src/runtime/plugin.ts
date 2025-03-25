@@ -1,5 +1,5 @@
 import { createVueless, setTheme } from 'vueless'
-import { COLOR_MODE_KEY, AUTO_MODE_KEY, LIGHT_MODE_SELECTOR, DARK_MODE_SELECTOR, PRIMARY_COLOR_KEY, NEUTRAL_COLOR_KEY } from 'vueless/constants'
+import { COLOR_MODE_KEY, AUTO_MODE_KEY, LIGHT_MODE_SELECTOR, DARK_MODE_SELECTOR, PRIMARY_COLOR_KEY, NEUTRAL_COLOR_KEY, ROUNDING_KEY } from 'vueless/constants'
 import { ColorMode } from 'vueless/types'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
@@ -35,10 +35,12 @@ export default defineNuxtPlugin((_nuxtApp) => {
     const isAutoModeCookie = cookies?.[AUTO_MODE_KEY]
     const primaryColorCookie = cookies?.[PRIMARY_COLOR_KEY]
     const neutralColorCookie = cookies?.[NEUTRAL_COLOR_KEY]
+    const roundingCookie = cookies?.[ROUNDING_KEY]
 
     const themeRootVariables = setTheme({
       primary: primaryColorCookie,
       neutral: neutralColorCookie,
+      rounding: Number(roundingCookie),
       colorMode: colorModeCookie,
     },
     Boolean(Number(isAutoModeCookie)),
