@@ -1,5 +1,5 @@
 import { createVueless, setTheme } from 'vueless'
-import { COLOR_MODE_KEY, AUTO_MODE_KEY, LIGHT_MODE_SELECTOR, DARK_MODE_SELECTOR, PRIMARY_COLOR_KEY, NEUTRAL_COLOR_KEY, ROUNDING_KEY } from 'vueless/constants'
+import { COLOR_MODE_KEY, AUTO_MODE_KEY, LIGHT_MODE_SELECTOR, DARK_MODE_SELECTOR, PRIMARY_COLOR_KEY, NEUTRAL_COLOR_KEY, ROUNDING_KEY, DEFAULT_PRIMARY_COLOR, DEFAULT_NEUTRAL_COLOR, DEFAULT_ROUNDING } from 'vueless/constants'
 import { ColorMode } from 'vueless/types'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
@@ -31,22 +31,22 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     const cookies = parseCookies(event?.node.req.headers.cookie)
 
-    const colorModeCookie = cookies?.[COLOR_MODE_KEY]
-    const isAutoModeCookie = cookies?.[AUTO_MODE_KEY]
-    const primaryColorCookie = cookies?.[PRIMARY_COLOR_KEY]
-    const neutralColorCookie = cookies?.[NEUTRAL_COLOR_KEY]
-    const roundingCookie = cookies?.[ROUNDING_KEY]
+    const colorMode = cookies?.[COLOR_MODE_KEY] || ColorMode.Auto
+    const isAutoMode = cookies?.[AUTO_MODE_KEY] === undefined ? true : !!Number(cookies?.[AUTO_MODE_KEY])
+    const primaryColor = cookies?.[PRIMARY_COLOR_KEY] || DEFAULT_PRIMARY_COLOR
+    const neutralColor = cookies?.[NEUTRAL_COLOR_KEY] || DEFAULT_NEUTRAL_COLOR
+    const rounding = cookies?.[ROUNDING_KEY] || DEFAULT_ROUNDING
 
     const themeRootVariables = setTheme({
-      primary: primaryColorCookie,
-      neutral: neutralColorCookie,
-      rounding: Number(roundingCookie),
-      colorMode: colorModeCookie,
+      primary: primaryColor,
+      neutral: neutralColor,
+      rounding: Number(rounding),
+      colorMode: colorMode,
     },
-    Boolean(Number(isAutoModeCookie)),
+    Boolean(Number(isAutoMode)),
     )
 
-    const colorModeClass = colorModeCookie === ColorMode.Dark ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR
+    const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR
 
     _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],
