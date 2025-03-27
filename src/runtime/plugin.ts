@@ -37,13 +37,14 @@ export default defineNuxtPlugin((_nuxtApp) => {
     const neutralColor = cookies?.[NEUTRAL_COLOR_KEY] || DEFAULT_NEUTRAL_COLOR
     const rounding = cookies?.[ROUNDING_KEY] || DEFAULT_ROUNDING
 
-    const themeRootVariables = setTheme({
-      primary: primaryColor,
-      neutral: neutralColor,
-      rounding: Number(rounding),
-      colorMode: colorMode,
-    },
-    Boolean(Number(isAutoMode)),
+    const themeRootVariables = setTheme(
+      {
+        primary: primaryColor,
+        neutral: neutralColor,
+        rounding: Number(rounding),
+        colorMode: colorMode,
+      },
+      isAutoMode,
     )
 
     const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR
