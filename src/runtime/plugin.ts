@@ -31,22 +31,14 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     const cookies = parseCookies(event?.node.req.headers.cookie)
 
-    const colorModeCookie = cookies?.[COLOR_MODE_KEY]
-    const isAutoModeCookie = cookies?.[AUTO_MODE_KEY]
-    const primaryColorCookie = cookies?.[PRIMARY_COLOR_KEY]
-    const neutralColorCookie = cookies?.[NEUTRAL_COLOR_KEY]
-    const roundingCookie = cookies?.[ROUNDING_KEY]
+    const primary = cookies?.[PRIMARY_COLOR_KEY]
+    const neutral = cookies?.[NEUTRAL_COLOR_KEY]
+    const rounding = Number(cookies?.[ROUNDING_KEY])
+    const colorMode = cookies?.[COLOR_MODE_KEY]
+    const isCachedAutoMode = Boolean(Number(cookies?.[AUTO_MODE_KEY]))
 
-    const themeRootVariables = setTheme({
-      primary: primaryColorCookie,
-      neutral: neutralColorCookie,
-      rounding: Number(roundingCookie),
-      colorMode: colorModeCookie,
-    },
-    Boolean(Number(isAutoModeCookie)),
-    )
-
-    const colorModeClass = colorModeCookie === ColorMode.Dark ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR
+    const themeRootVariables = setTheme({ primary, neutral, rounding, colorMode }, isCachedAutoMode)
+    const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR
 
     _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],
