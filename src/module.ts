@@ -1,10 +1,11 @@
+import { copyFileSync, existsSync } from 'node:fs'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
 import TailwindCSS from '@tailwindcss/vite'
 
-import { COMPONENTS } from 'vueless/constants.js'
 import { Vueless } from 'vueless/plugin-vite.js'
 import { getNuxtDirs } from 'vueless/utils/node/helper.js'
 import { createTailwindSafelist } from 'vueless/utils/node/tailwindSafelist.js'
+import { COMPONENTS, VUELESS_CACHE_DIR, VUELESS_CONFIG_FILE_NAME } from 'vueless/constants.js'
 
 export default defineNuxtModule({
   meta: {
@@ -32,6 +33,16 @@ export default defineNuxtModule({
         TailwindCSS(),
         Vueless({ mode: 'nuxt-module', mirrorCacheDir, debug }),
       )
+    })
+
+    /* Copy vueless config into .output folder. */
+    _nuxt.hook('nitro:build:public-assets', () => {
+      const source = resolve(process.cwd(), `${VUELESS_CACHE_DIR}/${VUELESS_CONFIG_FILE_NAME}.mjs`)
+      const destination = resolve(process.cwd(), `.output/${VUELESS_CONFIG_FILE_NAME}.js`)
+
+      if (existsSync(source)) {
+        copyFileSync(source, destination)
+      }
     })
 
     /* Generate tailwind safelist before module installed */
