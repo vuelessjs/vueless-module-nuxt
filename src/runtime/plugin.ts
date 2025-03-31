@@ -33,7 +33,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     const primary = cookies?.[PRIMARY_COLOR_KEY]
     const neutral = cookies?.[NEUTRAL_COLOR_KEY]
-    const rounding = Number(cookies?.[ROUNDING_KEY])
+    const rounding = cookies?.[ROUNDING_KEY]
     const colorMode = cookies?.[COLOR_MODE_KEY]
     const isCachedAutoMode = Boolean(Number(cookies?.[AUTO_MODE_KEY]))
 
