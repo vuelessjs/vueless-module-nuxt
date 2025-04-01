@@ -39,13 +39,24 @@ export default defineNuxtModule({
     _nuxt.hook('nitro:build:public-assets', () => {
       const source = resolve(process.cwd(), `${VUELESS_CACHE_DIR}/${VUELESS_CONFIG_FILE_NAME}.mjs`)
       const destination = resolve(process.cwd(), `.output/${VUELESS_CONFIG_FILE_NAME}.mjs`)
+      const destination2 = resolve(process.cwd(), `dist/${VUELESS_CONFIG_FILE_NAME}.mjs`)
+
+      const outputDir = resolve(process.cwd(), `.output`)
+      const distDir = resolve(process.cwd(), `dist`)
 
       console.log('source', source)
       console.log('destination', destination)
       console.log('existsSync(source)', existsSync(source))
 
-      if (existsSync(source)) {
+      console.log('existsSync(.output)', existsSync(outputDir))
+      console.log('existsSync(dist)', existsSync(distDir))
+
+      if (existsSync(source) && existsSync(outputDir)) {
         copyFileSync(source, destination)
+      }
+
+      if (existsSync(source) && existsSync(distDir)) {
+        copyFileSync(source, destination2)
       }
     })
 
