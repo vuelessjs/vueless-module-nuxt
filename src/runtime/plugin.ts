@@ -17,8 +17,12 @@ function parseCookies(cookieHeader: string | undefined): Record<string, string> 
 }
 
 export default defineNuxtPlugin((_nuxtApp) => {
+  const config = useRuntimeConfig().public.vueless
+
+  console.log('config', config)
+
   /* Init vueless */
-  const vueless = createVueless()
+  const vueless = createVueless({ config })
   _nuxtApp.vueApp.use(vueless, [])
 
   /* Set vueless directives */
