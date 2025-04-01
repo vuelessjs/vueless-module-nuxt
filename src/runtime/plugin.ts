@@ -4,6 +4,7 @@ import { ColorMode } from 'vueless/types'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
 
+import { useRuntimeConfig } from '#imports'
 import { defineNuxtPlugin } from '#app'
 
 function parseCookies(cookieHeader: string | undefined): Record<string, string> {
@@ -19,10 +20,8 @@ function parseCookies(cookieHeader: string | undefined): Record<string, string> 
 export default defineNuxtPlugin((_nuxtApp) => {
   const config = useRuntimeConfig().public.vueless
 
-  console.log('config', config)
-
   /* Init vueless */
-  const vueless = createVueless({ config })
+  const vueless = createVueless(config)
   _nuxtApp.vueApp.use(vueless, [])
 
   /* Set vueless directives */

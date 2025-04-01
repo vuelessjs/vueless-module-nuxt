@@ -1,10 +1,14 @@
 // import { copyFileSync, existsSync } from 'node:fs'
+import path from 'node:path'
+import { cwd } from 'node:process'
+import fs from 'node:fs'
+import esbuild from 'esbuild'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
 
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
 import { getNuxtDirs } from 'vueless/utils/node/helper.js'
 import { createTailwindSafelist } from 'vueless/utils/node/tailwindSafelist.js'
-import { COMPONENTS } from 'vueless/constants.js'
+import { COMPONENTS, VUELESS_CONFIG_FILE_NAME } from 'vueless/constants.js'
 
 export default defineNuxtModule({
   meta: {
@@ -14,10 +18,12 @@ export default defineNuxtModule({
       nuxt: '>=3.13.0',
     },
   },
+
   defaults: {
     mirrorCacheDir: '',
     debug: false,
   },
+
   async setup(_options, _nuxt) {
     const { resolve } = createResolver(import.meta.url)
     const { mirrorCacheDir, debug } = _options
@@ -34,60 +40,34 @@ export default defineNuxtModule({
       )
     })
 
+    const configPathJs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.js`)
+    const configPathTs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.ts`)
+
+    const esbuildConfig = {
+      bundle: true,
+      platform: 'node',
+      format: 'esm',
+      target: 'ESNext',
+      loader: { '.ts': 'ts' },
+      write: false,
+    }
+
     let vuelessConfig = {}
+    let result = null
 
-    try {
-      vuelessConfig = (await import(/* @vite-ignore */ `${process.cwd()}/vueless.config.js`))
-        .default
-
-      if (!vuelessConfig) {
-        vuelessConfig = (await import(/* @vite-ignore */ `${process.cwd()}/vueless.config.ts`))
-          .default
-      }
-    }
-    catch {
-      vuelessConfig = {}
+    if (fs.existsSync(configPathJs)) {
+      result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathJs] })
     }
 
-    console.log('vuelessConfig', vuelessConfig)
+    if (fs.existsSync(configPathTs)) {
+      result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathTs] })
+    }
+
+    const code = result?.outputFiles?.[0]?.text || ''
+
+    vuelessConfig = (await import(`data:text/javascript,${encodeURIComponent(code)}`)).default
 
     _nuxt.options.runtimeConfig.public.vueless = vuelessConfig
-
-    /* Copy vueless config into .output folder. */
-    // _nuxt.hook('nitro:build:public-assets', () => {
-    //   const source = resolve(process.cwd(), `${VUELESS_CACHE_DIR}/${VUELESS_CONFIG_FILE_NAME}.mjs`)
-    //   const destination = resolve(process.cwd(), `.output/${VUELESS_CONFIG_FILE_NAME}.mjs`)
-    //   const destination2 = resolve(process.cwd(), `dist/${VUELESS_CONFIG_FILE_NAME}.mjs`)
-    //   const destination3 = resolve(process.cwd(), `dist/_nuxt/${VUELESS_CONFIG_FILE_NAME}.mjs`)
-    //   const destination4 = resolve(process.cwd(), `${VUELESS_CONFIG_FILE_NAME}.mjs`)
-    //
-    //   const outputDir = resolve(process.cwd(), `.output`)
-    //   const distDir = resolve(process.cwd(), `dist`)
-    //   const distNuxtDir = resolve(process.cwd(), `dist/_nuxt`)
-    //
-    //   console.log('source', source)
-    //   console.log('destination', destination)
-    //   console.log('existsSync(source)', existsSync(source))
-    //
-    //   console.log('existsSync(.output)', existsSync(outputDir))
-    //   console.log('existsSync(dist)', existsSync(distDir))
-    //
-    //   if (existsSync(source) && existsSync(outputDir)) {
-    //     copyFileSync(source, destination)
-    //   }
-    //
-    //   if (existsSync(source) && existsSync(distDir)) {
-    //     copyFileSync(source, destination2)
-    //   }
-    //
-    //   if (existsSync(source) && existsSync(distNuxtDir)) {
-    //     copyFileSync(source, destination3)
-    //   }
-    //
-    //   if (existsSync(source)) {
-    //     copyFileSync(source, destination4)
-    //   }
-    // })
 
     /* Generate tailwind safelist before module installed */
     await createTailwindSafelist({
