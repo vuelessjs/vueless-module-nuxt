@@ -23,7 +23,7 @@
       />
       <UCalendar
         v-model="selectedDate"
-        class="col-span-1 w-auto shadow-none border-gray-200"
+        class="col-span-1 w-auto shadow-none border-muted"
         range
       />
       <CookieSettings class="col-span-1" />
