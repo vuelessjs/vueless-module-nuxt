@@ -40,6 +40,10 @@ export default defineNuxtModule({
       const source = resolve(process.cwd(), `${VUELESS_CACHE_DIR}/${VUELESS_CONFIG_FILE_NAME}.mjs`)
       const destination = resolve(process.cwd(), `.output/${VUELESS_CONFIG_FILE_NAME}.mjs`)
 
+      console.log('source', source)
+      console.log('destination', destination)
+      console.log('existsSync(source)', existsSync(source))
+
       if (existsSync(source)) {
         copyFileSync(source, destination)
       }
