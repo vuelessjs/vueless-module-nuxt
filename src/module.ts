@@ -40,11 +40,12 @@ export default defineNuxtModule({
       const source = resolve(process.cwd(), `${VUELESS_CACHE_DIR}/${VUELESS_CONFIG_FILE_NAME}.mjs`)
       const destination = resolve(process.cwd(), `.output/${VUELESS_CONFIG_FILE_NAME}.mjs`)
       const destination2 = resolve(process.cwd(), `dist/${VUELESS_CONFIG_FILE_NAME}.mjs`)
-      const destination3 = resolve(process.cwd(), `netlify/${VUELESS_CONFIG_FILE_NAME}.mjs`)
+      const destination3 = resolve(process.cwd(), `dist/_nuxt/${VUELESS_CONFIG_FILE_NAME}.mjs`)
+      const destination4 = resolve(process.cwd(), `${VUELESS_CONFIG_FILE_NAME}.mjs`)
 
       const outputDir = resolve(process.cwd(), `.output`)
       const distDir = resolve(process.cwd(), `dist`)
-      const netlifyDir = resolve(process.cwd(), `netlify`)
+      const distNuxtDir = resolve(process.cwd(), `dist/_nuxt`)
 
       console.log('source', source)
       console.log('destination', destination)
@@ -52,7 +53,6 @@ export default defineNuxtModule({
 
       console.log('existsSync(.output)', existsSync(outputDir))
       console.log('existsSync(dist)', existsSync(distDir))
-      console.log('existsSync(netlifyDir)', existsSync(netlifyDir))
 
       if (existsSync(source) && existsSync(outputDir)) {
         copyFileSync(source, destination)
@@ -62,8 +62,12 @@ export default defineNuxtModule({
         copyFileSync(source, destination2)
       }
 
-      if (existsSync(source) && existsSync(netlifyDir)) {
+      if (existsSync(source) && existsSync(distNuxtDir)) {
         copyFileSync(source, destination3)
+      }
+
+      if (existsSync(source)) {
+        copyFileSync(source, destination4)
       }
     })
 
