@@ -38,7 +38,7 @@ export default defineNuxtModule({
     /* Copy vueless config into .output folder. */
     _nuxt.hook('nitro:build:public-assets', () => {
       const source = resolve(process.cwd(), `${VUELESS_CACHE_DIR}/${VUELESS_CONFIG_FILE_NAME}.mjs`)
-      const destination = resolve(process.cwd(), `.output/${VUELESS_CONFIG_FILE_NAME}.js`)
+      const destination = resolve(process.cwd(), `.output/${VUELESS_CONFIG_FILE_NAME}.mjs`)
 
       if (existsSync(source)) {
         copyFileSync(source, destination)
