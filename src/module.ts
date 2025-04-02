@@ -24,8 +24,12 @@ export default defineNuxtModule({
   },
 
   async setup(_options, _nuxt) {
-    const { resolve } = createResolver(import.meta.url)
     const { mirrorCacheDir, debug } = _options
+    const { resolve } = createResolver(import.meta.url)
+    const { vuelessConfig, dependencies } = await getVuelessConfig()
+
+    /* Defining vueless config in runtime  */
+    _nuxt.options.runtimeConfig.public.vueless = vuelessConfig
 
     /* Transpile vueless and tailwindcss ts files into js */
     _nuxt.options.build.transpile.push('vueless')
@@ -39,7 +43,21 @@ export default defineNuxtModule({
       )
     })
 
-    _nuxt.options.runtimeConfig.public.vueless = await getVuelessConfig()
+    /* Reload nuxt when vueless config was changed. */
+    const chokidarPath = require.resolve('chokidar')
+    const chokidar = await import(chokidarPath)
+
+    const watcher = chokidar.watch(dependencies, { ignoreInitial: true })
+
+    watcher.on('change', async () => {
+      const { dependencies: newDependencies } = await getVuelessConfig()
+
+      watcher.unwatch(dependencies)
+      watcher.add(newDependencies)
+
+      /* TODO: Need to find better solution. */
+      _nuxt.callHook('restart')
+    })
 
     /* Generate tailwind safelist before module installed */
     await createTailwindSafelist({
@@ -80,6 +98,7 @@ async function getVuelessConfig() {
     target: 'ESNext',
     loader: { '.ts': 'ts' },
     write: false,
+    metafile: true, // Generate dependency tree
   }
 
   const configPathJs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.js`)
@@ -97,5 +116,8 @@ async function getVuelessConfig() {
 
   const code = result?.outputFiles?.[0]?.text || ''
 
-  return (await import(`data:text/javascript,${encodeURIComponent(code)}`)).default || {}
+  return {
+    vuelessConfig: (await import(`data:text/javascript,${encodeURIComponent(code)}`)).default || {},
+    dependencies: Object.keys(result?.metafile?.inputs || {}),
+  }
 }
