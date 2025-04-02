@@ -1,11 +1,11 @@
-import UBadge from './playground/configs/vueless/UBadge.config.js'
+import UBadge from './.vueless/configs/UBadge.config'
 
 export default {
   colorMode: 'auto',
   components: {
     UBadge,
     UHeader: {
-      header: 'font-bold',
+      // header: 'font-bold',
     },
   },
 }
