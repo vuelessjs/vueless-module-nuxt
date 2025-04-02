@@ -2,7 +2,6 @@
 import path from 'node:path'
 import { cwd } from 'node:process'
 import fs from 'node:fs'
-import esbuild from 'esbuild'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
 
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
@@ -40,34 +39,7 @@ export default defineNuxtModule({
       )
     })
 
-    const configPathJs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.js`)
-    const configPathTs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.ts`)
-
-    const esbuildConfig = {
-      bundle: true,
-      platform: 'node',
-      format: 'esm',
-      target: 'ESNext',
-      loader: { '.ts': 'ts' },
-      write: false,
-    }
-
-    let vuelessConfig = {}
-    let result = null
-
-    if (fs.existsSync(configPathJs)) {
-      result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathJs] })
-    }
-
-    if (fs.existsSync(configPathTs)) {
-      result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathTs] })
-    }
-
-    const code = result?.outputFiles?.[0]?.text || ''
-
-    vuelessConfig = (await import(`data:text/javascript,${encodeURIComponent(code)}`)).default
-
-    _nuxt.options.runtimeConfig.public.vueless = vuelessConfig
+    _nuxt.options.runtimeConfig.public.vueless = await getVuelessConfig()
 
     /* Generate tailwind safelist before module installed */
     await createTailwindSafelist({
@@ -95,3 +67,35 @@ export default defineNuxtModule({
     addImportsDir('vueless/utils')
   },
 })
+
+async function getVuelessConfig() {
+  /* Using esbuild. This prevents `Inlined implicit external` issue. */
+  const esbuildPath = require.resolve('esbuild')
+  const esbuild = await import(esbuildPath)
+
+  const esbuildConfig = {
+    bundle: true,
+    platform: 'node',
+    format: 'esm',
+    target: 'ESNext',
+    loader: { '.ts': 'ts' },
+    write: false,
+  }
+
+  const configPathJs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.js`)
+  const configPathTs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.ts`)
+
+  let result = null
+
+  if (fs.existsSync(configPathJs)) {
+    result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathJs] })
+  }
+
+  if (fs.existsSync(configPathTs)) {
+    result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathTs] })
+  }
+
+  const code = result?.outputFiles?.[0]?.text || ''
+
+  return (await import(`data:text/javascript,${encodeURIComponent(code)}`)).default || {}
+}
