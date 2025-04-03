@@ -43,21 +43,23 @@ export default defineNuxtModule({
       )
     })
 
-    /* Reload nuxt when vueless config was changed. */
-    const chokidarPath = require.resolve('chokidar')
-    const chokidar = await import(chokidarPath)
+    if (_nuxt.options.dev) {
+      /* Reload nuxt when vueless config was changed. */
+      const chokidarPath = require.resolve('chokidar')
+      const chokidar = await import(chokidarPath)
 
-    const watcher = chokidar.watch(dependencies, { ignoreInitial: true })
+      const watcher = chokidar.watch(dependencies, { ignoreInitial: true })
 
-    watcher.on('change', async () => {
-      const { dependencies: newDependencies } = await getVuelessConfig()
+      watcher.on('change', async () => {
+        const { dependencies: newDependencies } = await getVuelessConfig()
 
-      watcher.unwatch(dependencies)
-      watcher.add(newDependencies)
+        watcher.unwatch(dependencies)
+        watcher.add(newDependencies)
 
-      /* TODO: Need to find better solution. */
-      _nuxt.callHook('restart')
-    })
+        /* TODO: Need to find better solution. */
+        _nuxt.callHook('restart')
+      })
+    }
 
     /* Generate tailwind safelist before module installed */
     await createTailwindSafelist({
