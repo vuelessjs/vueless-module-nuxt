@@ -21,7 +21,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
   const config = useRuntimeConfig().public.vueless
 
   /* Init vueless */
-  const vueless = createVueless(config)
+  const vueless = createVueless({ config })
   _nuxtApp.vueApp.use(vueless, [])
 
   /* Set vueless directives */
