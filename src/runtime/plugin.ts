@@ -1,5 +1,16 @@
 import { createVueless, setTheme } from 'vueless'
-import { COLOR_MODE_KEY, AUTO_MODE_KEY, LIGHT_MODE_SELECTOR, DARK_MODE_SELECTOR, PRIMARY_COLOR_KEY, NEUTRAL_COLOR_KEY, ROUNDING_KEY } from 'vueless/constants'
+import {
+  TEXT,
+  OUTLINE,
+  ROUNDING,
+  PRIMARY_COLOR,
+  NEUTRAL_COLOR,
+  AUTO_MODE_KEY,
+  COLOR_MODE_KEY,
+  DARK_MODE_CLASS,
+  LIGHT_MODE_CLASS,
+  DISABLED_OPACITY,
+} from 'vueless/constants'
 import { ColorMode } from 'vueless/types'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
@@ -34,14 +45,34 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     const cookies = parseCookies(event?.node.req.headers.cookie)
 
-    const primary = cookies?.[PRIMARY_COLOR_KEY]
-    const neutral = cookies?.[NEUTRAL_COLOR_KEY]
-    const rounding = cookies?.[ROUNDING_KEY]
+    const primary = cookies?.[`vl-${PRIMARY_COLOR}`]
+    const neutral = cookies?.[`vl-${NEUTRAL_COLOR}`]
+
+    const text = {
+      xs: cookies?.[`vl-${TEXT}-xs`],
+      sm: cookies?.[`vl-${TEXT}-sm`],
+      md: cookies?.[`vl-${TEXT}-md`],
+      lg: cookies?.[`vl-${TEXT}-lg`],
+    }
+
+    const outline = {
+      sm: cookies?.[`vl-${OUTLINE}-sm`],
+      md: cookies?.[`vl-${OUTLINE}-md`],
+      lg: cookies?.[`vl-${OUTLINE}-lg`],
+    }
+
+    const rounding = {
+      sm: cookies?.[`vl-${ROUNDING}-sm`],
+      md: cookies?.[`vl-${ROUNDING}-md`],
+      lg: cookies?.[`vl-${ROUNDING}-lg`],
+    }
+
+    const disabledOpacity = cookies?.[`vl-${DISABLED_OPACITY}`]
     const colorMode = cookies?.[COLOR_MODE_KEY]
     const isCachedAutoMode = Boolean(Number(cookies?.[AUTO_MODE_KEY]))
 
-    const themeRootVariables = setTheme({ primary, neutral, rounding, colorMode }, isCachedAutoMode)
-    const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_SELECTOR : LIGHT_MODE_SELECTOR
+    const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode }, isCachedAutoMode)
+    const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_CLASS : LIGHT_MODE_CLASS
 
     _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],

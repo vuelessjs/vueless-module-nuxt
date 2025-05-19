@@ -1,4 +1,3 @@
-// import { copyFileSync, existsSync } from 'node:fs'
 import path from 'node:path'
 import { cwd } from 'node:process'
 import fs from 'node:fs'
@@ -7,7 +6,7 @@ import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDi
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
 import { getNuxtDirs } from 'vueless/utils/node/helper.js'
 import { createTailwindSafelist } from 'vueless/utils/node/tailwindSafelist.js'
-import { COMPONENTS, VUELESS_CONFIG_FILE_NAME } from 'vueless/constants.js'
+import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV } from 'vueless/constants.js'
 
 export default defineNuxtModule({
   meta: {
@@ -39,7 +38,7 @@ export default defineNuxtModule({
       config.plugins = config.plugins || []
       config.plugins.push(
         TailwindCSS(),
-        Vueless({ mode: 'nuxt-module', mirrorCacheDir, debug }),
+        Vueless({ env: NUXT_MODULE_ENV, mirrorCacheDir, debug }),
       )
     })
 

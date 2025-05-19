@@ -5,5 +5,7 @@ export default defineNuxtConfig({
   vueless: {
     mirrorCacheDir: 'playground/node_modules/.cache/vueless',
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+  },
 })
