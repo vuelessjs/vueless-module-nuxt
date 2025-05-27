@@ -1,17 +1,20 @@
 <template>
   <UCard
     title="Set Goal"
-    description="Define your daily activity target."
-    class="!h-full"
+    description="Define your daily calorie target."
+    class="flex flex-col"
   >
-    <UCol>
-      <UInputNumber
+    <UCol class="h-full justify-between">
+      <UInputCounter
         v-model="count"
         :step="10"
+        :max="5000"
+        :min="500"
         label-align="top"
         description="Calories per day"
         size="lg"
-        :config="{ label: { description: 'text-center', content: 'justify-around' } }"
+        :config="counterConfig"
+        class="w-full justify-between"
       />
       <UButton
         label="Set goal"
@@ -23,5 +26,13 @@
 </template>
 
 <script setup>
-const count = ref(450)
+const counterConfig = {
+  label: {
+    description: 'text-center',
+    content: 'justify-around',
+  },
+  counterInput: 'w-full',
+}
+
+const count = ref(1200)
 </script>
