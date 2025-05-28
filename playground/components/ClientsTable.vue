@@ -33,9 +33,8 @@
       <template #cell-user="{ value }">
         <URow align="center">
           <UAvatar
-            size="sm"
+            :src="value.src"
             rounded="full"
-            :src="value.image"
           />
           <ULink
             class="mb-0"
@@ -51,6 +50,7 @@
         <UBadge
           :label="value.label"
           :color="value.color"
+          variant="soft"
         />
       </template>
 
@@ -129,14 +129,14 @@ function onClickDelete() {
 
 function generateRandomTableData() {
   const users = [
-    { nickname: 'John Doe', image: 'https://avatar.iran.liara.run/public/45' },
-    { nickname: 'Adam Gordon', image: 'https://avatar.iran.liara.run/public/41' },
-    { nickname: 'Leslie Nielsen', image: 'https://avatar.iran.liara.run/public/33' },
-    { nickname: 'Sarah Johnson', image: 'https://avatar.iran.liara.run/public/25' },
-    { nickname: 'Mike Chen', image: 'https://avatar.iran.liara.run/public/28' },
-    { nickname: 'Emma Watson', image: 'https://avatar.iran.liara.run/public/15' },
-    { nickname: 'David Miller', image: 'https://avatar.iran.liara.run/public/22' },
-    { nickname: 'Alex Rodriguez', image: 'https://avatar.iran.liara.run/public/19' },
+    { nickname: 'John Doe', src: '~/assets/images/john-doe.png' },
+    { nickname: 'Alex Johnson', src: '~/assets/images/alex-johnson.png' },
+    { nickname: 'Emily Davis', src: '~/assets/images/emily-davis.png' },
+    { nickname: 'Pat Morgan', src: '~/assets/images/pat-morgan.png' },
+    { nickname: 'Chris Lee', src: '~/assets/images/chris-lee.png' },
+    { nickname: 'Taylor Brown', src: '~/assets/images/taylor-brown.png' },
+    { nickname: 'Jamie Wilson', src: '~/assets/images/jamie-wilson.png' },
+    { nickname: 'Jordan White', src: '~/assets/images/jordan-white.png' },
   ]
 
   const statuses = [

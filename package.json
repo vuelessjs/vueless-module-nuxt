@@ -56,7 +56,7 @@
   "dependencies": {
     "@nuxt/kit": "^3.17.4",
     "tailwindcss": "^4.1.7",
-    "vueless": "^0.0.825-beta.151"
+    "vueless": "^0.0.825-beta.169"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.31.4",

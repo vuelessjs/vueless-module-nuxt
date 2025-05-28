@@ -2,8 +2,12 @@
   <UCard
     title="Cookie Preferences"
     description="Customize your cookie settings to enhance your browsing experience."
+    class="flex flex-col"
   >
-    <UCol>
+    <UCol
+      justify="between"
+      class="h-full"
+    >
       <URow
         v-for="(cookie, index) in cookieSettings"
         :key="cookie.label"

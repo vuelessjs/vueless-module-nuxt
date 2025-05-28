@@ -2,12 +2,17 @@
   <UCard
     title="Sign Up"
     description="Enter your email below to get started and create your account."
+    class="flex flex-col"
   >
-    <UCol>
+    <UCol
+      justify="between"
+      align="stretch"
+      class="h-full"
+    >
       <URow
         align="center"
         justify="between"
-        block
+        gap="sm"
       >
         <UButton
           label="GitHub"

@@ -2,8 +2,12 @@
   <UCard
     title="Payment Options"
     description="Add a new payment method to your account."
+    class="flex flex-col"
   >
-    <UCol>
+    <UCol
+      justify="between"
+      class="h-full"
+    >
       <UToggle
         v-model="selectedPaymentOption"
         name="paymentOptions"
@@ -22,18 +26,16 @@
       </UToggle>
 
       <UCol
-        gap="xs"
+        gap="sm"
         class="w-full"
       >
         <UInput
           label="Name"
           placeholder="John Doe"
-          validation-rule="string"
         />
         <UInput
           label="City"
           placeholder="New York"
-          validation-rule="string"
         />
         <UInput
           label="Card Number"
@@ -44,19 +46,21 @@
       <URow
         align="end"
         gap="sm"
+        class="grid grid-cols-3"
       >
         <USelect
           v-model="selectedMonth"
           label="Expiration date"
           :options="months"
+          :clearable="false"
           placeholder="Month"
           label-align="top"
         />
         <USelect
           v-model="selectedYear"
           :options="years"
+          :clearable="false"
           placeholder="Year"
-          label-align="top"
           validation-rule="integer"
           max-length="4"
         />
@@ -88,18 +92,18 @@ const toggleItemConfig = /* tw */ {
 }
 
 const months = [
-  { label: 'January', id: '1' },
-  { label: 'February', id: '2' },
-  { label: 'March', id: '3' },
-  { label: 'April', id: '4' },
-  { label: 'May', id: '5' },
-  { label: 'June', id: '6' },
-  { label: 'July', id: '7' },
-  { label: 'August', id: '8' },
-  { label: 'September', id: '9' },
-  { label: 'October', id: '10' },
-  { label: 'November', id: '11' },
-  { label: 'December', id: '12' },
+  { label: '01', id: '1' },
+  { label: '02', id: '2' },
+  { label: '03', id: '3' },
+  { label: '04', id: '4' },
+  { label: '05', id: '5' },
+  { label: '06', id: '6' },
+  { label: '07', id: '7' },
+  { label: '08', id: '8' },
+  { label: '09', id: '9' },
+  { label: '10', id: '10' },
+  { label: '11', id: '11' },
+  { label: '12', id: '12' },
 ]
 
 const years = [

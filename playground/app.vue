@@ -30,79 +30,101 @@
     </div>
   </div>
 
-  <UCol
+  <URow
     gap="xl"
     class="p-16"
   >
     <UThemeColorToggle
+      v-model:primary="primary"
+      v-model:neutral="neutral"
       :primary-colors="primaryColors"
       :neutral-colors="neutralColors"
     />
 
-    <ULabel label="Contacts">
-      <div class="flex -space-x-2 overflow-hidden pt-0.5">
-        <UAvatar
-          v-for="n in 3"
-          :key="n"
-          bordered
-          color="neutral"
-          size="sm"
-          rounded="full"
-        />
-        <UAvatar
-          size="sm"
-          rounded="full"
-          label="99"
-          color="neutral"
-        />
-      </div>
-    </ULabel>
-  </UCol>
+    <URow
+      gap="none"
+      class="flex"
+    >
+      <UButton
+        label="Light"
+        size="lg"
+        right-icon="light_mode"
+        variant="outlined"
+        :config="buttonConfig"
+        class="pr-4 rounded-l-full rounded-r-none"
+        @click="setTheme({ colorMode: 'light' })"
+      />
+      <UButton
+        label="Dark"
+        size="lg"
+        right-icon="dark_mode"
+        :config="buttonConfig"
+        class="pl-4 rounded-l-none rounded-r-full"
+        @click="setTheme({ colorMode: 'dark' })"
+      />
+    </URow>
+  </URow>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { setTheme } from 'vueless'
 
+const buttonConfig = {
+  centerIcon: {
+    defaults: {
+      size: {
+        lg: 'lg',
+      },
+    },
+  },
+}
+
 const selectedDate = ref({
   from: new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
   to: new Date(new Date().setDate(new Date().getDate() + (6 - new Date().getDay()))),
 })
-const selectedColor = ref('')
 
-watch(selectedColor, (newValue) => {
+const primary = ref('')
+const neutral = ref('')
+
+const primaryColors = {
+  grayscale: 'bg-grayscale',
+  red: 'bg-red-600 dark:bg-red-400',
+  orange: 'bg-orange-600 dark:bg-orange-400',
+  amber: 'bg-amber-600 dark:bg-amber-400',
+  yellow: 'bg-yellow-600 dark:bg-yellow-400',
+  lime: 'bg-lime-600 dark:bg-lime-400',
+  green: 'bg-green-600 dark:bg-green-400',
+  emerald: 'bg-emerald-600 dark:bg-emerald-400',
+  teal: 'bg-teal-600 dark:bg-teal-400',
+  cyan: 'bg-cyan-600 dark:bg-cyan-400',
+  sky: 'bg-sky-600 dark:bg-sky-400',
+  blue: 'bg-blue-600 dark:bg-blue-400',
+  indigo: 'bg-indigo-600 dark:bg-indigo-400',
+  violet: 'bg-violet-600 dark:bg-violet-400',
+  purple: 'bg-purple-600 dark:bg-purple-400',
+  fuchsia: 'bg-fuchsia-600 dark:bg-fuchsia-400',
+  pink: 'bg-pink-600 dark:bg-pink-400',
+  rose: 'bg-rose-600 dark:bg-rose-400',
+}
+const neutralColors = {
+  slate: 'bg-slate-600 dark:bg-slate-400',
+  gray: 'bg-gray-600 dark:bg-gray-400',
+  zinc: 'bg-zinc-600 dark:bg-zinc-400',
+  neutral: 'bg-neutral-600 dark:bg-neutral-400',
+  stone: 'bg-stone-600 dark:bg-stone-400',
+}
+
+watch(primary, (newValue) => {
   if (newValue !== '') {
-    console.log('setTheme', newValue)
-    setTheme({ brand: newValue })
+    setTheme({ primary: newValue })
   }
 })
 
-const primaryColors = {
-  grayscale: 'bg-gray-900',
-  red: 'bg-red-600',
-  orange: 'bg-orange-600',
-  amber: 'bg-amber-600',
-  yellow: 'bg-yellow-600',
-  lime: 'bg-lime-600',
-  green: 'bg-green-600',
-  emerald: 'bg-emerald-600',
-  teal: 'bg-teal-600',
-  cyan: 'bg-cyan-600',
-  sky: 'bg-sky-600',
-  blue: 'bg-blue-600',
-  indigo: 'bg-indigo-600',
-  violet: 'bg-violet-600',
-  purple: 'bg-purple-600',
-  fuchsia: 'bg-fuchsia-600',
-  pink: 'bg-pink-600',
-  rose: 'bg-rose-600',
-}
-
-const neutralColors = {
-  slate: 'bg-slate-600',
-  gray: 'bg-gray-600',
-  zinc: 'bg-zinc-600',
-  neutral: 'bg-neutral-600',
-  stone: 'bg-stone-600',
-}
+watch(neutral, (newValue) => {
+  if (newValue !== '') {
+    setTheme({ neutral: newValue })
+  }
+})
 </script>
