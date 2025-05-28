@@ -4,7 +4,10 @@
     description="Invite your team members to work together seamlessly."
     class="flex flex-col"
   >
-    <UCol class="h-full justify-between">
+    <UCol
+      justify="between"
+      class="h-full"
+    >
       <URow
         v-for="member in teamMembers"
         :key="member.email"
@@ -16,12 +19,10 @@
           align="center"
           gap="sm"
         >
-          <img
+          <UAvatar
             :src="member.src"
-            alt="person"
-            height="32"
-            width="32"
-          >
+            rounded="full"
+          />
           <UCol gap="2xs">
             <UHeader
               :label="member.name"

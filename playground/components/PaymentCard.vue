@@ -4,7 +4,10 @@
     description="Add a new payment method to your account."
     class="flex flex-col"
   >
-    <UCol class="h-full justify-between">
+    <UCol
+      justify="between"
+      class="h-full"
+    >
       <UToggle
         v-model="selectedPaymentOption"
         name="paymentOptions"
@@ -52,17 +55,14 @@
           :clearable="false"
           placeholder="Month"
           label-align="top"
-          :config="{ innerWrapper: 'pr-0', toggleWrapper: 'mr-2' }"
         />
         <USelect
           v-model="selectedYear"
           :options="years"
           :clearable="false"
           placeholder="Year"
-          label-align="top"
           validation-rule="integer"
           max-length="4"
-          :config="{ innerWrapper: 'pr-0', toggleWrapper: 'mr-2' }"
         />
         <UInput
           label="CVC"

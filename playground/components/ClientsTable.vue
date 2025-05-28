@@ -32,12 +32,10 @@
 
       <template #cell-user="{ value }">
         <URow align="center">
-          <img
+          <UAvatar
             :src="value.src"
-            alt="person"
-            height="32"
-            width="32"
-          >
+            rounded="full"
+          />
           <ULink
             class="mb-0"
             target-blank

@@ -4,7 +4,10 @@
     description="Define your daily calorie target."
     class="flex flex-col"
   >
-    <UCol class="h-full justify-between">
+    <UCol
+      justify="between"
+      class="h-full"
+    >
       <UInputCounter
         v-model="count"
         :step="10"
