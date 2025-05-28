@@ -62,6 +62,11 @@
       />
     </URow>
   </URow>
+
+  <UButton
+    label="toggle language"
+    @click="toggleLocale"
+  />
 </template>
 
 <script setup>
@@ -82,6 +87,12 @@ const selectedDate = ref({
   from: new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
   to: new Date(new Date().setDate(new Date().getDate() + (6 - new Date().getDay()))),
 })
+
+const { setLocale, locale } = useI18n()
+
+function toggleLocale() {
+  setLocale(locale.value === 'en' ? 'ua' : 'en').then(() => window.location.reload())
+}
 
 const primary = ref('')
 const neutral = ref('')

@@ -16,9 +16,15 @@ const playgroundNuxtDirs = [
 ]
 
 export default defineNuxtConfig({
-  modules: ['../src/module.ts'],
+  modules: ['../src/module.ts', '@nuxtjs/i18n'],
   devtools: {
     enabled: true,
+  },
+  i18n: {
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'ua', name: 'Українська', file: 'ua.json' },
+    ],
   },
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2024-09-13',
