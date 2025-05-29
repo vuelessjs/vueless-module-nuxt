@@ -17,12 +17,13 @@ export default defineNuxtModule({
   },
 
   defaults: {
+    include: [],
     mirrorCacheDir: '',
     debug: false,
   },
 
   async setup(_options, _nuxt) {
-    const { mirrorCacheDir, debug } = _options
+    const { include, mirrorCacheDir, debug } = _options
     const { resolve } = createResolver(import.meta.url)
     const { vuelessConfig, dependencies } = await getVuelessConfig()
 
@@ -37,7 +38,7 @@ export default defineNuxtModule({
       config.plugins = config.plugins || []
       config.plugins.push(
         TailwindCSS(),
-        Vueless({ env: NUXT_MODULE_ENV, mirrorCacheDir, debug }),
+        Vueless({ env: NUXT_MODULE_ENV, mirrorCacheDir, debug, include }),
       )
     })
 
@@ -59,10 +60,13 @@ export default defineNuxtModule({
       })
     }
 
+    /* Merge component configs and cache it */
     await cacheMergedConfigs(VUELESS_PACKAGE_DIR)
+
     /* Generate tailwind safelist before module installed */
     await createTailwindSafelist({
       targetFiles: getNuxtDirs(),
+      srcDir: VUELESS_PACKAGE_DIR,
       env: NUXT_MODULE_ENV,
     })
 
