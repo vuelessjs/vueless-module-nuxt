@@ -47,6 +47,10 @@
 </template>
 
 <script setup>
+import JohnDoe from '~/assets/images/john-doe.png'
+import EmilyDavis from '~/assets/images/emily-davis.png'
+import ChrisLee from '~/assets/images/chris-lee.png'
+
 const rolesOptions = ref([
   { label: 'Owner', id: 'owner' },
   { label: 'Admin', id: 'admin' },
@@ -60,19 +64,19 @@ const teamMembers = ref([
   {
     name: 'John Doe',
     email: 'j@example.com',
-    src: '~/assets/images/john-doe.png',
+    src: JohnDoe,
     role: '',
   },
   {
     name: 'Emily Davis',
     email: 'e@example.com',
-    src: '~/assets/images/emily-davis.png',
+    src: EmilyDavis,
     role: '',
   },
   {
     name: 'Chris Lee',
     email: 'c@example.com',
-    src: '~/assets/images/chris-lee.png',
+    src: ChrisLee,
     role: '',
   },
 ])
