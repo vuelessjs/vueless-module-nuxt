@@ -46,18 +46,16 @@
       class="flex"
     >
       <UButton
-        label="Light"
         size="lg"
-        right-icon="light_mode"
+        icon="light_mode"
         variant="outlined"
         :config="buttonConfig"
         class="pr-4 rounded-l-full rounded-r-none"
         @click="setTheme({ colorMode: 'light' })"
       />
       <UButton
-        label="Dark"
         size="lg"
-        right-icon="dark_mode"
+        icon="dark_mode"
         :config="buttonConfig"
         class="pl-4 rounded-l-none rounded-r-full"
         @click="setTheme({ colorMode: 'dark' })"
