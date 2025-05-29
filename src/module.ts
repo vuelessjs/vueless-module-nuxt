@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { cwd } from 'node:process'
 import fs from 'node:fs'
-import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
 import { getNuxtDirs, cacheMergedConfigs } from 'vueless/utils/node/helper.js'
 import { createTailwindSafelist } from 'vueless/utils/node/tailwindSafelist.js'
@@ -32,6 +32,18 @@ export default defineNuxtModule({
 
     /* Transpile vueless and tailwindcss ts files into js */
     _nuxt.options.build.transpile.push('vueless')
+
+    if (hasNuxtModule('@nuxtjs/i18n')) {
+      // @ts-expect-error Type is present in this condition
+      _nuxt.hook('i18n:registerModule', (register) => {
+        register({
+          langDir: resolve('./locales'),
+          locales: [
+            { code: 'en', name: 'English', file: 'en.json' },
+          ],
+        })
+      })
+    }
 
     /* Add vueless vite plugin */
     _nuxt.hook('vite:extendConfig', async (config) => {

@@ -20,16 +20,16 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+  css: ['~/assets/css/main.css'],
+  compatibilityDate: '2024-09-13',
   i18n: {
     locales: [
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'ua', name: 'Українська', file: 'ua.json' },
     ],
   },
-  css: ['~/assets/css/main.css'],
-  compatibilityDate: '2024-09-13',
   vueless: {
-    include: playgroundNuxtDirs,
+    include: playgroundNuxtDirs as never[],
     mirrorCacheDir: 'playground/node_modules/.cache/vueless',
   },
 })
