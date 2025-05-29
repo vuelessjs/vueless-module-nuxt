@@ -1,0 +1,82 @@
+{
+  "UCalendar": {
+    "today": "Сьогодні",
+    "yesterday": "Вчора",
+    "tomorrow": "Завтра",
+    "weekdays": {
+      "shorthand": {
+        "sunday": "Нд",
+        "monday": "Пн",
+        "tuesday": "Вт",
+        "wednesday": "Ср",
+        "thursday": "Чт",
+        "friday": "Пт",
+        "saturday": "Сб"
+      },
+      "longhand": {
+        "sunday": "Неділя",
+        "monday": "Понеділок",
+        "tuesday": "Вівторок",
+        "wednesday": "Середа",
+        "thursday": "Четвер",
+        "friday": "Пʼятниця",
+        "saturday": "Субота"
+      },
+      "userFormat": {
+        "sunday": "Неділя",
+        "monday": "Понеділок",
+        "tuesday": "Вівторок",
+        "wednesday": "Середа",
+        "thursday": "Четвер",
+        "friday": "Пʼятниця",
+        "saturday": "Субота"
+      }
+    },
+    "months": {
+      "shorthand": {
+        "january": "Січ",
+        "february": "Лют",
+        "march": "Бер",
+        "april": "Кві",
+        "may": "Тра",
+        "june": "Чер",
+        "july": "Лип",
+        "august": "Сер",
+        "september": "Вер",
+        "october": "Жов",
+        "november": "Лис",
+        "december": "Гру"
+      },
+      "longhand": {
+        "january": "Січень",
+        "february": "Лютий",
+        "march": "Березень",
+        "april": "Квітень",
+        "may": "Травень",
+        "june": "Червень",
+        "july": "Липень",
+        "august": "Серпень",
+        "september": "Вересень",
+        "october": "Жовтень",
+        "november": "Листопад",
+        "december": "Грудень"
+      },
+      "userFormat": {
+        "january": "Січень",
+        "february": "Лютий",
+        "march": "Березень",
+        "april": "Квітень",
+        "may": "Травень",
+        "june": "Червень",
+        "july": "Липень",
+        "august": "Серпень",
+        "september": "Вересень",
+        "october": "Жовтень",
+        "november": "Листопад",
+        "december": "Грудень"
+      }
+    },
+    "timeLabel": "Час",
+    "okLabel": "Гаразд"
+  }
+}

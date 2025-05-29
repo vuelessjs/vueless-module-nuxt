@@ -1,4 +1,5 @@
 import { createVueless, setTheme } from 'vueless'
+import createVueI18nAdapter from 'vueless/adapter.locale/vue-i18n'
 import {
   TEXT,
   OUTLINE,
@@ -15,6 +16,8 @@ import { ColorMode } from 'vueless/types'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
 
+import type { CreateVuelessOptions } from 'vueless/types'
+
 import { useRuntimeConfig } from '#imports'
 import { defineNuxtPlugin } from '#app'
 
@@ -30,9 +33,16 @@ function parseCookies(cookieHeader: string | undefined): Record<string, string> 
 
 export default defineNuxtPlugin((_nuxtApp) => {
   const config = useRuntimeConfig().public.vueless
+  const vuelessOptions = { config } as CreateVuelessOptions
+
+  if ('$i18n' in _nuxtApp) {
+    vuelessOptions.i18n = {
+      adapter: createVueI18nAdapter({ global: _nuxtApp.$i18n }),
+    }
+  }
 
   /* Init vueless */
-  const vueless = createVueless({ config })
+  const vueless = createVueless(vuelessOptions)
   _nuxtApp.vueApp.use(vueless, [])
 
   /* Set vueless directives */
