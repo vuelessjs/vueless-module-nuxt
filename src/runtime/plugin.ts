@@ -12,9 +12,10 @@ import {
   LIGHT_MODE_CLASS,
   DISABLED_OPACITY,
 } from 'vueless/constants'
-import { ColorMode, type CreateVuelessOptions } from 'vueless/types'
 import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
 import vTooltip from 'vueless/directives/tooltip/vTooltip'
+
+import type { ColorMode, CreateVuelessOptions } from 'vueless/types'
 
 import { useRuntimeConfig } from '#imports'
 import { defineNuxtPlugin } from '#app'
@@ -42,7 +43,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
       ..._nuxtApp.$i18n.messages.value || {},
       en: {
         ...defaultEnLocale,
-        ...('en' in _nuxtApp.$i18n.messages.value ? _nuxtApp.$i18n.messages.value.en as Record<string, unknown> : {}),
+        ..._nuxtApp.$i18n.messages.value?.en as Record<string, unknown> || {},
       },
     }
 
