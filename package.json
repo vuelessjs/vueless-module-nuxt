@@ -37,7 +37,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "nuxi dev playground",
+    "dev": "npm run dev:prepare && nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:preview": "nuxi preview playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.17.4",
-    "vueless": "^0.0.825-beta.176"
+    "vueless": "^0.0.825-beta.178"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.31.4",

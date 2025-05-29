@@ -37,7 +37,7 @@ export default defineNuxtModule({
       // @ts-expect-error Type is present in this condition
       _nuxt.hook('i18n:registerModule', (register) => {
         register({
-          langDir: resolve('./locales'),
+          langDir: resolve('../node_modules/vueless/locales'),
           locales: [
             { code: 'en', name: 'English', file: 'en.json' },
           ],

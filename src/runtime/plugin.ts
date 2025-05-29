@@ -1,5 +1,5 @@
 import { createVueless, setTheme } from 'vueless'
-import createVueI18nAdapter from 'vueless/adatper.locale/vue-i18n'
+import createVueI18nAdapter from 'vueless/adapter.locale/vue-i18n'
 import {
   TEXT,
   OUTLINE,
