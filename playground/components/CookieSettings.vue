@@ -2,7 +2,7 @@
   <UCard
     title="Cookie Preferences"
     description="Customize your cookie settings to enhance your browsing experience."
-    class="flex flex-col"
+    class="flex flex-col h-full"
   >
     <UCol
       justify="between"

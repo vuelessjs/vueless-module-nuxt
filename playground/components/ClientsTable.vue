@@ -1,5 +1,5 @@
 <template>
-  <UGroup class="col-span-2">
+  <UGroup>
     <UTable
       :columns="columns"
       :rows="rows"
@@ -23,10 +23,10 @@
       </template>
 
       <template #cell-amount="{ value }">
-        <UMoney
+        <UNumber
           align="left"
           :value="value.sum"
-          :symbol="value.symbol"
+          :currency="value.currency"
         />
       </template>
 
@@ -34,6 +34,7 @@
         <URow align="center">
           <UAvatar
             :src="value.src"
+            size="sm"
             rounded="full"
           />
           <ULink
@@ -108,6 +109,15 @@
 <script setup>
 import { getRandomId } from 'vueless'
 
+import JohnDoe from '~/assets/images/john-doe.png'
+import AlexJohnson from '~/assets/images/alex-johnson.png'
+import EmilyDavis from '~/assets/images/emily-davis.png'
+import PatMorgan from '~/assets/images/pat-morgan.png'
+import ChrisLee from '~/assets/images/chris-lee.png'
+import TaylorBrown from '~/assets/images/taylor-brown.png'
+import JamieWilson from '~/assets/images/jamie-wilson.png'
+import JordanWhite from '~/assets/images/jordan-white.png'
+
 const currentPage = ref(1)
 const isShownDeleteModal = ref(false)
 
@@ -119,8 +129,10 @@ const columns = [
   { key: 'tools', label: 'Tools' },
 ]
 
-const rows = computed(() => {
-  return generateRandomTableData(currentPage.value)
+const rows = ref([])
+
+onMounted(() => {
+  rows.value = generateRandomTableData()
 })
 
 function onClickDelete() {
@@ -129,14 +141,14 @@ function onClickDelete() {
 
 function generateRandomTableData() {
   const users = [
-    { nickname: 'John Doe', src: '~/assets/images/john-doe.png' },
-    { nickname: 'Alex Johnson', src: '~/assets/images/alex-johnson.png' },
-    { nickname: 'Emily Davis', src: '~/assets/images/emily-davis.png' },
-    { nickname: 'Pat Morgan', src: '~/assets/images/pat-morgan.png' },
-    { nickname: 'Chris Lee', src: '~/assets/images/chris-lee.png' },
-    { nickname: 'Taylor Brown', src: '~/assets/images/taylor-brown.png' },
-    { nickname: 'Jamie Wilson', src: '~/assets/images/jamie-wilson.png' },
-    { nickname: 'Jordan White', src: '~/assets/images/jordan-white.png' },
+    { nickname: 'John Doe', src: JohnDoe },
+    { nickname: 'Alex Johnson', src: AlexJohnson },
+    { nickname: 'Emily Davis', src: EmilyDavis },
+    { nickname: 'Pat Morgan', src: PatMorgan },
+    { nickname: 'Chris Lee', src: ChrisLee },
+    { nickname: 'Taylor Brown', src: TaylorBrown },
+    { nickname: 'Jamie Wilson', src: JamieWilson },
+    { nickname: 'Jordan White', src: JordanWhite },
   ]
 
   const statuses = [
@@ -156,7 +168,7 @@ function generateRandomTableData() {
   const generateAmount = () => {
     return {
       sum: Number.parseFloat((Math.random() * 190 + 10).toFixed(2)),
-      symbol: '$',
+      currency: '$',
     }
   }
 

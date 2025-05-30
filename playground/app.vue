@@ -1,36 +1,47 @@
 <template>
-  <div class="max-w-screen-2xl grid gap-4 grid-cols-4 mt-10 mx-auto">
-    <div class="grid gap-4 col-span-1">
-      <PaymentCard />
-      <ActivityTracker />
+  <div class="max-w-screen-2xl xl:grid xl:grid-cols-2 xl:gap-4 mt-10 px-6 mx-auto">
+    <div class="grid gap-4 grid-cols-2 xl:grid-cols-2 max-xl:mb-4">
+      <div class="grid gap-4 col-span-1">
+        <PaymentCard />
+        <ActivityTracker />
+      </div>
+      <div class="grid gap-4 col-span-1">
+        <SignupForm />
+        <RoleCard />
+      </div>
     </div>
-    <div class="grid gap-4 col-span-1">
-      <SignupForm />
-      <RoleCard />
-    </div>
-    <div class="grid grid-cols-2 gap-4 col-span-2">
-      <ClientsTable />
-      <UAlert
-        title="Scheduled Maintenance Notice"
-        description="
-            Our website will be undergoing scheduled maintenance on March 15th from 2:00 AM to 4:00 AM UTC.
-            Some features may be temporarily unavailable during this time. We appreciate your patience!
-          "
-        variant="outlined"
-        bordered
-        closable
-        class="col-span-2"
-      />
-      <UCalendar
-        v-model="selectedDate"
-        class="col-span-1 w-auto shadow-none border-muted"
-        range
-      />
-      <CookieSettings class="col-span-1" />
+
+    <div class="grid grid-cols-4 xl:grid-cols-2 gap-4">
+      <div class="col-span-4 xl:col-span-2">
+        <ClientsTable />
+      </div>
+      <div class="col-span-4 xl:col-span-2">
+        <UAlert
+          title="Scheduled Maintenance Notice"
+          description="
+              Our website will be undergoing scheduled maintenance on March 15th from 2:00 AM to 4:00 AM UTC.
+              Some features may be temporarily unavailable during this time. We appreciate your patience!
+            "
+          variant="outlined"
+          bordered
+          closable
+        />
+      </div>
+      <div class="col-span-2 xl:col-span-1">
+        <UCalendar
+          v-model="selectedDate"
+          class="w-auto h-full shadow-none border-muted"
+          range
+        />
+      </div>
+      <div class="col-span-2 xl:col-span-1">
+        <CookieSettings />
+      </div>
     </div>
   </div>
 
   <URow
+    justify="center"
     gap="xl"
     class="p-16"
   >
@@ -48,7 +59,7 @@
       <UButton
         size="lg"
         icon="light_mode"
-        variant="outlined"
+        :variant="switcherVariant.light"
         :config="buttonConfig"
         class="pr-4 rounded-l-full rounded-r-none"
         @click="setTheme({ colorMode: 'light' })"
@@ -56,6 +67,7 @@
       <UButton
         size="lg"
         icon="dark_mode"
+        :variant="switcherVariant.dark"
         :config="buttonConfig"
         class="pl-4 rounded-l-none rounded-r-full"
         @click="setTheme({ colorMode: 'dark' })"
@@ -72,6 +84,9 @@
 <script setup>
 import { ref } from 'vue'
 import { setTheme } from 'vueless'
+import { COLOR_MODE_KEY } from 'vueless/constants'
+
+const colorModeCookie = useCookie(COLOR_MODE_KEY)
 
 const buttonConfig = {
   centerIcon: {
@@ -124,6 +139,11 @@ const neutralColors = {
   neutral: 'bg-neutral-600 dark:bg-neutral-400',
   stone: 'bg-stone-600 dark:bg-stone-400',
 }
+
+const switcherVariant = computed(() => ({
+  light: colorModeCookie.value === 'light' ? 'solid' : 'outlined',
+  dark: colorModeCookie.value === 'dark' ? 'solid' : 'outlined',
+}))
 
 watch(primary, (newValue) => {
   if (newValue !== '') {
