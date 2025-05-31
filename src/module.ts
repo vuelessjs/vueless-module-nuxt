@@ -3,8 +3,7 @@ import { cwd } from 'node:process'
 import fs from 'node:fs'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
-import { getNuxtDirs, cacheMergedConfigs } from 'vueless/utils/node/helper.js'
-import { createTailwindSafelist } from 'vueless/utils/node/tailwindSafelist.js'
+import { cacheMergedConfigs } from 'vueless/utils/node/helper.js'
 import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants.js'
 
 export default defineNuxtModule({
@@ -15,7 +14,6 @@ export default defineNuxtModule({
       nuxt: '>=3.13.0',
     },
   },
-
   defaults: {
     include: [],
     mirrorCacheDir: '',
@@ -74,13 +72,6 @@ export default defineNuxtModule({
 
     /* Merge component configs and cache it */
     await cacheMergedConfigs(VUELESS_PACKAGE_DIR)
-
-    /* Generate tailwind safelist before module installed */
-    await createTailwindSafelist({
-      targetFiles: getNuxtDirs(),
-      srcDir: VUELESS_PACKAGE_DIR,
-      env: NUXT_MODULE_ENV,
-    })
 
     /**
      * Add runtime plugin
