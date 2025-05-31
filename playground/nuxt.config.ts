@@ -27,6 +27,9 @@ export default defineNuxtConfig({
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'ua', name: 'Українська', file: 'ua.json' },
     ],
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
   },
   vueless: {
     include: playgroundNuxtDirs as never[],
