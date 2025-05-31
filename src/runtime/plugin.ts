@@ -18,6 +18,7 @@ import vTooltip from 'vueless/directives/tooltip/vTooltip'
 
 import type { CreateVuelessOptions } from 'vueless/types'
 
+import { vuelessConfig } from 'vueless/utils/ui'
 import { useRuntimeConfig } from '#imports'
 import { defineNuxtPlugin } from '#app'
 
@@ -78,7 +79,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     }
 
     const disabledOpacity = cookies?.[`vl-${DISABLED_OPACITY}`]
-    const colorMode = cookies?.[COLOR_MODE_KEY]
+    const colorMode = cookies?.[COLOR_MODE_KEY] || vuelessConfig.colorMode || ColorMode.Light
     const isCachedAutoMode = Boolean(Number(cookies?.[AUTO_MODE_KEY]))
 
     const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode }, isCachedAutoMode)
