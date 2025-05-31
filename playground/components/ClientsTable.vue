@@ -5,6 +5,7 @@
       :rows="rows"
       selectable
       compact
+      class="max-h-[222px] overflow-hidden"
     >
       <template #header-actions>
         <URow gap="2xs">

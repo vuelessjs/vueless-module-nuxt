@@ -41,69 +41,61 @@
   </div>
 
   <URow
-    justify="center"
+    justify="between"
+    align="center"
     gap="xl"
-    class="p-16"
+    class="py-8 px-12 max-w-screen-2xl mx-auto"
   >
     <UThemeColorToggle
       v-model:primary="primary"
       v-model:neutral="neutral"
       :primary-colors="primaryColors"
       :neutral-colors="neutralColors"
+      size="sm"
+      class="w-full"
     />
 
-    <URow
-      gap="none"
-      class="flex"
-    >
+    <URow>
       <UButton
-        size="lg"
-        icon="light_mode"
-        :variant="switcherVariant.light"
-        :config="buttonConfig"
-        class="pr-4 rounded-l-full rounded-r-none"
-        @click="setTheme({ colorMode: 'light' })"
+        :label="localeName"
+        variant="outlined"
+        @click="toggleLocale"
       />
-      <UButton
-        size="lg"
-        icon="dark_mode"
-        :variant="switcherVariant.dark"
-        :config="buttonConfig"
-        class="pl-4 rounded-l-none rounded-r-full"
-        @click="setTheme({ colorMode: 'dark' })"
-      />
+      <URow gap="none">
+        <UButton
+          icon="light_mode"
+          :variant="!isDarkMode ? 'solid' : 'outlined'"
+          class="pr-4 rounded-l-full rounded-r-none"
+          @click="setTheme({ colorMode: 'light' })"
+        />
+        <UButton
+          icon="dark_mode"
+          :variant="isDarkMode ? 'solid' : 'outlined'"
+          class="pl-4 rounded-l-none rounded-r-full"
+          @click="setTheme({ colorMode: 'dark' })"
+        />
+      </URow>
     </URow>
   </URow>
-
-  <UButton
-    label="toggle language"
-    @click="toggleLocale"
-  />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { setTheme } from 'vueless'
-import { COLOR_MODE_KEY } from 'vueless/constants'
+import { useDarkMode } from 'vueless/composables/useDarkMode'
 
-const colorModeCookie = useCookie(COLOR_MODE_KEY)
-
-const buttonConfig = {
-  centerIcon: {
-    defaults: {
-      size: {
-        lg: 'lg',
-      },
-    },
-  },
-}
+const { isDarkMode } = useDarkMode()
 
 const selectedDate = ref({
   from: new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
   to: new Date(new Date().setDate(new Date().getDate() + (6 - new Date().getDay()))),
 })
 
-const { setLocale, locale } = useI18n()
+const { setLocale, locale, locales } = useI18n()
+
+const localeName = computed(() => {
+  return locales.value.find(l => l.code === locale.value)?.name ?? locale.value
+})
 
 function toggleLocale() {
   setLocale(locale.value === 'en' ? 'ua' : 'en').then(() => window.location.reload())
@@ -132,6 +124,7 @@ const primaryColors = {
   pink: 'bg-pink-600 dark:bg-pink-400',
   rose: 'bg-rose-600 dark:bg-rose-400',
 }
+
 const neutralColors = {
   slate: 'bg-slate-600 dark:bg-slate-400',
   gray: 'bg-gray-600 dark:bg-gray-400',
@@ -139,11 +132,6 @@ const neutralColors = {
   neutral: 'bg-neutral-600 dark:bg-neutral-400',
   stone: 'bg-stone-600 dark:bg-stone-400',
 }
-
-const switcherVariant = computed(() => ({
-  light: colorModeCookie.value === 'light' ? 'solid' : 'outlined',
-  dark: colorModeCookie.value === 'dark' ? 'solid' : 'outlined',
-}))
 
 watch(primary, (newValue) => {
   if (newValue !== '') {
