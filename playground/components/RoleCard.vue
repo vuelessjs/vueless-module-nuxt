@@ -21,6 +21,7 @@
         >
           <UAvatar
             :src="member.src"
+            size="sm"
             rounded="full"
           />
           <UCol gap="2xs">

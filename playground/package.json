@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "@nuxtjs/i18n": "^9.5.4",
-    "nuxt": "^3.13.2"
+    "nuxt": "^3.17.4"
   }
 }

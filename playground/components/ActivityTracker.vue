@@ -1,24 +1,30 @@
 <template>
   <UCard
     title="Set Goal"
-    description="Define your daily calorie target."
+    description="Define your daily activity target."
     class="flex flex-col"
   >
     <UCol
       justify="between"
       class="h-full"
     >
-      <UInputCounter
-        v-model="count"
-        :step="10"
-        :max="5000"
-        :min="500"
-        label-align="top"
+      <ULabel
         description="Calories per day"
-        size="lg"
-        :config="counterConfig"
-        class="w-full justify-between"
-      />
+        :config="{ description: 'text-center !text-medium' }"
+      >
+        <UInputCounter
+          v-model="count"
+          :step="10"
+          :max="5000"
+          :min="500"
+          label-align="top"
+          description="Calories per day"
+          size="lg"
+          readonly
+          :config="counterConfig"
+          class="w-full justify-around"
+        />
+      </ULabel>
       <UButton
         label="Set goal"
         block

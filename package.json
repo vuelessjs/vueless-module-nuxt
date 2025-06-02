@@ -37,10 +37,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "npm run dev:prepare && nuxi dev playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev:clear": "nuxi cleanup && cd playground && rm -rf .nuxt .output node_modules/.cache",
+    "dev": "npm run dev:clear && npm run dev:prepare && nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:preview": "nuxi preview playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "prepack": "nuxt-module-build build && cp package.json LICENSE README.md dist/",
     "release:beta": "release-it --ci --npm.publish --preRelease=beta --increment=prerelease",
     "release:patch": "release-it patch --ci --npm.publish",
@@ -55,7 +56,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.17.4",
-    "vueless": "^0.0.825-beta.178"
+    "vueless": "^0.0.825-beta.186"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.31.4",
