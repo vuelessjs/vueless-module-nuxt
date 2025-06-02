@@ -38,7 +38,7 @@
   ],
   "scripts": {
     "dev": "npm run dev:prepare && nuxi dev playground",
-    "dev:prepare": "nuxi cleanup playground && nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev:prepare": "nuxi cleanup && nuxi prepare && nuxi cleanup playground && nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "dev:build": "nuxi build playground",
     "dev:preview": "nuxi preview playground",
     "prepack": "nuxt-module-build build && cp package.json LICENSE README.md dist/",
@@ -50,8 +50,7 @@
     "lint:ci": "eslint --no-fix --max-warnings=0",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
-    "install": "npx nuxi prepare"
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
     "@nuxt/kit": "^3.17.4",
