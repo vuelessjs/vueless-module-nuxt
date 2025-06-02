@@ -37,9 +37,8 @@
     "dist"
   ],
   "scripts": {
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "dev:clear": "nuxi cleanup && cd playground && rm -rf .nuxt .output node_modules/.cache",
-    "dev": "npm run dev:clear && npm run dev:prepare && nuxi dev playground",
+    "dev": "npm run dev:prepare && nuxi dev playground",
+    "dev:prepare": "nuxi cleanup playground && nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "dev:build": "nuxi build playground",
     "dev:preview": "nuxi preview playground",
     "prepack": "nuxt-module-build build && cp package.json LICENSE README.md dist/",
@@ -80,6 +79,5 @@
   },
   "bugs": {
     "url": "https://github.com/vuelessjs/vueless-module-nuxt/issues"
-  },
-  "web-types": "./node_modules/vueless/web-types.json"
+  }
 }
