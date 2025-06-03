@@ -48,7 +48,7 @@
     "release:major": "release-it major --ci --npm.publish --git.tag --github.release",
     "lint": "eslint . --no-fix",
     "lint:fix": "eslint . --fix",
-    "lint:ci": "eslint --no-fix --max-warnings=0",
+    "lint:ci": "eslint . --no-fix --max-warnings=0",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
