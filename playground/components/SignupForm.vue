@@ -2,15 +2,21 @@
   <UCard
     title="Sign Up"
     description="Enter your email below to get started and create your account."
+    class="flex flex-col"
   >
-    <UCol>
+    <UCol
+      justify="between"
+      align="stretch"
+      class="h-full"
+    >
       <URow
         align="center"
         justify="between"
+        gap="sm"
       >
         <UButton
           label="GitHub"
-          variant="secondary"
+          variant="outlined"
           block
           class="!leading-none"
         >
@@ -24,7 +30,7 @@
 
         <UButton
           label="Google"
-          variant="secondary"
+          variant="outlined"
           block
           class="!leading-none"
         >
@@ -55,7 +61,10 @@
         />
       </UCol>
 
-      <UCheckbox label="Remember me" />
+      <UCheckbox
+        v-model="remember"
+        label="Remember me"
+      />
 
       <UButton
         label="Create account"
@@ -70,4 +79,5 @@ import GithubLogo from '~/assets/svg/github-logo.svg?component'
 import GoogleLogo from '~/assets/svg/google-logo.svg?component'
 
 const password = ref('')
+const remember = ref(false)
 </script>

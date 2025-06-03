@@ -2,13 +2,18 @@
   <UCard
     title="Cookie Preferences"
     description="Customize your cookie settings to enhance your browsing experience."
+    class="flex flex-col h-full"
   >
-    <UCol>
+    <UCol
+      justify="between"
+      class="h-full"
+    >
       <URow
         v-for="(cookie, index) in cookieSettings"
         :key="cookie.label"
         justify="between"
         align="center"
+        block
       >
         <UCol gap="2xs">
           <UHeader
@@ -25,7 +30,7 @@
 
       <UButton
         label="Save preferences"
-        variant="secondary"
+        variant="outlined"
         block
       />
     </UCol>

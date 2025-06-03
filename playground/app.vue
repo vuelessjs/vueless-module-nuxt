@@ -1,391 +1,147 @@
 <template>
-  <div class="max-w-screen-2xl grid gap-4 grid-cols-4 mt-10 mx-auto">
-    <div class="grid gap-4 col-span-1">
-      <PaymentCard />
-      <ActivityTracker />
+  <div class="max-w-screen-2xl xl:grid xl:grid-cols-2 xl:gap-4 mt-10 px-6 mx-auto">
+    <div class="grid gap-4 grid-cols-2 xl:grid-cols-2 max-xl:mb-4">
+      <div class="grid gap-4 col-span-1">
+        <PaymentCard />
+        <ActivityTracker />
+      </div>
+      <div class="grid gap-4 col-span-1">
+        <SignupForm />
+        <RoleCard />
+      </div>
     </div>
-    <div class="grid gap-4 col-span-1">
-      <SignupForm />
-      <RoleCard />
-    </div>
-    <div class="grid grid-cols-2 gap-4 col-span-2">
-      <ClientsTable />
-      <UAlert
-        title="Scheduled Maintenance Notice"
-        description="
-            Our website will be undergoing scheduled maintenance on March 15th from 2:00 AM to 4:00 AM UTC.
-            Some features may be temporarily unavailable during this time. We appreciate your patience!
-          "
-        variant="thirdary"
-        color="white"
-        bordered
-        closable
-        class="col-span-2"
-      />
-      <UCalendar
-        v-model="selectedDate"
-        class="col-span-1 w-auto shadow-none border-gray-200"
-      />
-      <CookieSettings class="col-span-1" />
+
+    <div class="grid grid-cols-4 xl:grid-cols-2 gap-4">
+      <div class="col-span-4 xl:col-span-2">
+        <ClientsTable />
+      </div>
+      <div class="col-span-4 xl:col-span-2">
+        <UAlert
+          title="Scheduled Maintenance Notice"
+          description="
+              Our website will be undergoing scheduled maintenance on March 15th from 2:00 AM to 4:00 AM UTC.
+              Some features may be temporarily unavailable during this time. We appreciate your patience!
+            "
+          variant="outlined"
+          bordered
+          closable
+        />
+      </div>
+      <div class="col-span-2 xl:col-span-1">
+        <UCalendar
+          v-model="selectedDate"
+          class="w-auto h-full shadow-none border-muted"
+          range
+        />
+      </div>
+      <div class="col-span-2 xl:col-span-1">
+        <CookieSettings />
+      </div>
     </div>
   </div>
 
-  <UCol
+  <URow
+    justify="between"
+    align="center"
     gap="xl"
-    class="p-16"
+    class="py-8 px-12 max-w-screen-2xl mx-auto"
   >
     <UThemeColorToggle
-      :brand-colors="brandColors"
-      :gray-colors="grayColors"
+      v-model:primary="primary"
+      v-model:neutral="neutral"
+      :primary-colors="primaryColors"
+      :neutral-colors="neutralColors"
+      size="sm"
+      class="w-full"
     />
 
-    <UAlert
-      class="mb-8"
-      color="brand"
-      close-icon
-      bordered
-      variant="thirdary"
-    >
-      <UText>
-        Alert message text
-
-        <ULink
-          size="md"
-          label="this blog post"
-          href="https://github.blog/2023-03-09-raising-the-bar-for-software-security-github-2fa-begins-march-13"
-        />.
-      </UText>
-    </UAlert>
-
-    <UCol>
-      <UGroup title="User info">
-        <URow>
-          <UCard>
-            <UCol
-              size="lg"
-              class="w-full"
-            >
-              <ULabel label="Name">
-                <UText line>
-                  Jonnny Grid
-                </UText>
-              </ULabel>
-
-              <ULabel label="Email">
-                <ULink
-                  type="email"
-                  href="i.ivan.gridnev@gmail.com"
-                  label="i.ivan.gridnev@gmail.com"
-                />
-              </ULabel>
-
-              <ULabel label="Contacts">
-                <div class="flex -space-x-2 overflow-hidden pt-0.5">
-                  <UAvatar
-                    v-for="n in 3"
-                    :key="n"
-                    bordered
-                    color="gray"
-                    size="sm"
-                    rounded="full"
-                    :src="rows[n - 1].user.image"
-                  />
-                  <UAvatar
-                    size="sm"
-                    rounded="full"
-                    label="99"
-                    color="gray"
-                  />
-                </div>
-              </ULabel>
-            </UCol>
-          </UCard>
-
-          <UCard>
-            <UCol>
-              <UText size="sm">
-                In this area you can change your password.
-              </UText>
-
-              <UInput
-                placeholder="New password"
-                size="sm"
-                label-align="top"
-              />
-
-              <UInput
-                placeholder="Confirm password"
-                size="sm"
-                label-align="top"
-              />
-
-              <URow class="items-center">
-                <UButton
-                  label="Change"
-                  size="sm"
-                />
-
-                <USwitch
-                  v-model="switchValue"
-                  label="Enable 2FA"
-                />
-              </URow>
-            </UCol>
-          </UCard>
-        </URow>
-      </UGroup>
-
-      <UGroup title="Payment details">
-        <UTable
-          :columns="columns"
-          :rows="rows"
-          selectable
-          compact
-        >
-          <template #header-actions>
-            <UButton
-              size="sm"
-              variant="thirdary"
-              label="Delete"
-              color="blue"
-              class=""
-            />
-          </template>
-
-          <template #cell-amount="{ value }">
-            <UMoney
-              size="sm"
-              align="left"
-              :value="value.sum"
-              :symbol="value.symbol"
-            />
-          </template>
-
-          <template #cell-user="{ value }">
-            <div class="flex items-center space-x-2">
-              <UAvatar
-                size="sm"
-                rounded="full"
-                :src="value.image"
-              />
-              <ULink
-                class="mb-0"
-                target-blank
-                size="md"
-                color="grayscale"
-                :href="value.profile"
-                :label="value.nickname"
-              />
-            </div>
-          </template>
-
-          <template #cell-status="{ value }">
-            <UBadge
-              :label="value.label"
-              :color="value.color"
-              variant="thirdary"
-            />
-          </template>
-
-          <template #cell-tools>
-            <div class="flex">
-              <UButton
-                square
-                size="sm"
-                variant="thirdary"
-              >
-                <UIcon
-                  name="edit"
-                  color="gray"
-                  size="xs"
-                />
-              </UButton>
-
-              <UButton
-                square
-                size="sm"
-                variant="thirdary"
-                color="red"
-                @click="onClickDelete"
-              >
-                <UIcon
-                  name="delete"
-                  color="red"
-                  size="xs"
-                />
-              </UButton>
-            </div>
-          </template>
-        </UTable>
-
-        <UPagination
-          v-model="currentPage"
-          class="mt-4 flex justify-center"
-          :total="90"
-          size="sm"
+    <URow>
+      <UButton
+        :label="localeName"
+        variant="outlined"
+        @click="toggleLocale"
+      />
+      <URow gap="none">
+        <UButton
+          icon="light_mode"
+          :variant="!isDarkMode ? 'solid' : 'outlined'"
+          class="pr-4 rounded-l-full rounded-r-none"
+          @click="setTheme({ colorMode: 'light' })"
         />
-      </UGroup>
-    </UCol>
-
-    <UModalConfirm
-      v-model="isShownDeleteModal"
-      title="Delete payment"
-      confirm-label="Delete"
-      color="red"
-    >
-      <UText>Are you 100% sure to delete this payment?</UText>
-    </UModalConfirm>
-
-    <UHeader label="Vueless UI is ready!" />
-
-    <UIcon name="heart_plus" />
-
-    <UButton
-      label="Button"
-      left-icon="timer"
-      @click="test"
-    />
-
-    <UCheckbox />
-
-    <UCheckboxMultiState />
-
-    <USelect label="USelect" />
-
-    <UInput
-      label="Input"
-    />
-
-    <UCalendar v-model="selectedDate" />
-
-    <USwitch
-      v-model="selectedSwitch"
-      size="lg"
-    />
-  </UCol>
+        <UButton
+          icon="dark_mode"
+          :variant="isDarkMode ? 'solid' : 'outlined'"
+          class="pl-4 rounded-l-none rounded-r-full"
+          @click="setTheme({ colorMode: 'dark' })"
+        />
+      </URow>
+    </URow>
+  </URow>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { setTheme, getRandomId } from 'vueless'
+import { setTheme } from 'vueless'
+import { useDarkMode } from 'vueless/composables/useDarkMode'
 
-const now = new Date()
-const selectedDate = ref(now)
+const { isDarkMode } = useDarkMode()
 
-const selectedSwitch = ref(true)
-const selectedColor = ref('')
+const selectedDate = ref({
+  from: new Date(new Date().setDate(new Date().getDate() - new Date().getDay())),
+  to: new Date(new Date().setDate(new Date().getDate() + (6 - new Date().getDay()))),
+})
 
-watch(selectedColor, (newValue) => {
+const { setLocale, locale, locales } = useI18n()
+
+const localeName = computed(() => {
+  return locales.value.find(l => l.code === locale.value)?.name ?? locale.value
+})
+
+function toggleLocale() {
+  setLocale(locale.value === 'en' ? 'ua' : 'en').then(() => window.location.reload())
+}
+
+const primary = ref('')
+const neutral = ref('')
+
+const primaryColors = {
+  grayscale: 'bg-grayscale',
+  red: 'bg-red-600 dark:bg-red-400',
+  orange: 'bg-orange-600 dark:bg-orange-400',
+  amber: 'bg-amber-600 dark:bg-amber-400',
+  yellow: 'bg-yellow-600 dark:bg-yellow-400',
+  lime: 'bg-lime-600 dark:bg-lime-400',
+  green: 'bg-green-600 dark:bg-green-400',
+  emerald: 'bg-emerald-600 dark:bg-emerald-400',
+  teal: 'bg-teal-600 dark:bg-teal-400',
+  cyan: 'bg-cyan-600 dark:bg-cyan-400',
+  sky: 'bg-sky-600 dark:bg-sky-400',
+  blue: 'bg-blue-600 dark:bg-blue-400',
+  indigo: 'bg-indigo-600 dark:bg-indigo-400',
+  violet: 'bg-violet-600 dark:bg-violet-400',
+  purple: 'bg-purple-600 dark:bg-purple-400',
+  fuchsia: 'bg-fuchsia-600 dark:bg-fuchsia-400',
+  pink: 'bg-pink-600 dark:bg-pink-400',
+  rose: 'bg-rose-600 dark:bg-rose-400',
+}
+
+const neutralColors = {
+  slate: 'bg-slate-600 dark:bg-slate-400',
+  gray: 'bg-gray-600 dark:bg-gray-400',
+  zinc: 'bg-zinc-600 dark:bg-zinc-400',
+  neutral: 'bg-neutral-600 dark:bg-neutral-400',
+  stone: 'bg-stone-600 dark:bg-stone-400',
+}
+
+watch(primary, (newValue) => {
   if (newValue !== '') {
-    console.log('setTheme', newValue)
-    setTheme({ brand: newValue })
+    setTheme({ primary: newValue })
   }
 })
 
-const brandColors = {
-  grayscale: 'bg-gray-900',
-  red: 'bg-red-600',
-  orange: 'bg-orange-600',
-  amber: 'bg-amber-600',
-  yellow: 'bg-yellow-600',
-  lime: 'bg-lime-600',
-  green: 'bg-green-600',
-  emerald: 'bg-emerald-600',
-  teal: 'bg-teal-600',
-  cyan: 'bg-cyan-600',
-  sky: 'bg-sky-600',
-  blue: 'bg-blue-600',
-  indigo: 'bg-indigo-600',
-  violet: 'bg-violet-600',
-  purple: 'bg-purple-600',
-  fuchsia: 'bg-fuchsia-600',
-  pink: 'bg-pink-600',
-  rose: 'bg-rose-600',
-}
-
-const grayColors = {
-  slate: 'bg-slate-600',
-  cool: 'bg-cool-600',
-  zinc: 'bg-zinc-600',
-  neutral: 'bg-neutral-600',
-  stone: 'bg-stone-600',
-}
-
-function test() {
-  console.log('setTheme')
-  setTheme({ brand: 'red' })
-}
-
-const currentPage = ref(1)
-const switchValue = ref(false)
-const isShownDeleteModal = ref(false)
-
-function onClickDelete() {
-  isShownDeleteModal.value = true
-}
-
-const columns = [
-  { key: 'date', label: 'Date' },
-  { key: 'amount', label: 'Amount' },
-  { key: 'user', label: 'User' },
-  { key: 'status', label: 'Status' },
-  { key: 'tools', label: 'Tools' },
-]
-
-const rows = [
-  {
-    id: getRandomId(),
-    date: '28.02.2024',
-    amount: {
-      sum: 46.99,
-      symbol: '$',
-    },
-    user: {
-      nickname: 'Johnny Grid',
-      image: 'https://gitlab.com/uploads/-/system/user/avatar/4469990/avatar.png?width=192',
-      profile: 'https://gitlab.com/JohnnyGrid',
-    },
-    status: {
-      label: 'payed',
-      color: 'green',
-    },
-    tools: '',
-  },
-  {
-    id: getRandomId(),
-    date: '28.02.2024',
-    amount: {
-      sum: 103.45,
-      symbol: '$',
-    },
-    user: {
-      nickname: 'Adam Gordon',
-      image: 'https://gitlab.com/uploads/-/system/user/avatar/4469990/avatar.png?width=192',
-      profile: 'https://gitlab.com/JohnnyGrid',
-    },
-    status: {
-      label: 'pending',
-      color: 'yellow',
-    },
-    tools: '',
-  },
-  {
-    id: getRandomId(),
-    date: '28.02.2024',
-    amount: {
-      sum: 30.45,
-      symbol: '$',
-    },
-    user: {
-      nickname: 'Leslie Nielsen',
-      image: 'https://gitlab.com/uploads/-/system/user/avatar/4469990/avatar.png?width=192',
-      profile: 'https://gitlab.com/JohnnyGrid',
-    },
-    status: {
-      label: 'overdue',
-      color: 'red',
-    },
-    tools: '',
-  },
-]
+watch(neutral, (newValue) => {
+  if (newValue !== '') {
+    setTheme({ neutral: newValue })
+  }
+})
 </script>

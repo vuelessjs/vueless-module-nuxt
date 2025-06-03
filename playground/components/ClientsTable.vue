@@ -1,43 +1,42 @@
 <template>
-  <UGroup class="col-span-2">
+  <UGroup>
     <UTable
       :columns="columns"
       :rows="rows"
       selectable
       compact
+      class="max-h-[222px] overflow-hidden"
     >
       <template #header-actions>
         <URow gap="2xs">
           <UButton
             label="Edit"
-            variant="thirdary"
-            color="brand"
+            variant="ghost"
             size="sm"
           />
 
           <UButton
             label="Delete"
-            variant="thirdary"
-            color="brand"
+            variant="ghost"
             size="sm"
           />
         </URow>
       </template>
 
       <template #cell-amount="{ value }">
-        <UMoney
+        <UNumber
           align="left"
           :value="value.sum"
-          :symbol="value.symbol"
+          :currency="value.currency"
         />
       </template>
 
       <template #cell-user="{ value }">
-        <URow>
+        <URow align="center">
           <UAvatar
+            :src="value.src"
             size="sm"
             rounded="full"
-            :src="value.image"
           />
           <ULink
             class="mb-0"
@@ -53,7 +52,7 @@
         <UBadge
           :label="value.label"
           :color="value.color"
-          variant="thirdary"
+          variant="soft"
         />
       </template>
 
@@ -62,11 +61,10 @@
           <UButton
             square
             size="sm"
-            variant="thirdary"
+            variant="ghost"
           >
             <UIcon
               name="edit"
-              color="gray"
               size="xs"
             />
           </UButton>
@@ -74,13 +72,13 @@
           <UButton
             square
             size="sm"
-            variant="thirdary"
-            color="red"
+            variant="ghost"
+            color="error"
             @click="onClickDelete"
           >
             <UIcon
               name="delete"
-              color="red"
+              color="error"
               size="xs"
             />
           </UButton>
@@ -112,6 +110,15 @@
 <script setup>
 import { getRandomId } from 'vueless'
 
+import JohnDoe from '~/assets/images/john-doe.png'
+import AlexJohnson from '~/assets/images/alex-johnson.png'
+import EmilyDavis from '~/assets/images/emily-davis.png'
+import PatMorgan from '~/assets/images/pat-morgan.png'
+import ChrisLee from '~/assets/images/chris-lee.png'
+import TaylorBrown from '~/assets/images/taylor-brown.png'
+import JamieWilson from '~/assets/images/jamie-wilson.png'
+import JordanWhite from '~/assets/images/jordan-white.png'
+
 const currentPage = ref(1)
 const isShownDeleteModal = ref(false)
 
@@ -123,8 +130,10 @@ const columns = [
   { key: 'tools', label: 'Tools' },
 ]
 
-const rows = computed(() => {
-  return generateRandomTableData(currentPage.value)
+const rows = ref([])
+
+onMounted(() => {
+  rows.value = generateRandomTableData()
 })
 
 function onClickDelete() {
@@ -133,22 +142,22 @@ function onClickDelete() {
 
 function generateRandomTableData() {
   const users = [
-    { nickname: 'John Doe', image: 'https://avatar.iran.liara.run/public/45' },
-    { nickname: 'Adam Gordon', image: 'https://avatar.iran.liara.run/public/41' },
-    { nickname: 'Leslie Nielsen', image: 'https://avatar.iran.liara.run/public/33' },
-    { nickname: 'Sarah Johnson', image: 'https://avatar.iran.liara.run/public/25' },
-    { nickname: 'Mike Chen', image: 'https://avatar.iran.liara.run/public/28' },
-    { nickname: 'Emma Watson', image: 'https://avatar.iran.liara.run/public/15' },
-    { nickname: 'David Miller', image: 'https://avatar.iran.liara.run/public/22' },
-    { nickname: 'Alex Rodriguez', image: 'https://avatar.iran.liara.run/public/19' },
+    { nickname: 'John Doe', src: JohnDoe },
+    { nickname: 'Alex Johnson', src: AlexJohnson },
+    { nickname: 'Emily Davis', src: EmilyDavis },
+    { nickname: 'Pat Morgan', src: PatMorgan },
+    { nickname: 'Chris Lee', src: ChrisLee },
+    { nickname: 'Taylor Brown', src: TaylorBrown },
+    { nickname: 'Jamie Wilson', src: JamieWilson },
+    { nickname: 'Jordan White', src: JordanWhite },
   ]
 
   const statuses = [
-    { label: 'Completed', color: 'green' },
-    { label: 'Awaiting', color: 'yellow' },
-    { label: 'Failed', color: 'red' },
-    { label: 'Processing', color: 'blue' },
-    { label: 'Pending', color: 'orange' },
+    { label: 'Completed', color: 'success' },
+    { label: 'Awaiting', color: 'warning' },
+    { label: 'Failed', color: 'error' },
+    { label: 'Processing', color: 'info' },
+    { label: 'Pending', color: 'notice' },
   ]
 
   const generateDate = () => {
@@ -160,7 +169,7 @@ function generateRandomTableData() {
   const generateAmount = () => {
     return {
       sum: Number.parseFloat((Math.random() * 190 + 10).toFixed(2)),
-      symbol: '$',
+      currency: '$',
     }
   }
 
