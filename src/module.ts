@@ -1,10 +1,13 @@
 import path from 'node:path'
 import { cwd } from 'node:process'
 import fs from 'node:fs'
+import { createRequire } from 'node:module'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
 import { cacheMergedConfigs } from 'vueless/utils/node/helper.js'
 import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants.js'
+
+const require = createRequire(import.meta.url)
 
 export default defineNuxtModule({
   meta: {
@@ -54,7 +57,8 @@ export default defineNuxtModule({
 
     if (_nuxt.options.dev) {
       /* Reload nuxt when vueless config was changed. */
-      const chokidar = await import('chokidar')
+      const chokidarPath = require.resolve('chokidar')
+      const chokidar = await import(chokidarPath)
 
       const watcher = chokidar.watch(dependencies, { ignoreInitial: true })
 
@@ -96,7 +100,8 @@ export default defineNuxtModule({
 
 async function getVuelessConfig() {
   /* Using esbuild. This prevents `Inlined implicit external` issue. */
-  const esbuild = await import('esbuild')
+  const esbuildPath = require.resolve('esbuild')
+  const esbuild = await import(esbuildPath)
   const esbuildConfig = {
     bundle: true,
     platform: 'node',
