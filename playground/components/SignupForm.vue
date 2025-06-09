@@ -54,10 +54,9 @@
           placeholder="johndoe@example.com"
           type="email"
         />
-        <UInput
+        <UInputPassword
           v-model="password"
           label="Password"
-          type="password"
         />
       </UCol>
 
