@@ -54,8 +54,7 @@ export default defineNuxtModule({
 
     if (_nuxt.options.dev) {
       /* Reload nuxt when vueless config was changed. */
-      const chokidarPath = require.resolve('chokidar')
-      const chokidar = await import(chokidarPath)
+      const chokidar = await import('chokidar')
 
       const watcher = chokidar.watch(dependencies, { ignoreInitial: true })
 
@@ -97,9 +96,7 @@ export default defineNuxtModule({
 
 async function getVuelessConfig() {
   /* Using esbuild. This prevents `Inlined implicit external` issue. */
-  const esbuildPath = require.resolve('esbuild')
-  const esbuild = await import(esbuildPath)
-
+  const esbuild = await import('esbuild')
   const esbuildConfig = {
     bundle: true,
     platform: 'node',
