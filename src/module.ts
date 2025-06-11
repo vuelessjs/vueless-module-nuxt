@@ -1,6 +1,7 @@
+import fs from 'node:fs'
 import path from 'node:path'
 import { cwd } from 'node:process'
-import fs from 'node:fs'
+import { pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
@@ -58,7 +59,7 @@ export default defineNuxtModule({
     if (_nuxt.options.dev) {
       /* Reload nuxt when vueless config was changed. */
       const chokidarPath = require.resolve('chokidar')
-      const chokidar = await import(chokidarPath)
+      const chokidar = await import(pathToFileURL(chokidarPath).href)
 
       const watcher = chokidar.watch(dependencies, { ignoreInitial: true })
 
@@ -101,7 +102,7 @@ export default defineNuxtModule({
 async function getVuelessConfig() {
   /* Using esbuild. This prevents `Inlined implicit external` issue. */
   const esbuildPath = require.resolve('esbuild')
-  const esbuild = await import(esbuildPath)
+  const esbuild = await import(pathToFileURL(esbuildPath).href)
   const esbuildConfig = {
     bundle: true,
     platform: 'node',
