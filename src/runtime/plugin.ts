@@ -1,5 +1,4 @@
-import { createVueless, setTheme } from 'vueless'
-import createVueI18nAdapter from 'vueless/adapter.locale/vue-i18n'
+import { createVueless, createVueI18nAdapter, setTheme, vClickOutside, vTooltip, vuelessConfig } from 'vueless'
 import {
   TEXT,
   OUTLINE,
@@ -11,23 +10,24 @@ import {
   DARK_MODE_CLASS,
   LIGHT_MODE_CLASS,
   DISABLED_OPACITY,
-} from 'vueless/constants'
-import { ColorMode } from 'vueless/types'
-import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
-import vTooltip from 'vueless/directives/tooltip/vTooltip'
+} from 'vueless/constants.js'
 
+import { ColorMode } from 'vueless/types'
 import type { CreateVuelessOptions } from 'vueless/types'
 
-import { vuelessConfig } from 'vueless/utils/ui'
 import { useRuntimeConfig } from '#imports'
 import { defineNuxtPlugin } from '#app'
 
-function parseCookies(cookieHeader: string | undefined): Record<string, string> {
+function parseCookies(cookieHeader?: string): Record<string, string> {
   if (!cookieHeader) return {}
 
   return cookieHeader.split(';').reduce<Record<string, string>>((acc, cookie) => {
     const [key, value] = cookie.trim().split('=')
-    if (key) acc[key] = value
+
+    if (key) {
+      acc[key] = value || ''
+    }
+
     return acc
   }, {})
 }

@@ -4,7 +4,7 @@ import { cwd } from 'node:process'
 import { pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
-import { Vueless, TailwindCSS } from 'vueless/plugin-vite.js'
+import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
 import { cacheMergedConfigs } from 'vueless/utils/node/helper.js'
 import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants.js'
 
@@ -22,10 +22,11 @@ export default defineNuxtModule({
     include: [],
     mirrorCacheDir: '',
     debug: false,
+    postcss: false,
   },
 
   async setup(_options, _nuxt) {
-    const { include, mirrorCacheDir, debug } = _options
+    const { include, mirrorCacheDir, debug, postcss } = _options
     const { resolve } = createResolver(import.meta.url)
     const { vuelessConfig, dependencies } = await getVuelessConfig()
 
@@ -51,7 +52,7 @@ export default defineNuxtModule({
     _nuxt.hook('vite:extendConfig', async (config) => {
       config.plugins = config.plugins || []
       config.plugins.push(
-        TailwindCSS(),
+        TailwindCSS({ postcss }),
         Vueless({ env: NUXT_MODULE_ENV, mirrorCacheDir, debug, include }),
       )
     })
