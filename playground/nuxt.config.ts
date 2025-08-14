@@ -2,6 +2,7 @@ import path from 'node:path'
 import { cwd } from 'node:process'
 
 const playgroundNuxtDirs = [
+  path.join(cwd(), 'playground', 'app'),
   path.join(cwd(), 'playground', 'composables'),
   path.join(cwd(), 'playground', 'components'),
   path.join(cwd(), 'playground', 'layouts'),
@@ -22,14 +23,21 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   compatibilityDate: '2024-09-13',
+  vite: {
+    optimizeDeps: {
+      include: [
+        'vueless',
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+      ],
+    },
+  },
   i18n: {
+    defaultLocale: 'en',
     locales: [
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'ua', name: 'Українська', file: 'ua.json' },
     ],
-    bundle: {
-      optimizeTranslationDirective: false,
-    },
   },
   vueless: {
     include: playgroundNuxtDirs as never[],
