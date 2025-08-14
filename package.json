@@ -38,24 +38,24 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.17.4",
-    "vueless": "^1.1.0"
+    "vueless": "^1.1.1-beta.30"
   },
   "devDependencies": {
-    "@material-symbols/svg-500": "^0.31.4",
-    "@nuxt/devtools": "^2.4.1",
-    "@nuxt/eslint-config": "^1.4.1",
-    "@nuxt/module-builder": "^1.0.1",
-    "@nuxt/schema": "^3.17.4",
-    "@nuxt/test-utils": "^3.19.1",
+    "@material-symbols/svg-500": "^0.34.1",
+    "@nuxt/devtools": "^2.6.2",
+    "@nuxt/eslint-config": "^1.8.0",
+    "@nuxt/kit": "^4.0.3",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.0.3",
+    "@nuxt/test-utils": "^3.19.2",
     "@types/node": "latest",
-    "changelogen": "^0.5.5",
-    "eslint": "^9.27.0",
-    "nuxt": "^3.17.4",
-    "release-it": "^19.0.2",
+    "changelogen": "^0.6.2",
+    "eslint": "^9.33.0",
+    "nuxt": "^4.0.3",
+    "release-it": "^19.0.4",
     "typescript": "latest",
-    "vitest": "^3.1.4",
-    "vue-tsc": "^2.2.10"
+    "vitest": "^3.2.4",
+    "vue-tsc": "^3.0.5"
   },
   "repository": {
     "type": "git",
@@ -69,6 +69,7 @@
     "nuxt",
     "nuxt.js",
     "nuxt3",
+    "nuxt4",
     "ui library",
     "component library",
     "nuxt framework",
