@@ -1,10 +1,10 @@
-import UBadge from './.vueless/configs/UBadge.config'
+import { componentConfigs } from './.vueless'
 
 export default {
   colorMode: 'auto',
   runtimeColors: true,
   components: {
-    UBadge,
+    ...componentConfigs,
     UHeader: {
       // header: 'font-bold',
     },
