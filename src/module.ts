@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url'
 import { createRequire } from 'node:module'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
-import { cacheMergedConfigs } from 'vueless/utils/node/helper.js'
+import { cacheMergedConfigs, autoImportUserConfigs } from 'vueless/utils/node/helper.js'
 import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants.js'
 
 const require = createRequire(import.meta.url)
@@ -28,6 +28,11 @@ export default defineNuxtModule({
   async setup(_options, _nuxt) {
     const { include, mirrorCacheDir, debug, postcss } = _options
     const { resolve } = createResolver(import.meta.url)
+
+    /* Auto-import user component configs */
+    await autoImportUserConfigs()
+
+    /* Get vueless config */
     const { vuelessConfig, dependencies } = await getVuelessConfig()
 
     /* Defining vueless config in runtime  */
@@ -36,6 +41,7 @@ export default defineNuxtModule({
     /* Transpile vueless and tailwindcss ts files into js */
     _nuxt.options.build.transpile.push('vueless')
 
+    /* Register i18n module */
     if (hasNuxtModule('@nuxtjs/i18n')) {
       // @ts-expect-error Type is present in this condition
       _nuxt.hook('i18n:registerModule', (register) => {
@@ -57,8 +63,8 @@ export default defineNuxtModule({
       )
     })
 
+    /* Reload nuxt when vueless config was changed. */
     if (_nuxt.options.dev) {
-      /* Reload nuxt when vueless config was changed. */
       const chokidarPath = require.resolve('chokidar')
       const chokidar = await import(pathToFileURL(chokidarPath).href)
 
