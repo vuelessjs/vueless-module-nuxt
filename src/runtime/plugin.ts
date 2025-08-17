@@ -59,26 +59,26 @@ export default defineNuxtPlugin((_nuxtApp) => {
     const neutral = cookies?.[`vl-${NEUTRAL_COLOR}`]
 
     const text = {
-      xs: cookies?.[`vl-${TEXT}-xs`],
-      sm: cookies?.[`vl-${TEXT}-sm`],
-      md: cookies?.[`vl-${TEXT}-md`],
-      lg: cookies?.[`vl-${TEXT}-lg`],
+      xs: Number(cookies?.[`vl-${TEXT}-xs`]),
+      sm: Number(cookies?.[`vl-${TEXT}-sm`]),
+      md: Number(cookies?.[`vl-${TEXT}-md`]),
+      lg: Number(cookies?.[`vl-${TEXT}-lg`]),
     }
 
     const outline = {
-      sm: cookies?.[`vl-${OUTLINE}-sm`],
-      md: cookies?.[`vl-${OUTLINE}-md`],
-      lg: cookies?.[`vl-${OUTLINE}-lg`],
+      sm: Number(cookies?.[`vl-${OUTLINE}-sm`]),
+      md: Number(cookies?.[`vl-${OUTLINE}-md`]),
+      lg: Number(cookies?.[`vl-${OUTLINE}-lg`]),
     }
 
     const rounding = {
-      sm: cookies?.[`vl-${ROUNDING}-sm`],
-      md: cookies?.[`vl-${ROUNDING}-md`],
-      lg: cookies?.[`vl-${ROUNDING}-lg`],
+      sm: Number.isNaN(cookies?.[`vl-${ROUNDING}-sm`]) ? Number(cookies?.[`vl-${ROUNDING}-sm`]) : undefined,
+      md: Number.isNaN(cookies?.[`vl-${ROUNDING}-md`]) ? Number(cookies?.[`vl-${ROUNDING}-md`]) : undefined,
+      lg: Number.isNaN(cookies?.[`vl-${ROUNDING}-lg`]) ? Number(cookies?.[`vl-${ROUNDING}-lg`]) : undefined,
     }
 
-    const disabledOpacity = cookies?.[`vl-${DISABLED_OPACITY}`]
-    const colorMode = cookies?.[COLOR_MODE_KEY] || vuelessConfig.colorMode || ColorMode.Light
+    const disabledOpacity = Number(cookies?.[`vl-${DISABLED_OPACITY}`])
+    const colorMode = (cookies?.[COLOR_MODE_KEY] || vuelessConfig.colorMode || ColorMode.Light) as ColorMode
     const isCachedAutoMode = Boolean(Number(cookies?.[AUTO_MODE_KEY]))
 
     const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode }, isCachedAutoMode)
