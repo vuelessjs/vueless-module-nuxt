@@ -1,4 +1,1 @@
-declare module '@vueless/*'
-declare module '@vueless'
-declare module 'vueless'
-declare module 'vueless/*'
+/// <reference types="vueless/modules" />
