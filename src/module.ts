@@ -6,7 +6,7 @@ import { createRequire } from 'node:module'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
 import { cacheMergedConfigs, autoImportUserConfigs } from 'vueless/utils/node/helper.js'
-import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants.js'
+import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants'
 
 const require = createRequire(import.meta.url)
 
@@ -91,10 +91,10 @@ export default defineNuxtModule({
     addPlugin(resolve('./runtime/plugin'))
 
     /* Register vueless components for auto-import. */
-    for (const componentName in COMPONENTS) {
+    for (const [componentName, componentPath] of Object.entries(COMPONENTS)) {
       addComponent({
         name: componentName,
-        filePath: `vueless/${COMPONENTS[componentName]}/${componentName}.vue`,
+        filePath: `vueless/${componentPath}/${componentName}.vue`,
       })
     }
 

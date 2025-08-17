@@ -1,4 +1,4 @@
-import { createVueless, createVueI18nAdapter, setTheme, vClickOutside, vTooltip, vuelessConfig } from 'vueless'
+import { createVueless, createVueI18nAdapter, setTheme, ColorMode, vClickOutside, vTooltip, vuelessConfig } from 'vueless'
 import {
   TEXT,
   OUTLINE,
@@ -10,10 +10,9 @@ import {
   DARK_MODE_CLASS,
   LIGHT_MODE_CLASS,
   DISABLED_OPACITY,
-} from 'vueless/constants.js'
+} from 'vueless/constants'
 
-import { ColorMode } from 'vueless/types'
-import type { CreateVuelessOptions } from 'vueless/types'
+import type { CreateVuelessOptions } from 'vueless'
 
 import { useRuntimeConfig } from '#imports'
 import { defineNuxtPlugin } from '#app'
