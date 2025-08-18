@@ -38,7 +38,7 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "vueless": "^1.1.1-beta.46"
+    "vueless": "^1.1.1-beta.47"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.34.1",

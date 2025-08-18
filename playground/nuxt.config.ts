@@ -27,12 +27,12 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: [
-        'vueless',
         '@vue/devtools-core',
         '@vue/devtools-kit',
       ],
     },
   },
+  // @ts-expect-error: i18n does not exist in type
   i18n: {
     defaultLocale: 'en',
     locales: [
