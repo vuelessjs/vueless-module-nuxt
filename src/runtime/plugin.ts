@@ -14,7 +14,6 @@ import {
 
 import type { CreateVuelessOptions } from 'vueless'
 
-import { useRuntimeConfig } from '#imports'
 import { defineNuxtPlugin } from '#app'
 
 function parseCookies(cookieHeader?: string): Record<string, string> {
@@ -32,8 +31,7 @@ function parseCookies(cookieHeader?: string): Record<string, string> {
 }
 
 export default defineNuxtPlugin((_nuxtApp) => {
-  const config = useRuntimeConfig().public.vueless
-  const vuelessOptions = { config } as never as CreateVuelessOptions
+  const vuelessOptions = {} as CreateVuelessOptions
 
   if ('$i18n' in _nuxtApp) {
     vuelessOptions.i18n = {

@@ -1,14 +1,7 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import { cwd } from 'node:process'
-import { pathToFileURL } from 'node:url'
-import { createRequire } from 'node:module'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
 import { cacheMergedConfigs, autoImportUserConfigs } from 'vueless/utils/node/helper.js'
-import { COMPONENTS, VUELESS_CONFIG_FILE_NAME, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants'
-
-const require = createRequire(import.meta.url)
+import { COMPONENTS, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants'
 
 export default defineNuxtModule({
   meta: {
@@ -21,22 +14,19 @@ export default defineNuxtModule({
   defaults: {
     include: [],
     mirrorCacheDir: '',
+    srcDir: undefined,
     debug: false,
     postcss: false,
   },
 
   async setup(_options, _nuxt) {
-    const { include, mirrorCacheDir, debug, postcss } = _options
+    const { include, mirrorCacheDir, debug, postcss, srcDir } = _options
     const { resolve } = createResolver(import.meta.url)
 
     /* Auto-import user component configs */
-    await autoImportUserConfigs()
-
-    /* Get vueless config */
-    const { vuelessConfig, dependencies } = await getVuelessConfig()
-
-    /* Defining vueless config in runtime  */
-    _nuxt.options.runtimeConfig.public.vueless = vuelessConfig
+    if (srcDir !== undefined) {
+      await autoImportUserConfigs(srcDir)
+    }
 
     /* Register i18n module */
     if (hasNuxtModule('@nuxtjs/i18n')) {
@@ -59,24 +49,6 @@ export default defineNuxtModule({
         Vueless({ env: NUXT_MODULE_ENV, mirrorCacheDir, debug, include }),
       )
     })
-
-    /* Reload nuxt when vueless config was changed. */
-    if (_nuxt.options.dev) {
-      const chokidarPath = require.resolve('chokidar')
-      const chokidar = await import(pathToFileURL(chokidarPath).href)
-
-      const watcher = chokidar.watch(dependencies, { ignoreInitial: true })
-
-      watcher.on('change', async () => {
-        const { dependencies: newDependencies } = await getVuelessConfig()
-
-        watcher.unwatch(dependencies)
-        watcher.add(newDependencies)
-
-        /* TODO: Need to find better solution. */
-        _nuxt.callHook('restart')
-      })
-    }
 
     /* Merge component configs and cache it */
     await cacheMergedConfigs(VUELESS_PACKAGE_DIR)
@@ -102,38 +74,3 @@ export default defineNuxtModule({
     addImportsDir('vueless/utils')
   },
 })
-
-async function getVuelessConfig() {
-  /* Using esbuild. This prevents `Inlined implicit external` issue. */
-  const esbuildPath = require.resolve('esbuild')
-  const esbuild = await import(pathToFileURL(esbuildPath).href)
-  const esbuildConfig = {
-    bundle: true,
-    platform: 'node',
-    format: 'esm',
-    target: 'ESNext',
-    loader: { '.ts': 'ts' },
-    write: false,
-    metafile: true, // Generate dependency tree
-  }
-
-  const configPathJs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.js`)
-  const configPathTs = path.join(cwd(), `${VUELESS_CONFIG_FILE_NAME}.ts`)
-
-  let result = null
-
-  if (fs.existsSync(configPathJs)) {
-    result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathJs] })
-  }
-
-  if (fs.existsSync(configPathTs)) {
-    result = await esbuild.build({ ...esbuildConfig, entryPoints: [configPathTs] })
-  }
-
-  const code = result?.outputFiles?.[0]?.text || ''
-
-  return {
-    vuelessConfig: (await import(`data:text/javascript,${encodeURIComponent(code)}`)).default || {},
-    dependencies: Object.keys(result?.metafile?.inputs || {}),
-  }
-}
