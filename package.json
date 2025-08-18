@@ -30,12 +30,12 @@
     "release:patch": "release-it patch --ci --npm.publish --git.tag --github.release",
     "release:minor": "release-it minor --ci --npm.publish --git.tag --github.release",
     "release:major": "release-it major --ci --npm.publish --git.tag --github.release",
+    "ts:check": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
     "lint": "eslint . --no-fix",
     "lint:fix": "eslint . --fix",
     "lint:ci": "eslint . --no-fix --max-warnings=0",
     "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:watch": "vitest watch"
   },
   "dependencies": {
     "vueless": "^1.1.1-beta.47"
