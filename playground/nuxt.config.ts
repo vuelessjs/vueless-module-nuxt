@@ -41,7 +41,7 @@ export default defineNuxtConfig({
     ],
   },
   vueless: {
-    srcDir: 'playground',
+    srcDir: 'playground' as never,
     include: playgroundNuxtDirs as never[],
     mirrorCacheDir: 'playground/node_modules/.cache/vueless',
   },
