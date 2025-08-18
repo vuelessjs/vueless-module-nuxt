@@ -1,5 +1,6 @@
 import path from 'node:path'
 import { cwd } from 'node:process'
+import { defineNuxtConfig } from 'nuxt/config'
 
 const playgroundNuxtDirs = [
   path.join(cwd(), 'playground', 'app'),
