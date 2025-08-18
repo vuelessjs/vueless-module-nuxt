@@ -38,7 +38,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "vueless": "^1.1.1-beta.47"
+    "vueless": "^1.1.1-beta.49"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.34.1",
