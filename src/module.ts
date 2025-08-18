@@ -38,9 +38,6 @@ export default defineNuxtModule({
     /* Defining vueless config in runtime  */
     _nuxt.options.runtimeConfig.public.vueless = vuelessConfig
 
-    /* Transpile vueless and tailwindcss ts files into js */
-    _nuxt.options.build.transpile.push('vueless')
-
     /* Register i18n module */
     if (hasNuxtModule('@nuxtjs/i18n')) {
       // @ts-expect-error Type is present in this condition
