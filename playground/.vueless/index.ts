@@ -9,8 +9,8 @@
  * Example: "UButton.config.ts"
  */
 
-import UBadge from "./configs/UBadge.config.ts";
-import UButton from "./configs/UButton.config.ts";
+import UBadge from "./configs/UBadge.ts";
+import UButton from "./configs/UButton.ts";
 
 export const componentConfigs = {
   UBadge,
