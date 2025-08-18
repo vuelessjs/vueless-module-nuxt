@@ -5,8 +5,5 @@ export default {
   runtimeColors: true,
   components: {
     ...componentConfigs,
-    UHeader: {
-      // header: 'font-bold',
-    },
   },
 }
