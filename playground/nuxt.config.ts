@@ -15,7 +15,7 @@ const playgroundNuxtDirs = [
   path.join(cwd(), 'playground', 'Error.vue'),
   path.join(cwd(), 'playground', 'app.vue'),
   path.join(cwd(), 'playground', 'error.vue'),
-]
+] as never[]
 
 export default defineNuxtConfig({
   modules: ['../src/module.ts', '@nuxtjs/i18n'],
@@ -41,8 +41,8 @@ export default defineNuxtConfig({
     ],
   },
   vueless: {
-    srcDir: 'playground' as never,
-    include: playgroundNuxtDirs as never[],
+    srcDir: 'playground',
+    include: playgroundNuxtDirs,
     mirrorCacheDir: 'playground/node_modules/.cache/vueless',
   },
 })
