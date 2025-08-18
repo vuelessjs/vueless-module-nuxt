@@ -14,19 +14,19 @@ export default defineNuxtModule({
   defaults: {
     include: [],
     mirrorCacheDir: '',
-    srcDir: undefined,
+    srcDir: '',
     debug: false,
     postcss: false,
   },
-
   async setup(_options, _nuxt) {
-    const { include, mirrorCacheDir, debug, postcss, srcDir } = _options
+    /* Prevent invoking the module several times */
+    if (_nuxt.options._prepare) return
+
     const { resolve } = createResolver(import.meta.url)
+    const { include, mirrorCacheDir, debug, postcss, srcDir } = _options
 
     /* Auto-import user component configs */
-    if (srcDir !== undefined) {
-      await autoImportUserConfigs(srcDir)
-    }
+    await autoImportUserConfigs(srcDir)
 
     /* Register i18n module */
     if (hasNuxtModule('@nuxtjs/i18n')) {
