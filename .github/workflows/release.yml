@@ -25,6 +25,7 @@ jobs:
           node-version: 22
           cache: 'npm'
       - run: npm ci
+      - run: npm run dev:prepare
       - run: npm run lint:ci
 
   ts-check:
