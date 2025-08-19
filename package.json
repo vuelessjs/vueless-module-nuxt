@@ -5,21 +5,9 @@
   "author": "Johnny Grid <hello@vueless.com> (https://vueless.com)",
   "homepage": "https://vueless.com",
   "license": "MIT",
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/types.d.mts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.mjs"
-    }
-  },
-  "main": "./dist/module.mjs",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "dev": "npm run dev:prepare && nuxi dev playground",
     "dev:prepare": "nuxi cleanup && nuxi prepare && nuxi cleanup playground && nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
@@ -57,6 +45,19 @@
     "vitest": "^3.2.4",
     "vue-tsc": "^3.0.5"
   },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.mjs"
+    }
+  },
+  "main": "./dist/module.mjs",
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vuelessjs/vueless-module-nuxt.git"
