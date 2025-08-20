@@ -1,5 +1,6 @@
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
+import { getVuelessConfig } from 'vueless/utils/node/vuelessConfig.js'
 import { cacheMergedConfigs, autoImportUserConfigs } from 'vueless/utils/node/helper.js'
 import { COMPONENTS, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants'
 
@@ -13,8 +14,7 @@ export default defineNuxtModule({
   },
   defaults: {
     include: [],
-    mirrorCacheDir: '',
-    srcDir: '',
+    basePath: '',
     debug: false,
     postcss: false,
   },
@@ -23,10 +23,10 @@ export default defineNuxtModule({
     if (_nuxt.options._prepare) return
 
     const { resolve } = createResolver(import.meta.url)
-    const { include, mirrorCacheDir, debug, postcss, srcDir } = _options
+    const { include, debug, postcss, basePath } = _options
 
-    /* Auto-import user component configs */
-    await autoImportUserConfigs(srcDir)
+    /* Sync server vueless config with runtime config. */
+    _nuxt.options.runtimeConfig.public.vueless = await getVuelessConfig(basePath)
 
     /* Register i18n module */
     if (hasNuxtModule('@nuxtjs/i18n')) {
@@ -46,9 +46,12 @@ export default defineNuxtModule({
       config.plugins = config.plugins || []
       config.plugins.push(
         TailwindCSS({ postcss }),
-        Vueless({ env: NUXT_MODULE_ENV, mirrorCacheDir, debug, include }),
+        Vueless({ env: NUXT_MODULE_ENV, basePath, debug, include }),
       )
     })
+
+    /* Auto-import user component configs */
+    await autoImportUserConfigs(basePath)
 
     /* Merge component configs and cache it */
     await cacheMergedConfigs(VUELESS_PACKAGE_DIR)

@@ -1,3 +1,4 @@
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 import { createVueless, createVueI18nAdapter, setTheme, ColorMode, vClickOutside, vTooltip, vuelessConfig } from 'vueless'
 import {
   TEXT,
@@ -12,9 +13,7 @@ import {
   DISABLED_OPACITY,
 } from 'vueless/constants'
 
-import type { CreateVuelessOptions } from 'vueless'
-
-import { defineNuxtPlugin } from '#app'
+import type { CreateVuelessOptions, Config as VuelessConfig } from 'vueless'
 
 function parseCookies(cookieHeader?: string): Record<string, string> {
   if (!cookieHeader) return {}
@@ -33,6 +32,12 @@ function parseCookies(cookieHeader?: string): Record<string, string> {
 export default defineNuxtPlugin((_nuxtApp) => {
   const vuelessOptions = {} as CreateVuelessOptions
 
+  /* Define Vueless config only in production to prevent hydration errors */
+  if (import.meta.env.PROD) {
+    vuelessOptions.config = useRuntimeConfig().public.vueless as VuelessConfig
+  }
+
+  /* Define vue-i18n adapter */
   if ('$i18n' in _nuxtApp) {
     vuelessOptions.i18n = {
       adapter: createVueI18nAdapter({ global: _nuxtApp.$i18n }),
@@ -53,8 +58,8 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     const cookies = parseCookies(event?.node.req.headers.cookie)
 
-    const primary = cookies?.[`vl-${PRIMARY_COLOR}`]
-    const neutral = cookies?.[`vl-${NEUTRAL_COLOR}`]
+    const primary = cookies?.[`vl-${PRIMARY_COLOR}`] ?? undefined
+    const neutral = cookies?.[`vl-${NEUTRAL_COLOR}`] ?? undefined
 
     const textXs = Number(cookies?.[`vl-${TEXT}-xs`])
     const textSm = Number(cookies?.[`vl-${TEXT}-sm`])
