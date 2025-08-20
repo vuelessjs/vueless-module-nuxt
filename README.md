@@ -39,7 +39,7 @@ Vueless is simple enough for everyday use and powerful enough for advanced scena
 - 🔩️ Add or hide props to components
 - 🧿 `npm` package ships full source without TypeScript transpilation for better DX.
 
-## Quick Start (Nuxt)
+## Quick Start
 
 1. Install Vueless Nuxt module.
 
