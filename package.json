@@ -26,7 +26,7 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "vueless": "^1.1.1-beta.50"
+    "vueless": "^1.1.1-beta.56"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.34.1",
