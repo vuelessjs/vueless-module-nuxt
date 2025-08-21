@@ -1,4 +1,5 @@
 // @ts-check
+import { globalIgnores } from 'eslint/config'
 import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
 
 // Run `npx @eslint/config-inspector` to inspect the resolved config interactively
@@ -16,5 +17,6 @@ export default createConfigForNuxt({
   },
 })
   .append(
+    globalIgnores(['.storybook']),
     // your custom flat config here...
   )
