@@ -6,7 +6,6 @@ import {
   ROUNDING,
   PRIMARY_COLOR,
   NEUTRAL_COLOR,
-  AUTO_MODE_KEY,
   COLOR_MODE_KEY,
   DARK_MODE_CLASS,
   LIGHT_MODE_CLASS,
@@ -98,10 +97,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     const colorMode = (cookies?.[COLOR_MODE_KEY] || vuelessConfig.colorMode || ColorMode.Light) as ColorMode
 
-    const autoModeValue = Number(cookies?.[AUTO_MODE_KEY])
-    const isCachedAutoMode = Boolean(!Number.isNaN(autoModeValue) ? autoModeValue : undefined)
-
-    const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode }, isCachedAutoMode)
+    const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode })
     const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_CLASS : LIGHT_MODE_CLASS
 
     _nuxtApp.ssrContext?.head.push({
