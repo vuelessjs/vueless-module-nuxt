@@ -1,30 +1,57 @@
 {
   "name": "@vueless/nuxt",
-  "version": "1.0.0",
-  "license": "MIT",
+  "version": "1.0.1-beta.14",
   "description": "Nuxt Styleless UI Component Library, powered by Tailwind CSS.",
-  "keywords": [
-    "vueless",
-    "nuxt",
-    "nuxt.js",
-    "nuxt3",
-    "ui library",
-    "component library",
-    "nuxt framework",
-    "design system",
-    "tailwind",
-    "tailwindcss",
-    "unstyled",
-    "styleless",
-    "headlessui",
-    "ui"
-  ],
+  "author": "Johnny Grid <hello@vueless.com> (https://vueless.com)",
   "homepage": "https://vueless.com",
-  "author": "Johnny Grid",
-  "type": "module",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "dev": "npm run dev:prepare && nuxi dev playground",
+    "dev:prepare": "nuxi cleanup && nuxi prepare && nuxi cleanup playground && nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev:build": "nuxi build playground",
+    "dev:preview": "nuxi preview playground",
+    "prepack": "nuxi prepare && nuxt-module-build build && cp package.json LICENSE README.md dist/",
+    "release:beta": "release-it --ci --npm.publish --preRelease=beta --increment=prerelease",
+    "release:patch": "release-it patch --ci --npm.publish --git.tag --github.release",
+    "release:minor": "release-it minor --ci --npm.publish --git.tag --github.release",
+    "release:major": "release-it major --ci --npm.publish --git.tag --github.release",
+    "ts:check": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "lint": "eslint . --no-fix",
+    "lint:fix": "eslint . --fix",
+    "lint:ci": "eslint . --no-fix --max-warnings=0",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "sb:dev": "storybook dev -p 6006 --no-open",
+    "sb:dev:docs": "storybook dev -p 6006 --docs --no-open",
+    "sb:build": "storybook build --docs",
+    "sb:preview": "vite preview --host --outDir=storybook-static"
+  },
+  "dependencies": {
+    "vueless": "^1.2.2"
+  },
+  "devDependencies": {
+    "@material-symbols/svg-500": "^0.34.1",
+    "@nuxt/devtools": "^2.6.2",
+    "@nuxt/eslint-config": "^1.8.0",
+    "@nuxt/kit": "^4.0.3",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.0.3",
+    "@nuxt/test-utils": "^3.19.2",
+    "@types/node": "latest",
+    "@vueless/storybook": "^1.2.0",
+    "changelogen": "^0.6.2",
+    "eslint": "^9.33.0",
+    "nuxt": "^4.0.3",
+    "release-it": "^19.0.4",
+    "typescript": "latest",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^3.0.5"
+  },
+  "sideEffects": false,
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/types.d.mts",
@@ -36,47 +63,28 @@
   "files": [
     "dist"
   ],
-  "scripts": {
-    "dev": "npm run dev:prepare && nuxi dev playground",
-    "dev:prepare": "nuxi cleanup && nuxi prepare && nuxi cleanup playground && nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "dev:build": "nuxi build playground",
-    "dev:preview": "nuxi preview playground",
-    "prepack": "nuxi prepare && nuxt-module-build build && cp package.json LICENSE README.md dist/",
-    "release:beta": "release-it --ci --npm.publish --preRelease=beta --increment=prerelease",
-    "release:patch": "release-it patch --ci --npm.publish",
-    "release:minor": "release-it minor --ci --npm.publish --git.tag --github.release",
-    "release:major": "release-it major --ci --npm.publish --git.tag --github.release",
-    "lint": "eslint .",
-    "lint:ci": "eslint --no-fix --max-warnings=0",
-    "test": "vitest run",
-    "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
-  },
-  "dependencies": {
-    "@nuxt/kit": "^3.17.4",
-    "vueless": "^1.0.1"
-  },
-  "devDependencies": {
-    "@material-symbols/svg-500": "^0.31.4",
-    "@nuxt/devtools": "^2.4.1",
-    "@nuxt/eslint-config": "^1.4.1",
-    "@nuxt/module-builder": "^1.0.1",
-    "@nuxt/schema": "^3.17.4",
-    "@nuxt/test-utils": "^3.19.1",
-    "@types/node": "latest",
-    "changelogen": "^0.5.5",
-    "eslint": "^9.27.0",
-    "nuxt": "^3.17.4",
-    "release-it": "^19.0.2",
-    "typescript": "latest",
-    "vitest": "^3.1.4",
-    "vue-tsc": "^2.2.10"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vuelessjs/vueless-module-nuxt.git"
   },
   "bugs": {
     "url": "https://github.com/vuelessjs/vueless-module-nuxt/issues"
-  }
+  },
+  "keywords": [
+    "vueless",
+    "nuxt",
+    "nuxt.js",
+    "nuxt3",
+    "nuxt4",
+    "ui library",
+    "component library",
+    "nuxt framework",
+    "design system",
+    "tailwind",
+    "tailwindcss",
+    "unstyled",
+    "styleless",
+    "headlessui",
+    "ui"
+  ]
 }

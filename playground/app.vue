@@ -81,8 +81,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { setTheme } from 'vueless'
-import { useDarkMode } from 'vueless/composables/useDarkMode'
+import { setTheme, useDarkMode } from 'vueless'
 
 const { isDarkMode } = useDarkMode()
 

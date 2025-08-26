@@ -1,41 +1,42 @@
-import { createVueless, setTheme } from 'vueless'
-import createVueI18nAdapter from 'vueless/adapter.locale/vue-i18n'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
+import { createVueless, createVueI18nAdapter, setTheme, ColorMode, vClickOutside, vTooltip, vuelessConfig } from 'vueless'
 import {
   TEXT,
   OUTLINE,
   ROUNDING,
   PRIMARY_COLOR,
   NEUTRAL_COLOR,
-  AUTO_MODE_KEY,
   COLOR_MODE_KEY,
   DARK_MODE_CLASS,
   LIGHT_MODE_CLASS,
   DISABLED_OPACITY,
 } from 'vueless/constants'
-import { ColorMode } from 'vueless/types'
-import vClickOutside from 'vueless/directives/clickOutside/vClickOutside'
-import vTooltip from 'vueless/directives/tooltip/vTooltip'
 
-import type { CreateVuelessOptions } from 'vueless/types'
+import type { CreateVuelessOptions, Config as VuelessConfig } from 'vueless'
 
-import { vuelessConfig } from 'vueless/utils/ui'
-import { useRuntimeConfig } from '#imports'
-import { defineNuxtPlugin } from '#app'
-
-function parseCookies(cookieHeader: string | undefined): Record<string, string> {
+function parseCookies(cookieHeader?: string): Record<string, string> {
   if (!cookieHeader) return {}
 
   return cookieHeader.split(';').reduce<Record<string, string>>((acc, cookie) => {
     const [key, value] = cookie.trim().split('=')
-    if (key) acc[key] = value
+
+    if (key) {
+      acc[key] = value || ''
+    }
+
     return acc
   }, {})
 }
 
 export default defineNuxtPlugin((_nuxtApp) => {
-  const config = useRuntimeConfig().public.vueless
-  const vuelessOptions = { config } as CreateVuelessOptions
+  const vuelessOptions = {} as CreateVuelessOptions
 
+  /* Define Vueless config only in production to prevent hydration errors */
+  if (import.meta.env.PROD) {
+    vuelessOptions.config = useRuntimeConfig().public.vueless as VuelessConfig
+  }
+
+  /* Define vue-i18n adapter */
   if ('$i18n' in _nuxtApp) {
     vuelessOptions.i18n = {
       adapter: createVueI18nAdapter({ global: _nuxtApp.$i18n }),
@@ -56,33 +57,47 @@ export default defineNuxtPlugin((_nuxtApp) => {
 
     const cookies = parseCookies(event?.node.req.headers.cookie)
 
-    const primary = cookies?.[`vl-${PRIMARY_COLOR}`]
-    const neutral = cookies?.[`vl-${NEUTRAL_COLOR}`]
+    const primary = cookies?.[`vl-${PRIMARY_COLOR}`] ?? undefined
+    const neutral = cookies?.[`vl-${NEUTRAL_COLOR}`] ?? undefined
+
+    const textXs = Number(cookies?.[`vl-${TEXT}-xs`])
+    const textSm = Number(cookies?.[`vl-${TEXT}-sm`])
+    const textMd = Number(cookies?.[`vl-${TEXT}-md`])
+    const textLg = Number(cookies?.[`vl-${TEXT}-lg`])
 
     const text = {
-      xs: cookies?.[`vl-${TEXT}-xs`],
-      sm: cookies?.[`vl-${TEXT}-sm`],
-      md: cookies?.[`vl-${TEXT}-md`],
-      lg: cookies?.[`vl-${TEXT}-lg`],
+      xs: !Number.isNaN(textXs) ? textXs : undefined,
+      sm: !Number.isNaN(textSm) ? textSm : undefined,
+      md: !Number.isNaN(textMd) ? textMd : undefined,
+      lg: !Number.isNaN(textLg) ? textLg : undefined,
     }
+
+    const outlineSm = Number(cookies?.[`vl-${OUTLINE}-sm`])
+    const outlineMd = Number(cookies?.[`vl-${OUTLINE}-md`])
+    const outlineLg = Number(cookies?.[`vl-${OUTLINE}-lg`])
 
     const outline = {
-      sm: cookies?.[`vl-${OUTLINE}-sm`],
-      md: cookies?.[`vl-${OUTLINE}-md`],
-      lg: cookies?.[`vl-${OUTLINE}-lg`],
+      sm: !Number.isNaN(outlineSm) ? outlineSm : undefined,
+      md: !Number.isNaN(outlineMd) ? outlineMd : undefined,
+      lg: !Number.isNaN(outlineLg) ? outlineLg : undefined,
     }
+
+    const roundingSm = Number(cookies?.[`vl-${ROUNDING}-sm`])
+    const roundingMd = Number(cookies?.[`vl-${ROUNDING}-md`])
+    const roundingLg = Number(cookies?.[`vl-${ROUNDING}-lg`])
 
     const rounding = {
-      sm: cookies?.[`vl-${ROUNDING}-sm`],
-      md: cookies?.[`vl-${ROUNDING}-md`],
-      lg: cookies?.[`vl-${ROUNDING}-lg`],
+      sm: !Number.isNaN(roundingSm) ? roundingSm : undefined,
+      md: !Number.isNaN(roundingMd) ? roundingMd : undefined,
+      lg: !Number.isNaN(roundingLg) ? roundingLg : undefined,
     }
 
-    const disabledOpacity = cookies?.[`vl-${DISABLED_OPACITY}`]
-    const colorMode = cookies?.[COLOR_MODE_KEY] || vuelessConfig.colorMode || ColorMode.Light
-    const isCachedAutoMode = Boolean(Number(cookies?.[AUTO_MODE_KEY]))
+    const disabledOpacityValue = Number(cookies?.[`vl-${DISABLED_OPACITY}`])
+    const disabledOpacity = !Number.isNaN(disabledOpacityValue) ? disabledOpacityValue : undefined
 
-    const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode }, isCachedAutoMode)
+    const colorMode = (cookies?.[COLOR_MODE_KEY] || vuelessConfig.colorMode || ColorMode.Light) as ColorMode
+
+    const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode })
     const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_CLASS : LIGHT_MODE_CLASS
 
     _nuxtApp.ssrContext?.head.push({
