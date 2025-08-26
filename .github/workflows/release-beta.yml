@@ -17,6 +17,8 @@ jobs:
           node-version: 22
           cache: 'npm'
       - run: npm ci
+      - run: cd playground && npm ci
+      - run: cd ..
       - run: npm run lint:ci
 
   ts-check:
