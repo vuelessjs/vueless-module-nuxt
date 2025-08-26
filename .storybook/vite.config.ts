@@ -6,7 +6,7 @@ import { Vueless, TailwindCSS } from "vueless/plugin-vite";
 import { STORYBOOK_ENV } from "vueless/constants.js";
 
 export default defineConfig({
-  plugins: [Vue(), TailwindCSS(), Vueless({ env: STORYBOOK_ENV, basePath: "playground" })],
+  plugins: [Vue(), TailwindCSS(), Vueless({ env: STORYBOOK_ENV,  basePath: "playground" })],
   optimizeDeps: {
     include: [
       "cva",
@@ -18,6 +18,7 @@ export default defineConfig({
       "storybook/internal/docs-tools",
       "@storybook/addon-themes",
       "@storybook/vue3-vite",
+      "@vueless/storybook",
     ],
   },
 });
