@@ -41,7 +41,7 @@
     "@nuxt/schema": "^4.0.3",
     "@nuxt/test-utils": "^3.19.2",
     "@types/node": "latest",
-    "@vueless/storybook": "^1.2.1",
+    "@vueless/storybook": "^1.2.2",
     "changelogen": "^0.6.2",
     "eslint": "^9.33.0",
     "nuxt": "^4.0.3",
