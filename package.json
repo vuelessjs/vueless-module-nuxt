@@ -1,6 +1,6 @@
 {
   "name": "@vueless/nuxt",
-  "version": "1.1.0",
+  "version": "1.1.1-beta.0",
   "description": "Nuxt Styleless UI Component Library, powered by Tailwind CSS.",
   "author": "Johnny Grid <hello@vueless.com> (https://vueless.com)",
   "homepage": "https://vueless.com",
@@ -30,7 +30,7 @@
     "sb:preview": "vite preview --host --outDir=storybook-static"
   },
   "dependencies": {
-    "vueless": "^1.2.2"
+    "vueless": "^1.2.3"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.34.1",
@@ -41,7 +41,7 @@
     "@nuxt/schema": "^4.0.3",
     "@nuxt/test-utils": "^3.19.2",
     "@types/node": "latest",
-    "@vueless/storybook": "^1.2.0",
+    "@vueless/storybook": "^1.2.2",
     "changelogen": "^0.6.2",
     "eslint": "^9.33.0",
     "nuxt": "^4.0.3",
