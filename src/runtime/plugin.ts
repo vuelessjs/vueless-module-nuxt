@@ -32,7 +32,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
   const vuelessOptions = {} as CreateVuelessOptions
 
   /* Define Vueless config only in production to prevent hydration errors */
-  if (import.meta.env.PROD) {
+  if (!import.meta.env.DEV) {
     vuelessOptions.config = useRuntimeConfig().public.vueless as VuelessConfig
   }
 
