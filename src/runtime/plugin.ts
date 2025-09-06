@@ -1,32 +1,29 @@
 import { defineNuxtPlugin, useRuntimeConfig } from '#app'
-import { createVueless, createVueI18nAdapter, setTheme, ColorMode, vClickOutside, vTooltip, vuelessConfig } from 'vueless'
+import {
+  getTheme,
+  setTheme,
+  ColorMode,
+  createVueless,
+  createVueI18nAdapter,
+  normalizeThemeConfig,
+  vClickOutside,
+  vTooltip,
+} from 'vueless'
 import {
   TEXT,
   OUTLINE,
   ROUNDING,
   PRIMARY_COLOR,
   NEUTRAL_COLOR,
+  AUTO_MODE_KEY,
   COLOR_MODE_KEY,
+  LETTER_SPACING,
   DARK_MODE_CLASS,
   LIGHT_MODE_CLASS,
   DISABLED_OPACITY,
 } from 'vueless/constants'
 
 import type { CreateVuelessOptions, Config as VuelessConfig } from 'vueless'
-
-function parseCookies(cookieHeader?: string): Record<string, string> {
-  if (!cookieHeader) return {}
-
-  return cookieHeader.split(';').reduce<Record<string, string>>((acc, cookie) => {
-    const [key, value] = cookie.trim().split('=')
-
-    if (key) {
-      acc[key] = value || ''
-    }
-
-    return acc
-  }, {})
-}
 
 export default defineNuxtPlugin((_nuxtApp) => {
   const vuelessOptions = {} as CreateVuelessOptions
@@ -54,51 +51,38 @@ export default defineNuxtPlugin((_nuxtApp) => {
   /* Set vueless theme variables */
   if (import.meta.server) {
     const event = _nuxtApp.ssrContext?.event
-
     const cookies = parseCookies(event?.node.req.headers.cookie)
 
-    const primary = cookies?.[`vl-${PRIMARY_COLOR}`] ?? undefined
-    const neutral = cookies?.[`vl-${NEUTRAL_COLOR}`] ?? undefined
+    const normalizedThemeParams = normalizeThemeConfig({
+      colorMode: cookies?.[COLOR_MODE_KEY],
+      isColorModeAuto: cookies?.[AUTO_MODE_KEY],
+      primary: cookies?.[`vl-${PRIMARY_COLOR}`],
+      neutral: cookies?.[`vl-${NEUTRAL_COLOR}`],
+      text: {
+        xs: cookies?.[`vl-${TEXT}-xs`],
+        sm: cookies?.[`vl-${TEXT}-sm`],
+        md: cookies?.[`vl-${TEXT}-md`],
+        lg: cookies?.[`vl-${TEXT}-lg`],
+      },
+      outline: {
+        sm: cookies?.[`vl-${OUTLINE}-sm`],
+        md: cookies?.[`vl-${OUTLINE}-md`],
+        lg: cookies?.[`vl-${OUTLINE}-lg`],
+      },
+      rounding: {
+        sm: cookies?.[`vl-${ROUNDING}-sm`],
+        md: cookies?.[`vl-${ROUNDING}-md`],
+        lg: cookies?.[`vl-${ROUNDING}-lg`],
+      },
+      disabledOpacity: cookies?.[`vl-${DISABLED_OPACITY}`],
+      letterSpacing: cookies?.[`vl-${LETTER_SPACING}`],
+    })
 
-    const textXs = Number(cookies?.[`vl-${TEXT}-xs`])
-    const textSm = Number(cookies?.[`vl-${TEXT}-sm`])
-    const textMd = Number(cookies?.[`vl-${TEXT}-md`])
-    const textLg = Number(cookies?.[`vl-${TEXT}-lg`])
+    console.log('normalizedThemeParams', normalizedThemeParams)
 
-    const text = {
-      xs: !Number.isNaN(textXs) ? textXs : undefined,
-      sm: !Number.isNaN(textSm) ? textSm : undefined,
-      md: !Number.isNaN(textMd) ? textMd : undefined,
-      lg: !Number.isNaN(textLg) ? textLg : undefined,
-    }
-
-    const outlineSm = Number(cookies?.[`vl-${OUTLINE}-sm`])
-    const outlineMd = Number(cookies?.[`vl-${OUTLINE}-md`])
-    const outlineLg = Number(cookies?.[`vl-${OUTLINE}-lg`])
-
-    const outline = {
-      sm: !Number.isNaN(outlineSm) ? outlineSm : undefined,
-      md: !Number.isNaN(outlineMd) ? outlineMd : undefined,
-      lg: !Number.isNaN(outlineLg) ? outlineLg : undefined,
-    }
-
-    const roundingSm = Number(cookies?.[`vl-${ROUNDING}-sm`])
-    const roundingMd = Number(cookies?.[`vl-${ROUNDING}-md`])
-    const roundingLg = Number(cookies?.[`vl-${ROUNDING}-lg`])
-
-    const rounding = {
-      sm: !Number.isNaN(roundingSm) ? roundingSm : undefined,
-      md: !Number.isNaN(roundingMd) ? roundingMd : undefined,
-      lg: !Number.isNaN(roundingLg) ? roundingLg : undefined,
-    }
-
-    const disabledOpacityValue = Number(cookies?.[`vl-${DISABLED_OPACITY}`])
-    const disabledOpacity = !Number.isNaN(disabledOpacityValue) ? disabledOpacityValue : undefined
-
-    const colorMode = (cookies?.[COLOR_MODE_KEY] || vuelessConfig.colorMode || ColorMode.Light) as ColorMode
-
-    const themeRootVariables = setTheme({ primary, neutral, text, outline, rounding, disabledOpacity, colorMode })
-    const colorModeClass = colorMode === ColorMode.Dark ? DARK_MODE_CLASS : LIGHT_MODE_CLASS
+    const theme = getTheme(normalizedThemeParams)
+    const themeRootVariables = setTheme(theme)
+    const colorModeClass = theme.colorMode === ColorMode.Dark ? DARK_MODE_CLASS : LIGHT_MODE_CLASS
 
     _nuxtApp.ssrContext?.head.push({
       style: [{ innerHTML: themeRootVariables }],
@@ -106,3 +90,17 @@ export default defineNuxtPlugin((_nuxtApp) => {
     })
   }
 })
+
+function parseCookies(cookieHeader?: string): Record<string, string> {
+  if (!cookieHeader) return {}
+
+  return cookieHeader.split(';').reduce<Record<string, string>>((acc, cookie) => {
+    const [key, value] = cookie.trim().split('=')
+
+    if (key) {
+      acc[key] = value || ''
+    }
+
+    return acc
+  }, {})
+}
