@@ -79,6 +79,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     })
 
     const theme = getTheme(normalizedThemeParams)
+
     const themeRootVariables = setTheme(theme)
     const colorModeClass = theme.colorMode === ColorMode.Dark ? DARK_MODE_CLASS : LIGHT_MODE_CLASS
 
