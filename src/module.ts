@@ -1,5 +1,3 @@
-import fs from 'node:fs'
-import path from 'node:path'
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
 import { getVuelessConfig } from 'vueless/utils/node/vuelessConfig.js'
@@ -7,9 +5,7 @@ import { cacheMergedConfigs, autoImportUserConfigs } from 'vueless/utils/node/he
 import {
   COMPONENTS,
   NUXT_MODULE_ENV,
-  VUELESS_CACHE_DIR,
   VUELESS_PACKAGE_DIR,
-  VUELESS_CONFIG_FILE_NAME,
 } from 'vueless/constants'
 
 export default defineNuxtModule({
@@ -58,14 +54,8 @@ export default defineNuxtModule({
       )
     })
 
-    /* Copy vueless config into build. Required for `nuxt build` */
-    _nuxt.hook('nitro:build:public-assets', (nitro) => {
-      const vuelessConfigPath = `${VUELESS_CACHE_DIR}/${VUELESS_CONFIG_FILE_NAME}.mjs`
-      const src = path.resolve(vuelessConfigPath)
-      const dest = path.join(nitro.options.output.dir, vuelessConfigPath)
-
-      fs.mkdirSync(path.dirname(dest), { recursive: true })
-      fs.copyFileSync(src, dest)
+    _nuxt.hook('builder:watch', async () => {
+      await getVuelessConfig(basePath)
     })
 
     /* Auto-import user component configs */
