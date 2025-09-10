@@ -1,4 +1,4 @@
-import { defineNuxtPlugin, useRuntimeConfig } from '#app'
+import { defineNuxtPlugin } from '#app'
 import {
   getTheme,
   setTheme,
@@ -23,15 +23,10 @@ import {
   DISABLED_OPACITY,
 } from 'vueless/constants'
 
-import type { CreateVuelessOptions, Config as VuelessConfig } from 'vueless'
+import type { CreateVuelessOptions } from 'vueless'
 
 export default defineNuxtPlugin((_nuxtApp) => {
   const vuelessOptions = {} as CreateVuelessOptions
-
-  /* Define Vueless config only in production to prevent hydration errors */
-  if (!import.meta.env.DEV) {
-    vuelessOptions.config = useRuntimeConfig().public.vueless as VuelessConfig
-  }
 
   /* Define vue-i18n adapter */
   if ('$i18n' in _nuxtApp) {
