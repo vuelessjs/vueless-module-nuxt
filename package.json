@@ -30,21 +30,21 @@
     "sb:preview": "vite preview --host --outDir=storybook-static"
   },
   "dependencies": {
-    "vueless": "^1.2.5"
+    "vueless": "^1.2.6"
   },
   "devDependencies": {
-    "@material-symbols/svg-500": "^0.34.1",
-    "@nuxt/devtools": "^2.6.2",
-    "@nuxt/eslint-config": "^1.8.0",
-    "@nuxt/kit": "^4.0.3",
+    "@material-symbols/svg-500": "^0.35.0",
+    "@nuxt/devtools": "^2.6.3",
+    "@nuxt/eslint-config": "^1.9.0",
+    "@nuxt/kit": "^4.1.1",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/schema": "^4.0.3",
+    "@nuxt/schema": "^4.1.1",
     "@nuxt/test-utils": "^3.19.2",
     "@types/node": "latest",
-    "@vueless/storybook": "^1.2.2",
+    "@vueless/storybook": "^1.2.6",
     "changelogen": "^0.6.2",
     "eslint": "^9.33.0",
-    "nuxt": "^4.0.3",
+    "nuxt": "^4.1.1",
     "release-it": "^19.0.4",
     "typescript": "latest",
     "vitest": "^3.2.4",
