@@ -1,8 +1,7 @@
 import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
-import { getVuelessConfig } from 'vueless/utils/node/vuelessConfig.js'
 import { cacheMergedConfigs, autoImportUserConfigs } from 'vueless/utils/node/helper.js'
-import { COMPONENTS, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants'
+import { COMPONENTS, NUXT_MODULE_ENV, VUELESS_PACKAGE_DIR } from 'vueless/constants.js'
 
 export default defineNuxtModule({
   meta: {
@@ -24,9 +23,6 @@ export default defineNuxtModule({
 
     const { resolve } = createResolver(import.meta.url)
     const { include, debug, postcss, basePath } = _options
-
-    /* Sync server vueless config with runtime config. */
-    _nuxt.options.runtimeConfig.public.vueless = await getVuelessConfig(basePath)
 
     /* Register i18n module */
     if (hasNuxtModule('@nuxtjs/i18n')) {
