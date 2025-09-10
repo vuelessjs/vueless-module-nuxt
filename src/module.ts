@@ -50,7 +50,7 @@ export default defineNuxtModule({
     await autoImportUserConfigs(basePath)
 
     /* Merge component configs and cache it */
-    await cacheMergedConfigs(VUELESS_PACKAGE_DIR)
+    await cacheMergedConfigs({ vuelessSrcDir: VUELESS_PACKAGE_DIR, basePath })
 
     /**
      * Add runtime plugin
