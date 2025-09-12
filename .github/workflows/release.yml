@@ -31,7 +31,6 @@ jobs:
 
   ts-check:
     name: 'TS Check'
-    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +47,7 @@ jobs:
   release:
     name: "Release: ${{ github.event.inputs.release_type }}"
     if: github.ref_name == 'main'
-    needs: ts-check
+    needs: [lint, ts-check]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -68,4 +67,23 @@ jobs:
       - run: npm run release:${{ github.event.inputs.release_type }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-beta:
+    name: 'Update Beta'
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: |
+          git fetch origin beta
+          git checkout beta
+          git merge origin/main --no-edit -m "Merge main into beta [skip ci]" || echo "Merge conflict, needs manual resolution"
+          git push origin beta
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
