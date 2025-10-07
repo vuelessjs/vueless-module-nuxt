@@ -10,13 +10,9 @@
     "release": true
   },
   "npm": {
-    "publish": true,
-    "publishPath": "./dist"
+    "publish": true
   },
   "plugins": {
-    "@release-it/bumper": {
-      "out": "dist/*.json"
-    },
     "@release-it/conventional-changelog": {
       "infile": false,
       "ignoreRecommendedBump": true,
