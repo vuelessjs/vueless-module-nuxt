@@ -30,7 +30,7 @@
     "sb:preview": "vite preview --host --outDir=storybook-static"
   },
   "dependencies": {
-    "vueless": "^1.2.12"
+    "vueless": "^1.2.13"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.35.0",
