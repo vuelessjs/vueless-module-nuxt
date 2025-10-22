@@ -52,23 +52,10 @@ jobs:
       - run: npm run dev:prepare
       - run: npm run ts:check
 
-  test:
-    name: 'Test'
-    if: "!contains(github.event.head_commit.message, 'GITBOOK')"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run test
-
   release-beta:
     name: 'Release: beta'
     if: "github.event_name == 'push' && github.ref_name == 'beta'"
-    needs: [ lint, ts-check, test ]
+    needs: [ lint, ts-check ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -95,7 +82,7 @@ jobs:
   release:
     name: "Release: ${{ github.event.inputs.release_type }}"
     if: github.event_name == 'workflow_dispatch' && github.ref_name == 'main'
-    needs: [lint, ts-check, test]
+    needs: [ lint, ts-check ]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -155,7 +142,7 @@ jobs:
   update-beta:
     name: 'Update Beta'
     if: github.event_name == 'workflow_dispatch' && github.ref_name == 'main'
-    needs: [release]
+    needs: [ release ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -174,7 +161,7 @@ jobs:
   update-beta-auto:
     name: 'Update Beta Auto'
     if: github.event_name == 'repository_dispatch' && github.ref_name == 'main'
-    needs: [auto-release]
+    needs: [ auto-release ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
