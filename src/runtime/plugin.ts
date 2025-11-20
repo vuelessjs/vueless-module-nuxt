@@ -13,6 +13,7 @@ import {
   TEXT,
   OUTLINE,
   ROUNDING,
+  THEME_TOKENS,
   PRIMARY_COLOR,
   NEUTRAL_COLOR,
   AUTO_MODE_KEY,
@@ -79,7 +80,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
     const colorModeClass = theme.colorMode === ColorMode.Dark ? DARK_MODE_CLASS : LIGHT_MODE_CLASS
 
     _nuxtApp.ssrContext?.head.push({
-      style: [{ innerHTML: themeRootVariables }],
+      style: [{ innerHTML: themeRootVariables, id: THEME_TOKENS }],
       htmlAttrs: { class: colorModeClass },
     })
   }
