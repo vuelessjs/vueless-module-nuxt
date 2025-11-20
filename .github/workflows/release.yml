@@ -90,6 +90,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: beta
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
@@ -107,7 +108,7 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "chore: update Vueless UI to the latest beta version"
-            git push origin ${{ github.ref_name }}
+            git push origin beta
           fi
       - run: |
           git config user.name "${GITHUB_ACTOR}"
