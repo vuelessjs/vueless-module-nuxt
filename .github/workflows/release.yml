@@ -16,7 +16,7 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened ]
   repository_dispatch:
-    types: [vueless-release]
+    types: [ vueless-release, vueless-release-beta ]
 
 permissions: write-all
 
@@ -79,6 +79,44 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  release-beta-auto:
+    name: 'Release: beta'
+    if: github.event_name == 'repository_dispatch' && github.event.action == 'vueless-release-beta'
+    needs: [ lint, ts-check ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          registry-url: https://registry.npmjs.org/
+      - run: npm install -g npm@latest
+      - run: npm ci
+      - run: npm install vueless@beta
+      - run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update Vueless UI to the latest beta version"
+            git push origin ${{ github.ref_name }}
+          fi
+      - run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+      - run: npm run prepack
+      - run: npm run release:beta
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   release:
     name: "Release: ${{ github.event.inputs.release_type }}"
     if: github.event_name == 'workflow_dispatch' && github.ref_name == 'main'
@@ -106,9 +144,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  auto-release:
+  release-auto:
     name: "Auto-Release: ${{ github.event.client_payload.release_type }}"
-    if: github.event_name == 'repository_dispatch' && github.ref_name == 'main'
+    if: github.event_name == 'repository_dispatch' && github.event.action == 'vueless-release'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -161,8 +199,8 @@ jobs:
 
   update-beta-auto:
     name: 'Update Beta Auto'
-    if: github.event_name == 'repository_dispatch' && github.ref_name == 'main'
-    needs: [ auto-release ]
+    if: github.event_name == 'repository_dispatch' && github.event.action == 'vueless-release'
+    needs: [ release-auto ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
