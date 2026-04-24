@@ -30,8 +30,9 @@ export default defineNuxtModule({
 
     /* Add vueless vite plugin */
     _nuxt.hook('vite:extendConfig', async (config) => {
-      config.plugins = config.plugins || []
-      config.plugins.push(
+      const vite = config as { plugins: import('vite').Plugin[] }
+      vite.plugins = vite.plugins || []
+      vite.plugins.push(
         TailwindCSS({ postcss }),
         Vueless({ env: NUXT_MODULE_ENV, basePath, debug, include }),
       )
