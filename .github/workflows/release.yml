@@ -100,14 +100,17 @@ jobs:
       - run: npm install -g npm@~11.10.0
       - run: npm ci
       - run: npm install vueless@beta
+      - run: npm install @vueless/storybook@beta
+      - run: rm -rf .storybook
+      - run: npx @vueless/storybook init
       - run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add package.json package-lock.json
+          git add .
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore: update Vueless UI to the latest beta version"
+            git commit -m "chore: update Vueless UI to the latest beta version [skip ci]"
             git push origin beta
           fi
       - run: |
@@ -164,14 +167,17 @@ jobs:
       - run: npm install -g npm@~11.10.0
       - run: npm ci
       - run: npm install vueless@latest
+      - run: npm install @vueless/storybook@latest
+      - run: rm -rf .storybook
+      - run: npx @vueless/storybook init
       - run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          git add package.json package-lock.json
+          git add .
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "feat: update Vueless UI to the latest version"
+            git commit -m "feat: update Vueless UI to the latest version [skip ci]"
             git push origin ${{ github.ref_name }}
           fi
       - run: npm run prepack
