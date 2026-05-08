@@ -7,7 +7,6 @@
     <UCol
       justify="between"
       align="stretch"
-      class="h-full"
     >
       <URow
         align="center"

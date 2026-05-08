@@ -4,10 +4,7 @@
     description="Add a new payment method to your account."
     class="flex flex-col"
   >
-    <UCol
-      justify="between"
-      class="h-full"
-    >
+    <UCol justify="between">
       <UToggle
         v-model="selectedPaymentOption"
         name="paymentOptions"

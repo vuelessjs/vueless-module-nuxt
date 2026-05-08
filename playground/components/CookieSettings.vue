@@ -4,10 +4,7 @@
     description="Customize your cookie settings to enhance your browsing experience."
     class="flex flex-col h-full"
   >
-    <UCol
-      justify="between"
-      class="h-full"
-    >
+    <UCol justify="between">
       <URow
         v-for="(cookie, index) in cookieSettings"
         :key="cookie.label"
