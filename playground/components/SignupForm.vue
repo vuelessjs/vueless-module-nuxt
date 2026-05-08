@@ -6,7 +6,7 @@
   >
     <UCol
       justify="between"
-      align="stretch"
+      class="h-[stretch] shrink"
     >
       <URow
         align="center"
