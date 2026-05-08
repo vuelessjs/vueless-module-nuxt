@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "pathe": "^2.0.3",
-    "vue-router": "^5.0.6",
     "vueless": "^1.4.8"
   },
   "devDependencies": {
