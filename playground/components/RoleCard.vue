@@ -2,7 +2,6 @@
   <UCard
     title="Team Collaboration"
     description="Invite your team members to work together seamlessly."
-    class="flex flex-col justify-between"
   >
     <UCol justify="between">
       <URow
