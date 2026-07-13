@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "pathe": "^2.0.3",
-    "vueless": "^1.4.10"
+    "vueless": "^1.4.11"
   },
   "devDependencies": {
     "@material-symbols/svg-500": "^0.44.4",
@@ -43,7 +43,7 @@
     "@nuxt/test-utils": "^4.0.2",
     "@release-it/conventional-changelog": "^11.0.0",
     "@types/node": "latest",
-    "@vueless/storybook": "^1.6.1",
+    "@vueless/storybook": "^1.7.0",
     "changelogen": "^0.6.2",
     "eslint": "^10.2.1",
     "nuxt": "^4.4.2",
