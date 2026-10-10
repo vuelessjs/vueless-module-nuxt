@@ -5,6 +5,7 @@ import {
   ColorMode,
   createVueless,
   createVueI18nAdapter,
+  getThemeCookieName,
   normalizeThemeConfig,
   vClickOutside,
   vTooltip,
@@ -50,28 +51,28 @@ export default defineNuxtPlugin((_nuxtApp) => {
     const cookies = parseCookies(event?.node.req.headers.cookie)
 
     const normalizedThemeParams = normalizeThemeConfig({
-      colorMode: cookies?.[COLOR_MODE_KEY],
-      isColorModeAuto: cookies?.[AUTO_MODE_KEY],
-      primary: cookies?.[`vl-${PRIMARY_COLOR}`],
-      neutral: cookies?.[`vl-${NEUTRAL_COLOR}`],
+      colorMode: cookies?.[getThemeCookieName(COLOR_MODE_KEY)],
+      isColorModeAuto: cookies?.[getThemeCookieName(AUTO_MODE_KEY)],
+      primary: cookies?.[getThemeCookieName(`vl-${PRIMARY_COLOR}`)],
+      neutral: cookies?.[getThemeCookieName(`vl-${NEUTRAL_COLOR}`)],
       text: {
-        xs: cookies?.[`vl-${TEXT}-xs`],
-        sm: cookies?.[`vl-${TEXT}-sm`],
-        md: cookies?.[`vl-${TEXT}-md`],
-        lg: cookies?.[`vl-${TEXT}-lg`],
+        xs: cookies?.[getThemeCookieName(`vl-${TEXT}-xs`)],
+        sm: cookies?.[getThemeCookieName(`vl-${TEXT}-sm`)],
+        md: cookies?.[getThemeCookieName(`vl-${TEXT}-md`)],
+        lg: cookies?.[getThemeCookieName(`vl-${TEXT}-lg`)],
       },
       outline: {
-        sm: cookies?.[`vl-${OUTLINE}-sm`],
-        md: cookies?.[`vl-${OUTLINE}-md`],
-        lg: cookies?.[`vl-${OUTLINE}-lg`],
+        sm: cookies?.[getThemeCookieName(`vl-${OUTLINE}-sm`)],
+        md: cookies?.[getThemeCookieName(`vl-${OUTLINE}-md`)],
+        lg: cookies?.[getThemeCookieName(`vl-${OUTLINE}-lg`)],
       },
       rounding: {
-        sm: cookies?.[`vl-${ROUNDING}-sm`],
-        md: cookies?.[`vl-${ROUNDING}-md`],
-        lg: cookies?.[`vl-${ROUNDING}-lg`],
+        sm: cookies?.[getThemeCookieName(`vl-${ROUNDING}-sm`)],
+        md: cookies?.[getThemeCookieName(`vl-${ROUNDING}-md`)],
+        lg: cookies?.[getThemeCookieName(`vl-${ROUNDING}-lg`)],
       },
-      disabledOpacity: cookies?.[`vl-${DISABLED_OPACITY}`],
-      letterSpacing: cookies?.[`vl-${LETTER_SPACING}`],
+      disabledOpacity: cookies?.[getThemeCookieName(`vl-${DISABLED_OPACITY}`)],
+      letterSpacing: cookies?.[getThemeCookieName(`vl-${LETTER_SPACING}`)],
     })
 
     const theme = getTheme(normalizedThemeParams)
