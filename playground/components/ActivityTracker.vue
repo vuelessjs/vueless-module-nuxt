@@ -4,10 +4,7 @@
     description="Define your daily activity target."
     class="flex flex-col"
   >
-    <UCol
-      justify="between"
-      class="h-full"
-    >
+    <UCol justify="between">
       <ULabel
         description="Calories per day"
         :config="{ description: 'text-center !text-medium' }"

@@ -2,12 +2,8 @@
   <UCard
     title="Team Collaboration"
     description="Invite your team members to work together seamlessly."
-    class="flex flex-col"
   >
-    <UCol
-      justify="between"
-      class="h-full"
-    >
+    <UCol justify="between">
       <URow
         v-for="member in teamMembers"
         :key="member.email"

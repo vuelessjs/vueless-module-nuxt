@@ -6,27 +6,30 @@
   >
     <UCol
       justify="between"
-      class="h-full"
+      shrink
+      class="h-[stretch]"
     >
-      <URow
-        v-for="(cookie, index) in cookieSettings"
-        :key="cookie.label"
-        justify="between"
-        align="center"
-        block
-      >
-        <UCol gap="2xs">
-          <UHeader
-            :label="cookie.label"
-            class="text-sm"
-          />
-          <UText
-            :html="cookie.description"
-            size="sm"
-          />
-        </UCol>
-        <USwitch v-model="cookieValues[index]" />
-      </URow>
+      <UCol block>
+        <URow
+          v-for="(cookie, index) in cookieSettings"
+          :key="cookie.label"
+          justify="between"
+          align="center"
+          block
+        >
+          <UCol gap="2xs">
+            <UHeader
+              :label="cookie.label"
+              class="text-sm"
+            />
+            <UText
+              :html="cookie.description"
+              size="sm"
+            />
+          </UCol>
+          <USwitch v-model="cookieValues[index]" />
+        </URow>
+      </UCol>
 
       <UButton
         label="Save preferences"
@@ -50,6 +53,10 @@ const cookieSettings = ref([
   {
     label: 'Performance Cookies',
     description: 'Help us analyze and optimize website performance.',
+  },
+  {
+    label: 'Marketing Cookies',
+    description: 'Enable personalized features and enhance usability.',
   },
 ])
 
