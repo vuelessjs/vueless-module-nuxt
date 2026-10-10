@@ -1,8 +1,8 @@
-import { defineNuxtModule, addPlugin, createResolver, addComponent, addImportsDir, hasNuxtModule } from '@nuxt/kit'
-import { dirname, relative } from 'pathe'
+import { defineNuxtModule, addPlugin, addTemplate, createResolver, addComponent, addImportsDir, hasNuxtModule, findPath } from '@nuxt/kit'
+import { dirname, join, relative } from 'pathe'
 import { Vueless, TailwindCSS } from 'vueless/plugin-vite'
 import { cacheMergedConfigs, autoImportUserConfigs } from 'vueless/utils/node/helper.js'
-import { COMPONENTS, NUXT_MODULE_ENV, VUELESS_LIBRARY } from 'vueless/constants.js'
+import { COMPONENTS, NUXT_MODULE_ENV, VUELESS_LIBRARY, VUELESS_CONFIG_FILE_NAME } from 'vueless/constants.js'
 
 export default defineNuxtModule({
   meta: {
@@ -43,6 +43,19 @@ export default defineNuxtModule({
 
     /* Merge component configs and cache it */
     await cacheMergedConfigs({ vuelessSrcDir: relative(process.cwd(), vuelessDir), basePath })
+
+    /* Bundle the user config, so SSR has it before the first render */
+    const userConfigPath = await findPath(
+      join(process.cwd(), basePath, VUELESS_CONFIG_FILE_NAME),
+      { extensions: ['.ts', '.js'] },
+    )
+
+    addTemplate({
+      filename: 'vueless.config.mjs',
+      getContents: () => userConfigPath
+        ? `export { default } from ${JSON.stringify(userConfigPath)}`
+        : 'export default {}',
+    })
 
     /* Register i18n module */
     if (hasNuxtModule('@nuxtjs/i18n')) {

@@ -25,6 +25,8 @@ import {
   DISABLED_OPACITY,
 } from 'vueless/constants'
 
+import vuelessConfig from '#build/vueless.config.mjs'
+
 import type { CreateVuelessOptions } from 'vueless'
 
 export default defineNuxtPlugin((_nuxtApp) => {
@@ -35,6 +37,11 @@ export default defineNuxtPlugin((_nuxtApp) => {
     vuelessOptions.i18n = {
       adapter: createVueI18nAdapter({ global: _nuxtApp.$i18n }),
     }
+  }
+
+  /* Pass the config synchronously instead of relying on the async SSR import in vueless */
+  if (import.meta.server) {
+    vuelessOptions.config = vuelessConfig
   }
 
   /* Init vueless */
