@@ -43,7 +43,7 @@
     "@nuxt/test-utils": "^4.3.3",
     "@release-it/conventional-changelog": "^12.0.2",
     "@types/node": "^26.6.5",
-    "@vueless/storybook": "^1.8.1",
+    "@vueless/storybook": "^1.7.5-beta.0",
     "changelogen": "^0.6.2",
     "eslint": "^10.12.0",
     "nuxt": "^4.6.1",
